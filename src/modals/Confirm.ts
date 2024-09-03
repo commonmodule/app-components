@@ -7,6 +7,7 @@ export default class Confirm extends Modal {
     icon?: DomNode;
     title: string;
     message: string;
+    confirmButtonTitle?: string;
     onConfirm?: () => void;
   }) {
     super(".confirm");
@@ -21,7 +22,7 @@ export default class Confirm extends Modal {
           onClick: () => this.remove(),
         }),
         new Button(".confirm", {
-          title: "Confirm",
+          title: options.confirmButtonTitle ?? "Confirm",
           onClick: () => {
             if (options.onConfirm) options.onConfirm();
             this.remove();

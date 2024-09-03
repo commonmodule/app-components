@@ -1,6 +1,5 @@
 class AppCompConfig {
-  public modalRemovalDelay: number = 500;
-  public modalRemovalClassName: string = "fade-out";
+  public modalCloseTimeout: number = 500;
 }
 
 export default new AppCompConfig();

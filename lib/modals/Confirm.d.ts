@@ -5,6 +5,7 @@ export default class Confirm extends Modal {
         icon?: DomNode;
         title: string;
         message: string;
+        confirmButtonTitle?: string;
         onConfirm?: () => void;
     });
     wait(): Promise<void>;

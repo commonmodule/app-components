@@ -9,7 +9,7 @@ interface ButtonOptions {
     type?: ButtonType;
     icon?: DomNode;
     title?: string;
-    onClick?: (button: Button, event: MouseEvent) => void;
+    onClick?: (button: Button, event: MouseEvent) => Promise<void> | void;
 }
 export default class Button extends DomNode<HTMLButtonElement> {
     constructor(options: ButtonOptions);

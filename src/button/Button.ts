@@ -11,7 +11,7 @@ interface ButtonOptions {
   type?: ButtonType;
   icon?: DomNode;
   title?: string;
-  onClick?: (button: Button, event: MouseEvent) => void;
+  onClick?: (button: Button, event: MouseEvent) => Promise<void> | void;
 }
 
 export default class Button extends DomNode<HTMLButtonElement> {
@@ -40,8 +40,14 @@ export default class Button extends DomNode<HTMLButtonElement> {
       options.title,
     );
 
-    if (options.onClick) {
-      this.onDom("click", (event) => options.onClick!(this, event));
-    }
+    this.onDom("click", (event) => {
+      if (options.onClick) {
+        const promise = options.onClick(this, event);
+        if (promise instanceof Promise) {
+          //TODO: show loading spinner
+          //TODO: disable button
+        }
+      }
+    });
   }
 }
