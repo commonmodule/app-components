@@ -15,9 +15,9 @@ export default abstract class Modal extends DomNode<HTMLDialogElement> {
           event.clientY < rect.top ||
           event.clientY > rect.bottom
         ) {
-          this.element.close();
+          this.htmlElement.close();
         }
       })
-      .appendTo(BodyNode).element.showModal();
+      .appendTo(BodyNode).htmlElement.showModal();
   }
 }
