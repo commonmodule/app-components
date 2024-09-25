@@ -1,8 +1,8 @@
 import { DomNode, el } from "@common-module/app";
 import Button from "../button/Button.js";
-import Modal from "./Modal.js";
+import StructuredModal from "./StructuredModal.js";
 
-export default class Alert extends Modal {
+export default class Alert extends StructuredModal {
   constructor(options: {
     icon?: DomNode;
     title: string;
@@ -11,12 +11,10 @@ export default class Alert extends Modal {
     onConfirm?: () => void;
   }) {
     super(".alert");
-
-    this.append(
-      el("header", el("h1", options.icon, options.title)),
-      el("main", el("p", options.message)),
-      el(
-        "footer",
+    this
+      .appendToHeader(el("h1", options.icon, options.title))
+      .appendToMain(el("p", options.message))
+      .appendToFooter(
         new Button(".confirm", {
           title: options.confirmButtonTitle ?? "OK",
           onClick: () => {
@@ -24,7 +22,6 @@ export default class Alert extends Modal {
             this.remove();
           },
         }),
-      ),
-    );
+      );
   }
 }
