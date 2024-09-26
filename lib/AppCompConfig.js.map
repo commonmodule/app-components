@@ -1,1 +1,1 @@
-{"version":3,"file":"AppCompConfig.js","sourceRoot":"","sources":["../src/AppCompConfig.ts"],"names":[],"mappings":"AAAA,MAAM,aAAa;IACV,iBAAiB,GAAW,GAAG,CAAC;CACxC;AAED,eAAe,IAAI,aAAa,EAAE,CAAC"}
+{"version":3,"file":"AppCompConfig.js","sourceRoot":"","sources":["../src/AppCompConfig.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,oBAAoB,CAAC;AAI7C,MAAM,qBAAsB,SAAQ,OAAO;IACzC;QACE,KAAK,CAAC,kBAAkB,CAAC,CAAC;IAC5B,CAAC;CACF;AAED,MAAM,aAAa;IACV,cAAc,GAAuB,qBAAqB,CAAC;CACnE;AAED,eAAe,IAAI,aAAa,EAAE,CAAC"}

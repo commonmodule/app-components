@@ -1,5 +1,7 @@
+import { DomNode } from "@common-module/app";
+type DomNodeConstructor = new () => DomNode;
 declare class AppCompConfig {
-    modalCloseTimeout: number;
+    LoadingSpinner: DomNodeConstructor;
 }
 declare const _default: AppCompConfig;
 export default _default;
