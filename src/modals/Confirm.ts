@@ -1,8 +1,11 @@
 import { DomNode, el } from "@common-module/app";
-import Button from "../button/Button.js";
+import Button, { ButtonType } from "../button/Button.js";
 import StructuredModal from "./StructuredModal.js";
 
 export default class Confirm extends StructuredModal {
+  private resolveConfirm: (() => void) | undefined;
+  private rejectConfirm: ((reason: Error) => void) | undefined;
+
   constructor(options: {
     icon?: DomNode;
     title: string;
@@ -17,19 +20,27 @@ export default class Confirm extends StructuredModal {
       .appendToFooter(
         new Button(".cancel", {
           title: "Cancel",
-          onClick: () => this.remove(),
+          onClick: () => {
+            this.rejectConfirm?.(new Error("Canceled by user"));
+            this.remove();
+          },
         }),
         new Button(".confirm", {
+          type: ButtonType.Contained,
           title: options.confirmButtonTitle ?? "Confirm",
           onClick: () => {
             if (options.onConfirm) options.onConfirm();
+            this.resolveConfirm?.();
             this.remove();
           },
         }),
       );
   }
 
-  public async wait() {
-    //TODO:
+  public async waitForConfirmation() {
+    return new Promise<void>((resolve, reject) => {
+      this.resolveConfirm = resolve;
+      this.rejectConfirm = reject;
+    });
   }
 }
