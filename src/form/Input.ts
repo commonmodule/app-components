@@ -8,12 +8,23 @@ interface InputOptions {
 }
 
 export default class Input extends DomNode<HTMLLabelElement> {
+  private input: DomNode<HTMLInputElement> | DomNode<HTMLTextAreaElement>;
+
   constructor(options: InputOptions) {
     super(`label.input${options.required === true ? ".required" : ""}`);
 
     this.append(
       options.label ? el("span.label", options.label) : undefined,
-      el("input"),
+      this.input = el("input", { placeholder: options.placeholder }),
     );
+  }
+
+  public get value(): string {
+    return this.input.htmlElement.value;
+  }
+
+  public set value(value: string) {
+    if (this.input.htmlElement.value === value) return;
+    this.input.htmlElement.value = value;
   }
 }
