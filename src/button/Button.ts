@@ -47,7 +47,9 @@ export default class Button extends DomNode<HTMLButtonElement> {
     this.options = options;
 
     this.append(
-      options.icon ? this.iconContainer = el(".icon", options.icon) : undefined,
+      options.icon
+        ? this.iconContainer = el(".icon-container", options.icon)
+        : undefined,
       options.title,
     );
 
