@@ -1,5 +1,6 @@
 import { DomNode } from "@common-module/app";
 interface DropdownMenuItemOptions {
+    icon: DomNode;
     label: string;
     onClick: () => void;
 }
