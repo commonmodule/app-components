@@ -1,0 +1,14 @@
+import { DomNode } from "@common-module/app";
+
+interface DropdownMenuItemOptions {
+  label: string;
+  onClick: () => void;
+}
+
+export default class DropdownMenuItem extends DomNode {
+  constructor(options: DropdownMenuItemOptions) {
+    super(".dropdown-menu-item");
+    this.text = options.label;
+    this.onDom("click", () => options.onClick());
+  }
+}
