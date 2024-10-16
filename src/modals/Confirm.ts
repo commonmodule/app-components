@@ -4,7 +4,6 @@ import StructuredModal from "./StructuredModal.js";
 
 export default class Confirm extends StructuredModal {
   private resolveConfirm: (() => void) | undefined;
-  private rejectConfirm: ((reason: Error) => void) | undefined;
 
   constructor(options: {
     icon?: DomNode;
@@ -20,10 +19,7 @@ export default class Confirm extends StructuredModal {
       .appendToFooter(
         new Button(".cancel", {
           title: "Cancel",
-          onClick: () => {
-            this.rejectConfirm?.(new Error("Canceled by user"));
-            this.remove();
-          },
+          onClick: () => this.remove(),
         }),
         new Button(".confirm", {
           type: ButtonType.Contained,
@@ -38,9 +34,6 @@ export default class Confirm extends StructuredModal {
   }
 
   public async waitForConfirmation() {
-    return new Promise<void>((resolve, reject) => {
-      this.resolveConfirm = resolve;
-      this.rejectConfirm = reject;
-    });
+    return new Promise<void>((resolve) => this.resolveConfirm = resolve);
   }
 }

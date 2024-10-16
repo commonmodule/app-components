@@ -5,6 +5,7 @@ interface InputOptions {
   label?: string;
   placeholder?: string;
   required?: boolean;
+  value?: string;
 }
 
 export default class Input extends DomNode<HTMLLabelElement> {
@@ -15,7 +16,10 @@ export default class Input extends DomNode<HTMLLabelElement> {
 
     this.append(
       options.label ? el("span.label", options.label) : undefined,
-      this.input = el("input", { placeholder: options.placeholder }),
+      this.input = el("input", {
+        placeholder: options.placeholder,
+        value: options.value,
+      }),
     );
   }
 
@@ -26,5 +30,9 @@ export default class Input extends DomNode<HTMLLabelElement> {
   public set value(value: string) {
     if (this.input.htmlElement.value === value) return;
     this.input.htmlElement.value = value;
+  }
+
+  public focus() {
+    this.input.htmlElement.focus();
   }
 }
