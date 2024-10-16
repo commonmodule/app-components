@@ -12,6 +12,7 @@ export default class Input extends DomNode<HTMLLabelElement, {
     private input;
     private previousValue;
     constructor(options: InputOptions);
+    private handleInput;
     get value(): string;
     set value(value: string);
     focus(): void;

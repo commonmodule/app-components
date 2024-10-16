@@ -22,15 +22,18 @@ export default class Input extends DomNode<HTMLLabelElement, {
       this.input = el("input", {
         placeholder: options.placeholder,
         value: options.value ?? "",
-        onkeyup: () => {
-          if (this.value !== this.previousValue) {
-            this.emit("valueChanged", this.value);
-            this.previousValue = this.value;
-          }
-        },
+        onkeyup: () => this.handleInput(),
       }),
     );
   }
+
+  private handleInput = () => {
+    const newValue = this.value;
+    if (newValue !== this.previousValue) {
+      this.emit("valueChanged", newValue);
+      this.previousValue = newValue;
+    }
+  };
 
   public get value(): string {
     return this.input.htmlElement.value;
@@ -39,7 +42,7 @@ export default class Input extends DomNode<HTMLLabelElement, {
   public set value(value: string) {
     if (this.input.htmlElement.value === value) return;
     this.input.htmlElement.value = value;
-    this.emit("valueChanged", value);
+    this.handleInput();
   }
 
   public focus() {
