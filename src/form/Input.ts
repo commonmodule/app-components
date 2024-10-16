@@ -18,7 +18,7 @@ export default class Input extends DomNode<HTMLLabelElement> {
       options.label ? el("span.label", options.label) : undefined,
       this.input = el("input", {
         placeholder: options.placeholder,
-        value: options.value,
+        value: options.value ?? "",
       }),
     );
   }
