@@ -8,8 +8,11 @@ interface InputOptions {
   value?: string;
 }
 
-export default class Input extends DomNode<HTMLLabelElement> {
+export default class Input extends DomNode<HTMLLabelElement, {
+  valueChanged: (value: string) => void;
+}> {
   private input: DomNode<HTMLInputElement> | DomNode<HTMLTextAreaElement>;
+  private previousValue: string = "";
 
   constructor(options: InputOptions) {
     super(`label.input${options.required === true ? ".required" : ""}`);
@@ -19,6 +22,12 @@ export default class Input extends DomNode<HTMLLabelElement> {
       this.input = el("input", {
         placeholder: options.placeholder,
         value: options.value ?? "",
+        onkeyup: () => {
+          if (this.value !== this.previousValue) {
+            this.emit("valueChanged", this.value);
+            this.previousValue = this.value;
+          }
+        },
       }),
     );
   }
@@ -30,6 +39,7 @@ export default class Input extends DomNode<HTMLLabelElement> {
   public set value(value: string) {
     if (this.input.htmlElement.value === value) return;
     this.input.htmlElement.value = value;
+    this.emit("valueChanged", value);
   }
 
   public focus() {

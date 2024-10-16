@@ -6,8 +6,11 @@ interface InputOptions {
     required?: boolean;
     value?: string;
 }
-export default class Input extends DomNode<HTMLLabelElement> {
+export default class Input extends DomNode<HTMLLabelElement, {
+    valueChanged: (value: string) => void;
+}> {
     private input;
+    private previousValue;
     constructor(options: InputOptions);
     get value(): string;
     set value(value: string);
