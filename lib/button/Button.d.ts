@@ -8,7 +8,7 @@ export declare enum ButtonType {
 interface ButtonOptions {
     type?: ButtonType;
     icon?: DomNode;
-    title?: string;
+    title?: DomNode | string;
     onClick?: (button: Button, event: MouseEvent) => Promise<void> | DomNode | void;
 }
 export default class Button extends DomNode<HTMLButtonElement> {

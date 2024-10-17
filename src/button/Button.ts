@@ -11,7 +11,7 @@ export enum ButtonType {
 interface ButtonOptions {
   type?: ButtonType;
   icon?: DomNode;
-  title?: string;
+  title?: DomNode | string;
   onClick?: (
     button: Button,
     event: MouseEvent,
