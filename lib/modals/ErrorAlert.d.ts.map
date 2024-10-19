@@ -1,0 +1,1 @@
+{"version":3,"file":"ErrorAlert.d.ts","sourceRoot":"","sources":["../../src/modals/ErrorAlert.ts"],"names":[],"mappings":"AACA,OAAO,KAAK,MAAM,YAAY,CAAC;AAE/B,MAAM,CAAC,OAAO,OAAO,UAAW,SAAQ,KAAK;gBAC/B,OAAO,EAAE;QACnB,KAAK,EAAE,MAAM,CAAC;QACd,OAAO,EAAE,MAAM,CAAC;QAChB,kBAAkB,CAAC,EAAE,MAAM,CAAC;QAC5B,SAAS,CAAC,EAAE,MAAM,IAAI,CAAC;KACxB;CAMF"}

@@ -2,17 +2,19 @@ import { DomNode, el } from "@common-module/app";
 import Button, { ButtonType } from "../button/Button.js";
 import StructuredModal from "./StructuredModal.js";
 
+interface ConfirmOptions {
+  icon?: DomNode;
+  title: string;
+  message: DomNode[] | string;
+  confirmButtonTitle?: string;
+  onConfirm?: () => void;
+}
+
 export default class Confirm extends StructuredModal {
   private resolveConfirm: (() => void) | undefined;
   private rejectConfirm: ((reason: Error) => void) | undefined;
 
-  constructor(options: {
-    icon?: DomNode;
-    title: string;
-    message: string;
-    confirmButtonTitle?: string;
-    onConfirm?: () => void;
-  }) {
+  constructor(options: ConfirmOptions) {
     super(".confirm");
     this
       .on(
@@ -20,7 +22,11 @@ export default class Confirm extends StructuredModal {
         () => this.rejectConfirm?.(new Error("Canceled by user")),
       )
       .appendToHeader(el("h1", options.icon, options.title))
-      .appendToMain(el("p", options.message))
+      .appendToMain(
+        ...(typeof options.message === "string"
+          ? [el("p", options.message)]
+          : options.message),
+      )
       .appendToFooter(
         new Button(".cancel", {
           title: "Cancel",

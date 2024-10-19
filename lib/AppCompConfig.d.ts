@@ -1,6 +1,7 @@
 import { DomNode } from "@common-module/app";
 type DomNodeConstructor = new () => DomNode;
 declare class AppCompConfig {
+    ErrorAlertIcon: DomNodeConstructor;
     LoadingSpinner: DomNodeConstructor;
 }
 declare const _default: AppCompConfig;

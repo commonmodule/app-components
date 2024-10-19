@@ -9,5 +9,6 @@ export { default as DropdownMenuGroup } from "./menu/DropdownMenuGroup.js";
 export { default as DropdownMenuItem } from "./menu/DropdownMenuItem.js";
 export { default as Alert } from "./modals/Alert.js";
 export { default as Confirm } from "./modals/Confirm.js";
+export { default as ErrorAlert } from "./modals/ErrorAlert.js";
 export { default as StructuredModal } from "./modals/StructuredModal.js";
 //# sourceMappingURL=index.d.ts.map
