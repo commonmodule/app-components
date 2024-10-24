@@ -8,7 +8,7 @@ interface DropdownMenuOptions {
 }
 
 export default class DropdownMenu extends DomNode {
-  private options: DropdownMenuOptions;
+  private _options: DropdownMenuOptions;
 
   private header;
   private main;
@@ -34,7 +34,7 @@ export default class DropdownMenu extends DomNode {
     }
 
     super(`.dropdown-menu${classNames}`);
-    this.options = options;
+    this._options = options;
 
     window.getSelection()?.empty();
     for (const node of BodyNode.children) {
@@ -67,16 +67,16 @@ export default class DropdownMenu extends DomNode {
 
     let left = 0, top = 0;
 
-    if (this.options.left !== undefined) {
-      left = this.options.left;
-    } else if (this.options.right !== undefined) {
-      left = this.options.right - rect.width;
+    if (this._options.left !== undefined) {
+      left = this._options.left;
+    } else if (this._options.right !== undefined) {
+      left = this._options.right - rect.width;
     }
 
-    if (this.options.top !== undefined) {
-      top = this.options.top;
-    } else if (this.options.bottom !== undefined) {
-      top = this.options.bottom - rect.height;
+    if (this._options.top !== undefined) {
+      top = this._options.top;
+    } else if (this._options.bottom !== undefined) {
+      top = this._options.bottom - rect.height;
     }
 
     if (left + rect.width > window.innerWidth) {

@@ -6,7 +6,7 @@ interface DropdownMenuOptions {
     bottom?: number;
 }
 export default class DropdownMenu extends DomNode {
-    private options;
+    private _options;
     private header;
     private main;
     private footer;
