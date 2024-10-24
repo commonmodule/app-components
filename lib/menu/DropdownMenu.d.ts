@@ -1,9 +1,12 @@
 import { DomChild, DomNode } from "@common-module/app";
 interface DropdownMenuOptions {
-    left: number;
-    top: number;
+    left?: number;
+    right?: number;
+    top?: number;
+    bottom?: number;
 }
 export default class DropdownMenu extends DomNode {
+    private options;
     private header;
     private main;
     private footer;
