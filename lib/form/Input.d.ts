@@ -5,6 +5,7 @@ interface InputOptions {
     placeholder?: string;
     required?: boolean;
     value?: string;
+    readOnly?: boolean;
 }
 export default class Input extends DomNode<HTMLLabelElement, {
     valueChanged: (value: string) => void;

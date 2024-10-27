@@ -6,12 +6,13 @@ interface InputOptions {
   placeholder?: string;
   required?: boolean;
   value?: string;
+  readOnly?: boolean;
 }
 
 export default class Input extends DomNode<HTMLLabelElement, {
   valueChanged: (value: string) => void;
 }> {
-  private input: DomNode<HTMLInputElement> | DomNode<HTMLTextAreaElement>;
+  private input: DomNode<HTMLInputElement | HTMLTextAreaElement>;
   private previousValue: string = "";
 
   constructor(options: InputOptions) {
@@ -19,9 +20,10 @@ export default class Input extends DomNode<HTMLLabelElement, {
 
     this.append(
       options.label ? el("span.label", options.label) : undefined,
-      this.input = el("input", {
-        placeholder: options.placeholder,
+      this.input = el(options.multiline ? "textarea" : "input", {
+        placeholder: options.placeholder ?? "",
         value: options.value ?? "",
+        readOnly: options.readOnly,
         onkeyup: () => this.handleInput(),
       }),
     );
