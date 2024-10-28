@@ -48,7 +48,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
 
     this.append(
       options.icon
-        ? this.iconContainer = el(".icon-container", options.icon)
+        ? this.iconContainer = el(".icon-container", options.icon.clone())
         : undefined,
       options.title,
     );
@@ -78,21 +78,25 @@ export default class Button extends DomNode<HTMLButtonElement> {
 
   public startLoading(): this {
     this.addClass("loading");
-    if (this.iconContainer) {
-      this.iconContainer.empty().append(new AppCompConfig.LoadingSpinner());
-    } else {
-      this.prepend(this.loadingSpinner = new AppCompConfig.LoadingSpinner());
+    if (!this.removed) {
+      if (this.iconContainer) {
+        this.iconContainer.empty().append(new AppCompConfig.LoadingSpinner());
+      } else {
+        this.prepend(this.loadingSpinner = new AppCompConfig.LoadingSpinner());
+      }
     }
     return this;
   }
 
   public stopLoading(): this {
     this.removeClass("loading");
-    if (this.iconContainer) {
-      this.iconContainer.empty().append(this.options.icon);
-    } else if (this.loadingSpinner) {
-      this.loadingSpinner.remove();
-      this.loadingSpinner = undefined;
+    if (!this.removed) {
+      if (this.iconContainer) {
+        this.iconContainer.empty().append(this.options.icon?.clone());
+      } else if (this.loadingSpinner) {
+        this.loadingSpinner.remove();
+        this.loadingSpinner = undefined;
+      }
     }
     return this;
   }
