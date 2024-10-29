@@ -4,6 +4,7 @@ interface InputOptions {
   multiline?: boolean;
   label?: string;
   placeholder?: string;
+  suffixIcon?: DomNode;
   required?: boolean;
   value?: string;
   readOnly?: boolean;
@@ -15,8 +16,25 @@ export default class Input extends DomNode<HTMLLabelElement, {
   private input: DomNode<HTMLInputElement | HTMLTextAreaElement>;
   private previousValue: string = "";
 
-  constructor(options: InputOptions) {
-    super(`label.input${options.required === true ? ".required" : ""}`);
+  constructor(options: InputOptions);
+  constructor(classNames: `.${string}`, options: InputOptions);
+  constructor(
+    classNamesOrOptions: `.${string}` | InputOptions,
+    optionsOrUndefined?: InputOptions,
+  ) {
+    let classNames: "" | `.${string}` = "";
+    let options: InputOptions;
+
+    if (typeof classNamesOrOptions === "string") {
+      classNames = classNamesOrOptions;
+      options = optionsOrUndefined ?? {};
+    } else {
+      options = classNamesOrOptions;
+    }
+
+    super(
+      `label.input${classNames}${options.required === true ? ".required" : ""}`,
+    );
 
     this.append(
       options.label ? el("span.label", options.label) : undefined,
@@ -26,6 +44,7 @@ export default class Input extends DomNode<HTMLLabelElement, {
         readOnly: options.readOnly,
         onkeyup: () => this.handleInput(),
       }),
+      options.suffixIcon ? el(".suffix-icon", options.suffixIcon) : undefined,
     );
   }
 
