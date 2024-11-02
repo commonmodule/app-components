@@ -11,6 +11,7 @@ export enum ButtonType {
 interface ButtonOptions {
   type?: ButtonType;
   icon?: DomNode;
+  iconPosition?: "left" | "right";
   title?: DomNode | string;
   onClick?: (
     button: Button,
@@ -46,12 +47,24 @@ export default class Button extends DomNode<HTMLButtonElement> {
 
     this.options = options;
 
-    this.append(
-      options.icon
-        ? this.iconContainer = el(".icon-container", options.icon.clone())
-        : undefined,
-      options.title,
-    );
+    if (options.iconPosition === "right") {
+      this.append(
+        options.title,
+        options.icon
+          ? this.iconContainer = el(
+            ".right-icon-container",
+            options.icon.clone(),
+          )
+          : undefined,
+      );
+    } else {
+      this.append(
+        options.icon
+          ? this.iconContainer = el(".icon-container", options.icon.clone())
+          : undefined,
+        options.title,
+      );
+    }
 
     this.onDom("click", (event) => {
       if (options.onClick) {

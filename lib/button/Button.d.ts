@@ -8,6 +8,7 @@ export declare enum ButtonType {
 interface ButtonOptions {
     type?: ButtonType;
     icon?: DomNode;
+    iconPosition?: "left" | "right";
     title?: DomNode | string;
     onClick?: (button: Button, event: MouseEvent) => Promise<void> | DomNode | void;
 }
