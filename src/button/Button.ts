@@ -93,7 +93,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
     this.addClass("loading");
     if (!this.removed) {
       if (this.iconContainer) {
-        this.iconContainer.empty().append(new AppCompConfig.LoadingSpinner());
+        this.iconContainer.clear().append(new AppCompConfig.LoadingSpinner());
       } else {
         this.prepend(this.loadingSpinner = new AppCompConfig.LoadingSpinner());
       }
@@ -105,7 +105,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
     this.removeClass("loading");
     if (!this.removed) {
       if (this.iconContainer) {
-        this.iconContainer.empty().append(this.options.icon?.clone());
+        this.iconContainer.clear().append(this.options.icon?.clone());
       } else if (this.loadingSpinner) {
         this.loadingSpinner.remove();
         this.loadingSpinner = undefined;

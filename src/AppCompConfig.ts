@@ -8,6 +8,18 @@ class DefaultErrorAlertIcon extends DomNode {
   }
 }
 
+class DefaultAccordionOpenIcon extends DomNode {
+  constructor() {
+    super("span.icon.accordion-open", "▼");
+  }
+}
+
+class DefaultAccordionCloseIcon extends DomNode {
+  constructor() {
+    super("span.icon.accordion-close", "▲");
+  }
+}
+
 class DefaultLoadingSpinner extends DomNode {
   constructor() {
     super(".loading-spinner");
@@ -16,6 +28,9 @@ class DefaultLoadingSpinner extends DomNode {
 
 class AppCompConfig {
   public ErrorAlertIcon: DomNodeConstructor = DefaultErrorAlertIcon;
+  public AccordionOpenIcon: DomNodeConstructor = DefaultAccordionOpenIcon;
+  public AccordionCloseIcon: DomNodeConstructor = DefaultAccordionCloseIcon;
+
   public LoadingSpinner: DomNodeConstructor = DefaultLoadingSpinner;
 }
 
