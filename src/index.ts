@@ -1,5 +1,7 @@
+export { default as Accordion } from "./accordion/Accordion.js";
+export { default as AccordionItem } from "./accordion/AccordionItem.js";
 export { default as AppCompConfig } from "./AppCompConfig.js";
-export { ButtonType, default as Button } from "./button/Button.js";
+export { default as Button, ButtonType } from "./button/Button.js";
 export { default as ButtonGroup } from "./button/ButtonGroup.js";
 export { default as Form } from "./form/Form.js";
 export { default as Input } from "./form/Input.js";
