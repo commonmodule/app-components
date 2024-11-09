@@ -26,6 +26,8 @@ export default class Button extends DomNode<HTMLButtonElement> {
   private iconContainer: DomNode | undefined;
   private loadingSpinner: DomNode | undefined;
 
+  private loading = false;
+
   constructor(options: ButtonOptions);
   constructor(classNames: `.${string}`, options: ButtonOptions);
   constructor(
@@ -68,7 +70,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
     }
 
     this.onDom("click", (event) => {
-      if (options.onClick) {
+      if (!this.loading && options.onClick) {
         const promise = options.onClick(this, event);
         if (promise instanceof Promise) {
           this.startLoading();
@@ -93,25 +95,35 @@ export default class Button extends DomNode<HTMLButtonElement> {
   }
 
   public startLoading(): this {
-    this.addClass("loading");
-    if (!this.removed) {
-      if (this.iconContainer) {
-        this.iconContainer.clear().append(new AppCompConfig.LoadingSpinner());
-      } else {
-        this.prepend(this.loadingSpinner = new AppCompConfig.LoadingSpinner());
+    if (!this.loading) {
+      this.loading = true;
+      this.addClass("loading");
+
+      if (!this.removed) {
+        if (this.iconContainer) {
+          this.iconContainer.clear().append(new AppCompConfig.LoadingSpinner());
+        } else {
+          this.prepend(
+            this.loadingSpinner = new AppCompConfig.LoadingSpinner(),
+          );
+        }
       }
     }
     return this;
   }
 
   public stopLoading(): this {
-    this.removeClass("loading");
-    if (!this.removed) {
-      if (this.iconContainer) {
-        this.iconContainer.clear().append(this.options.icon?.clone());
-      } else if (this.loadingSpinner) {
-        this.loadingSpinner.remove();
-        this.loadingSpinner = undefined;
+    if (this.loading) {
+      this.loading = false;
+      this.removeClass("loading");
+
+      if (!this.removed) {
+        if (this.iconContainer) {
+          this.iconContainer.clear().append(this.options.icon?.clone());
+        } else if (this.loadingSpinner) {
+          this.loadingSpinner.remove();
+          this.loadingSpinner = undefined;
+        }
       }
     }
     return this;

@@ -17,6 +17,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
     private options;
     private iconContainer;
     private loadingSpinner;
+    private loading;
     constructor(options: ButtonOptions);
     constructor(classNames: `.${string}`, options: ButtonOptions);
     disable(): this;
