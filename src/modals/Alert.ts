@@ -7,7 +7,7 @@ interface AlertOptions {
   title: string;
   message: string;
   confirmButtonTitle?: string;
-  onConfirm?: () => void;
+  onConfirm?: () => Promise<void> | void;
 }
 
 export default class Alert extends StructuredModal {
@@ -37,8 +37,8 @@ export default class Alert extends StructuredModal {
       .appendToFooter(
         new Button(".confirm", {
           title: options.confirmButtonTitle ?? "OK",
-          onClick: () => {
-            if (options.onConfirm) options.onConfirm();
+          onClick: async () => {
+            if (options.onConfirm) await options.onConfirm();
             this.remove();
           },
         }),

@@ -5,7 +5,7 @@ interface AlertOptions {
     title: string;
     message: string;
     confirmButtonTitle?: string;
-    onConfirm?: () => void;
+    onConfirm?: () => Promise<void> | void;
 }
 export default class Alert extends StructuredModal {
     constructor(options: AlertOptions);

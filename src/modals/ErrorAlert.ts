@@ -6,7 +6,7 @@ export default class ErrorAlert extends Alert {
     title: string;
     message: string;
     confirmButtonTitle?: string;
-    onConfirm?: () => void;
+    onConfirm?: () => Promise<void> | void;
   }) {
     super(".error-alert", {
       icon: new AppCompConfig.ErrorAlertIcon(),

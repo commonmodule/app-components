@@ -4,7 +4,7 @@ export default class ErrorAlert extends Alert {
         title: string;
         message: string;
         confirmButtonTitle?: string;
-        onConfirm?: () => void;
+        onConfirm?: () => Promise<void> | void;
     });
 }
 //# sourceMappingURL=ErrorAlert.d.ts.map

@@ -5,7 +5,7 @@ interface ConfirmOptions {
     title: string;
     message: DomNode[] | string;
     confirmButtonTitle?: string;
-    onConfirm?: () => void;
+    onConfirm?: () => Promise<void> | void;
 }
 export default class Confirm extends StructuredModal {
     private resolveConfirm;
