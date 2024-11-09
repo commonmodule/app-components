@@ -13,6 +13,7 @@ interface ButtonOptions {
   icon?: DomNode;
   iconPosition?: "left" | "right";
   title?: DomNode | string;
+  disabled?: boolean;
   onClick?: (
     button: Button,
     event: MouseEvent,
@@ -75,6 +76,8 @@ export default class Button extends DomNode<HTMLButtonElement> {
         }
       }
     });
+
+    if (options.disabled) this.disable();
   }
 
   public disable(): this {

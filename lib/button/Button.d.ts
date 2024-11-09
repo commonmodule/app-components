@@ -10,6 +10,7 @@ interface ButtonOptions {
     icon?: DomNode;
     iconPosition?: "left" | "right";
     title?: DomNode | string;
+    disabled?: boolean;
     onClick?: (button: Button, event: MouseEvent) => Promise<void> | DomNode | void;
 }
 export default class Button extends DomNode<HTMLButtonElement> {
