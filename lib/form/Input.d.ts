@@ -7,6 +7,7 @@ interface InputOptions {
     required?: boolean;
     value?: string;
     readOnly?: boolean;
+    onChange?: (value: string) => void;
 }
 export default class Input extends DomNode<HTMLLabelElement, {
     valueChanged: (value: string) => void;

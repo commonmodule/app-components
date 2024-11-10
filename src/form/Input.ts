@@ -8,6 +8,7 @@ interface InputOptions {
   required?: boolean;
   value?: string;
   readOnly?: boolean;
+  onChange?: (value: string) => void;
 }
 
 export default class Input extends DomNode<HTMLLabelElement, {
@@ -46,6 +47,10 @@ export default class Input extends DomNode<HTMLLabelElement, {
       }),
       options.suffixIcon ? el(".suffix-icon", options.suffixIcon) : undefined,
     );
+
+    if (options.onChange) {
+      this.on("valueChanged", (value) => options.onChange!(value));
+    }
   }
 
   private handleInput = () => {
