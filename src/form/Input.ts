@@ -8,6 +8,8 @@ interface InputOptions {
   required?: boolean;
   value?: string;
   readOnly?: boolean;
+  autoCapitalize?: "off" | "none" | "on" | "sentences" | "words" | "characters";
+  onKeyDown?: (event: KeyboardEvent) => void;
   onChange?: (value: string) => void;
 }
 
@@ -37,6 +39,10 @@ export default class Input extends DomNode<HTMLLabelElement, {
       `label.input${classNames}${options.required === true ? ".required" : ""}`,
     );
 
+    if (options.autoCapitalize) {
+      this.htmlElement.autocapitalize = options.autoCapitalize;
+    }
+
     this.append(
       options.label ? el("span.label", options.label) : undefined,
       this.input = el(options.multiline ? "textarea" : "input", {
@@ -47,6 +53,10 @@ export default class Input extends DomNode<HTMLLabelElement, {
       }),
       options.suffixIcon ? el(".suffix-icon", options.suffixIcon) : undefined,
     );
+
+    if (options.onKeyDown) {
+      this.input.onDom("keydown", (event) => options.onKeyDown!(event));
+    }
 
     if (options.onChange) {
       this.on("valueChanged", (value) => options.onChange!(value));

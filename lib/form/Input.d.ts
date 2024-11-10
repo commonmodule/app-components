@@ -7,6 +7,8 @@ interface InputOptions {
     required?: boolean;
     value?: string;
     readOnly?: boolean;
+    autoCapitalize?: "off" | "none" | "on" | "sentences" | "words" | "characters";
+    onKeyDown?: (event: KeyboardEvent) => void;
     onChange?: (value: string) => void;
 }
 export default class Input extends DomNode<HTMLLabelElement, {
