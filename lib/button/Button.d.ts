@@ -15,11 +15,14 @@ interface ButtonOptions {
 }
 export default class Button extends DomNode<HTMLButtonElement> {
     private options;
+    private titleContainer;
     private iconContainer;
     private loadingSpinner;
     private loading;
     constructor(options: ButtonOptions);
     constructor(classNames: `.${string}`, options: ButtonOptions);
+    set title(title: DomNode | string);
+    get title(): string;
     disable(): this;
     enable(): this;
     startLoading(): this;

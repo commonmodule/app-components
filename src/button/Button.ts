@@ -23,6 +23,7 @@ interface ButtonOptions {
 export default class Button extends DomNode<HTMLButtonElement> {
   private options: ButtonOptions;
 
+  private titleContainer: DomNode;
   private iconContainer: DomNode | undefined;
   private loadingSpinner: DomNode | undefined;
 
@@ -52,7 +53,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
 
     if (options.iconPosition === "right") {
       this.append(
-        options.title,
+        this.titleContainer = el(".title", options.title),
         options.icon
           ? this.iconContainer = el(
             ".right-icon-container",
@@ -65,7 +66,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
         options.icon
           ? this.iconContainer = el(".icon-container", options.icon.clone())
           : undefined,
-        options.title,
+        this.titleContainer = el(".title", options.title),
       );
     }
 
@@ -80,6 +81,14 @@ export default class Button extends DomNode<HTMLButtonElement> {
     });
 
     if (options.disabled) this.disable();
+  }
+
+  public set title(title: DomNode | string) {
+    this.titleContainer.clear().append(title);
+  }
+
+  public get title(): string {
+    return this.titleContainer.text;
   }
 
   public disable(): this {
