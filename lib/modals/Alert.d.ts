@@ -1,9 +1,9 @@
-import { DomNode } from "@common-module/app";
+import { DomChild, DomNode } from "@common-module/app";
 import StructuredModal from "./StructuredModal.js";
 interface AlertOptions {
     icon?: DomNode;
     title: string;
-    message: string;
+    message: string | DomChild[];
     confirmButtonTitle?: string;
     onConfirm?: () => Promise<void> | void;
 }

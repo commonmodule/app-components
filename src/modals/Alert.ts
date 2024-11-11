@@ -1,11 +1,11 @@
-import { DomNode, el } from "@common-module/app";
+import { DomChild, DomNode, el } from "@common-module/app";
 import Button from "../button/Button.js";
 import StructuredModal from "./StructuredModal.js";
 
 interface AlertOptions {
   icon?: DomNode;
   title: string;
-  message: string;
+  message: string | DomChild[];
   confirmButtonTitle?: string;
   onConfirm?: () => Promise<void> | void;
 }
@@ -33,7 +33,14 @@ export default class Alert extends StructuredModal {
     super(`.alert${classNames}`);
     this
       .appendToHeader(el("h1", options.icon, options.title))
-      .appendToMain(el("p", options.message))
+      .appendToMain(
+        el(
+          "p",
+          ...(typeof options.message === "string"
+            ? [options.message]
+            : options.message),
+        ),
+      )
       .appendToFooter(
         new Button(".confirm", {
           title: options.confirmButtonTitle ?? "OK",

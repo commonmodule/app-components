@@ -1,4 +1,4 @@
-import { DomNode } from "@common-module/app";
+import { DomChild, DomNode } from "@common-module/app";
 export declare enum ButtonType {
     Text = "text",
     Contained = "contained",
@@ -9,7 +9,7 @@ interface ButtonOptions {
     type?: ButtonType;
     icon?: DomNode;
     iconPosition?: "left" | "right";
-    title?: DomNode | string;
+    title?: string | DomChild[];
     disabled?: boolean;
     onClick?: (button: Button, event: MouseEvent) => Promise<void> | DomNode | void;
 }
@@ -21,7 +21,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
     private loading;
     constructor(options: ButtonOptions);
     constructor(classNames: `.${string}`, options: ButtonOptions);
-    set title(title: DomNode | string);
+    set title(title: string | DomChild[]);
     get title(): string;
     disable(): this;
     enable(): this;

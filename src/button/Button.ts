@@ -1,4 +1,4 @@
-import { DomNode, el } from "@common-module/app";
+import { DomChild, DomNode, el } from "@common-module/app";
 import AppCompConfig from "../AppCompConfig.js";
 
 export enum ButtonType {
@@ -12,7 +12,7 @@ interface ButtonOptions {
   type?: ButtonType;
   icon?: DomNode;
   iconPosition?: "left" | "right";
-  title?: DomNode | string;
+  title?: string | DomChild[];
   disabled?: boolean;
   onClick?: (
     button: Button,
@@ -53,7 +53,14 @@ export default class Button extends DomNode<HTMLButtonElement> {
 
     if (options.iconPosition === "right") {
       this.append(
-        this.titleContainer = el(".title", options.title),
+        this.titleContainer = el(
+          ".title",
+          ...(
+            typeof options.title === "string" || !options.title
+              ? [options.title]
+              : options.title
+          ),
+        ),
         options.icon
           ? this.iconContainer = el(
             ".right-icon-container",
@@ -66,7 +73,14 @@ export default class Button extends DomNode<HTMLButtonElement> {
         options.icon
           ? this.iconContainer = el(".icon-container", options.icon.clone())
           : undefined,
-        this.titleContainer = el(".title", options.title),
+        this.titleContainer = el(
+          ".title",
+          ...(
+            typeof options.title === "string" || !options.title
+              ? [options.title]
+              : options.title
+          ),
+        ),
       );
     }
 
@@ -83,8 +97,10 @@ export default class Button extends DomNode<HTMLButtonElement> {
     if (options.disabled) this.disable();
   }
 
-  public set title(title: DomNode | string) {
-    this.titleContainer.clear().append(title);
+  public set title(title: string | DomChild[]) {
+    this.titleContainer.clear().append(
+      ...(typeof title === "string" ? [title] : title),
+    );
   }
 
   public get title(): string {
