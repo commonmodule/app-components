@@ -2,6 +2,12 @@ import { DomNode } from "@common-module/app";
 
 type DomNodeConstructor = new () => DomNode;
 
+class DefaultLoadingSpinner extends DomNode {
+  constructor() {
+    super(".loading-spinner");
+  }
+}
+
 class DefaultErrorAlertIcon extends DomNode {
   constructor() {
     super("span.icon.error-alert", "❌");
@@ -20,18 +26,11 @@ class DefaultAccordionCloseIcon extends DomNode {
   }
 }
 
-class DefaultLoadingSpinner extends DomNode {
-  constructor() {
-    super(".loading-spinner");
-  }
-}
-
 class AppCompConfig {
+  public LoadingSpinner: DomNodeConstructor = DefaultLoadingSpinner;
   public ErrorAlertIcon: DomNodeConstructor = DefaultErrorAlertIcon;
   public AccordionOpenIcon: DomNodeConstructor = DefaultAccordionOpenIcon;
   public AccordionCloseIcon: DomNodeConstructor = DefaultAccordionCloseIcon;
-
-  public LoadingSpinner: DomNodeConstructor = DefaultLoadingSpinner;
 }
 
 export default new AppCompConfig();
