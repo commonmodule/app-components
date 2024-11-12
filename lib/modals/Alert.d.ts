@@ -3,7 +3,7 @@ import StructuredModal from "./StructuredModal.js";
 interface AlertOptions {
     icon?: DomNode;
     title: string;
-    message: string | DomChild[];
+    message: string | DomChild | DomChild[];
     confirmButtonTitle?: string;
     onConfirm?: () => Promise<void> | void;
 }

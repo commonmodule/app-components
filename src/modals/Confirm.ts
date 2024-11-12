@@ -1,11 +1,11 @@
-import { DomNode, el } from "@common-module/app";
+import { DomChild, DomNode, el } from "@common-module/app";
 import Button, { ButtonType } from "../button/Button.js";
 import StructuredModal from "./StructuredModal.js";
 
 interface ConfirmOptions {
   icon?: DomNode;
   title: string;
-  message: DomNode[] | string;
+  message: DomChild[] | string;
   confirmButtonTitle?: string;
   onConfirm?: () => Promise<void> | void;
 }
@@ -14,8 +14,26 @@ export default class Confirm extends StructuredModal {
   private resolveConfirm: (() => void) | undefined;
   private rejectConfirm: ((reason: Error) => void) | undefined;
 
-  constructor(options: ConfirmOptions) {
-    super(".confirm");
+  constructor(options: ConfirmOptions);
+  constructor(classNames: `.${string}`, options: ConfirmOptions);
+  constructor(
+    classNamesOrOptions: `.${string}` | ConfirmOptions,
+    optionsOrUndefined?: ConfirmOptions,
+  ) {
+    let classNames: "" | `.${string}` = "";
+    let options: ConfirmOptions;
+
+    if (typeof classNamesOrOptions === "string") {
+      classNames = classNamesOrOptions;
+      if (optionsOrUndefined === undefined) {
+        throw new Error("DropdownMenuOptions is required");
+      }
+      options = optionsOrUndefined;
+    } else {
+      options = classNamesOrOptions;
+    }
+
+    super(`.confirm${classNames}`);
     this
       .on(
         "remove",

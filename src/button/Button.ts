@@ -12,7 +12,7 @@ interface ButtonOptions {
   type?: ButtonType;
   icon?: DomNode;
   iconPosition?: "left" | "right";
-  title?: string | DomChild[];
+  title?: string | DomChild | DomChild[];
   disabled?: boolean;
   onClick?: (
     button: Button,
@@ -55,11 +55,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
       this.append(
         this.titleContainer = el(
           ".title",
-          ...(
-            typeof options.title === "string" || !options.title
-              ? [options.title]
-              : options.title
-          ),
+          ...(Array.isArray(options.title) ? options.title : [options.title]),
         ),
         options.icon
           ? this.iconContainer = el(
@@ -75,11 +71,7 @@ export default class Button extends DomNode<HTMLButtonElement> {
           : undefined,
         this.titleContainer = el(
           ".title",
-          ...(
-            typeof options.title === "string" || !options.title
-              ? [options.title]
-              : options.title
-          ),
+          ...(Array.isArray(options.title) ? options.title : [options.title]),
         ),
       );
     }
@@ -97,9 +89,9 @@ export default class Button extends DomNode<HTMLButtonElement> {
     if (options.disabled) this.disable();
   }
 
-  public set title(title: string | DomChild[]) {
+  public set title(title: string | DomChild | DomChild[]) {
     this.titleContainer.clear().append(
-      ...(typeof title === "string" ? [title] : title),
+      ...(Array.isArray(title) ? title : [title]),
     );
   }
 

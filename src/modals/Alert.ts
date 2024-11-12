@@ -5,7 +5,7 @@ import StructuredModal from "./StructuredModal.js";
 interface AlertOptions {
   icon?: DomNode;
   title: string;
-  message: string | DomChild[];
+  message: string | DomChild | DomChild[];
   confirmButtonTitle?: string;
   onConfirm?: () => Promise<void> | void;
 }
@@ -36,9 +36,9 @@ export default class Alert extends StructuredModal {
       .appendToMain(
         el(
           "p",
-          ...(typeof options.message === "string"
-            ? [options.message]
-            : options.message),
+          ...(Array.isArray(options.message)
+            ? options.message
+            : [options.message]),
         ),
       )
       .appendToFooter(
