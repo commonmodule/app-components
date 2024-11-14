@@ -2,7 +2,7 @@ import { DomChild, DomNode, el } from "@common-module/app";
 import Button from "../button/Button.js";
 import StructuredModal from "./StructuredModal.js";
 
-interface AlertOptions {
+interface AlertDialogOptions {
   icon?: DomNode;
   title: string;
   message: string | DomChild | DomChild[];
@@ -10,15 +10,15 @@ interface AlertOptions {
   onConfirm?: () => Promise<void> | void;
 }
 
-export default class Alert extends StructuredModal {
-  constructor(options: AlertOptions);
-  constructor(classNames: `.${string}`, options: AlertOptions);
+export default class AlertDialog extends StructuredModal {
+  constructor(options: AlertDialogOptions);
+  constructor(classNames: `.${string}`, options: AlertDialogOptions);
   constructor(
-    classNamesOrOptions: `.${string}` | AlertOptions,
-    optionsOrUndefined?: AlertOptions,
+    classNamesOrOptions: `.${string}` | AlertDialogOptions,
+    optionsOrUndefined?: AlertDialogOptions,
   ) {
     let classNames: "" | `.${string}` = "";
-    let options: AlertOptions;
+    let options: AlertDialogOptions;
 
     if (typeof classNamesOrOptions === "string") {
       classNames = classNamesOrOptions;
@@ -30,7 +30,7 @@ export default class Alert extends StructuredModal {
       options = classNamesOrOptions;
     }
 
-    super(`.alert${classNames}`);
+    super(`.alert-dialog${classNames}`);
     this
       .appendToHeader(el("h1", options.icon, options.title))
       .appendToMain(

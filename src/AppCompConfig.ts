@@ -8,9 +8,27 @@ class DefaultLoadingSpinner extends DomNode {
   }
 }
 
-class DefaultErrorAlertIcon extends DomNode {
+class DefaultSuccessIcon extends DomNode {
   constructor() {
-    super("span.icon.error-alert", "❌");
+    super("span.icon.success", "✅");
+  }
+}
+
+class DefaultInfoIcon extends DomNode {
+  constructor() {
+    super("span.icon.info", "ℹ️");
+  }
+}
+
+class DefaultWarningIcon extends DomNode {
+  constructor() {
+    super("span.icon.warning", "⚠️");
+  }
+}
+
+class DefaultErrorIcon extends DomNode {
+  constructor() {
+    super("span.icon.error", "❌");
   }
 }
 
@@ -28,7 +46,12 @@ class DefaultAccordionCloseIcon extends DomNode {
 
 class AppCompConfig {
   public LoadingSpinner: DomNodeConstructor = DefaultLoadingSpinner;
-  public ErrorAlertIcon: DomNodeConstructor = DefaultErrorAlertIcon;
+
+  public SuccessIcon: DomNodeConstructor = DefaultSuccessIcon;
+  public InfoIcon: DomNodeConstructor = DefaultInfoIcon;
+  public WarningIcon: DomNodeConstructor = DefaultWarningIcon;
+  public ErrorIcon: DomNodeConstructor = DefaultErrorIcon;
+
   public AccordionOpenIcon: DomNodeConstructor = DefaultAccordionOpenIcon;
   public AccordionCloseIcon: DomNodeConstructor = DefaultAccordionCloseIcon;
 }

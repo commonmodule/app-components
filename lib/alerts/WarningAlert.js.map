@@ -1,0 +1,1 @@
+{"version":3,"file":"WarningAlert.js","sourceRoot":"","sources":["../../src/alerts/WarningAlert.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,MAAM,qBAAqB,CAAC;AAChD,OAAO,KAAK,MAAM,YAAY,CAAC;AAE/B,MAAM,CAAC,OAAO,OAAO,YAAa,SAAQ,KAAK;IAC7C,YAAY,OAAe;QACzB,KAAK,CAAC,UAAU,EAAE;YAChB,IAAI,EAAE,IAAI,aAAa,CAAC,WAAW,EAAE;YACrC,OAAO;SACR,CAAC,CAAC;IACL,CAAC;CACF"}

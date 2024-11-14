@@ -2,7 +2,7 @@ import { DomChild, DomNode, el } from "@common-module/app";
 import Button, { ButtonType } from "../button/Button.js";
 import StructuredModal from "./StructuredModal.js";
 
-interface ConfirmOptions {
+interface ConfirmDialogOptions {
   icon?: DomNode;
   title: string;
   message: DomChild[] | string;
@@ -10,18 +10,18 @@ interface ConfirmOptions {
   onConfirm?: () => Promise<void> | void;
 }
 
-export default class Confirm extends StructuredModal {
+export default class ConfirmDialog extends StructuredModal {
   private resolveConfirm: (() => void) | undefined;
   private rejectConfirm: ((reason: Error) => void) | undefined;
 
-  constructor(options: ConfirmOptions);
-  constructor(classNames: `.${string}`, options: ConfirmOptions);
+  constructor(options: ConfirmDialogOptions);
+  constructor(classNames: `.${string}`, options: ConfirmDialogOptions);
   constructor(
-    classNamesOrOptions: `.${string}` | ConfirmOptions,
-    optionsOrUndefined?: ConfirmOptions,
+    classNamesOrOptions: `.${string}` | ConfirmDialogOptions,
+    optionsOrUndefined?: ConfirmDialogOptions,
   ) {
     let classNames: "" | `.${string}` = "";
-    let options: ConfirmOptions;
+    let options: ConfirmDialogOptions;
 
     if (typeof classNamesOrOptions === "string") {
       classNames = classNamesOrOptions;
@@ -33,7 +33,7 @@ export default class Confirm extends StructuredModal {
       options = classNamesOrOptions;
     }
 
-    super(`.confirm${classNames}`);
+    super(`.confirm-dialog${classNames}`);
     this
       .on(
         "remove",

@@ -2,7 +2,10 @@ import { DomNode } from "@common-module/app";
 type DomNodeConstructor = new () => DomNode;
 declare class AppCompConfig {
     LoadingSpinner: DomNodeConstructor;
-    ErrorAlertIcon: DomNodeConstructor;
+    SuccessIcon: DomNodeConstructor;
+    InfoIcon: DomNodeConstructor;
+    WarningIcon: DomNodeConstructor;
+    ErrorIcon: DomNodeConstructor;
     AccordionOpenIcon: DomNodeConstructor;
     AccordionCloseIcon: DomNodeConstructor;
 }

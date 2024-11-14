@@ -1,6 +1,6 @@
 import { DomChild } from "@common-module/app";
-import Alert from "./AlertDialog.js";
-export default class ErrorAlert extends Alert {
+import AlertDialog from "./AlertDialog.js";
+export default class ErrorDialog extends AlertDialog {
     constructor(options: {
         title: string;
         message: string | DomChild | DomChild[];
@@ -8,4 +8,4 @@ export default class ErrorAlert extends Alert {
         onConfirm?: () => Promise<void> | void;
     });
 }
-//# sourceMappingURL=ErrorAlert.d.ts.map
+//# sourceMappingURL=ErrorDialog.d.ts.map
