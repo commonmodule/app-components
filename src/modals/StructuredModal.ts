@@ -6,8 +6,8 @@ export default class StructuredModal extends Modal {
   private main;
   private footer;
 
-  constructor(classNames: `.${string}`) {
-    super(`.structured-modal${classNames}`);
+  constructor(classNames: `.${string}`, modal = true) {
+    super(`.structured-modal${classNames}`, modal);
     super.append(
       this.header = el("header"),
       this.main = el("main"),
