@@ -3,7 +3,7 @@ import Modal from "./Modal.js";
 
 export default class StructuredModal extends Modal {
   private header;
-  private main;
+  protected main;
   private footer;
 
   constructor(classNames: `.${string}`, modal = true) {
