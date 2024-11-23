@@ -11,6 +11,7 @@ interface InputOptions {
   autoCapitalize?: "off" | "none" | "on" | "sentences" | "words" | "characters";
   onKeyDown?: (event: KeyboardEvent) => void;
   onChange?: (value: string) => void;
+  onClick?: (input: Input) => void;
 }
 
 export default class Input extends DomNode<HTMLLabelElement, {
@@ -61,6 +62,10 @@ export default class Input extends DomNode<HTMLLabelElement, {
     if (options.onChange) {
       this.on("valueChanged", (value) => options.onChange!(value));
     }
+
+    if (options.onClick) {
+      this.onDom("click", () => options.onClick!(this));
+    }
   }
 
   private handleInput = () => {
@@ -79,6 +84,14 @@ export default class Input extends DomNode<HTMLLabelElement, {
     if (this.input.htmlElement.value === value) return;
     this.input.htmlElement.value = value;
     this.handleInput();
+  }
+
+  public get readOnly(): boolean {
+    return this.input.htmlElement.readOnly;
+  }
+
+  public set readOnly(readOnly: boolean) {
+    this.input.htmlElement.readOnly = readOnly;
   }
 
   public focus() {
