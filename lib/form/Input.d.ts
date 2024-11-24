@@ -9,11 +9,11 @@ interface InputOptions {
     readOnly?: boolean;
     autoCapitalize?: "off" | "none" | "on" | "sentences" | "words" | "characters";
     onKeyDown?: (event: KeyboardEvent) => void;
-    onChange?: (value: string) => void;
+    onChange?: (newValue: string) => void;
     onClick?: (input: Input) => void;
 }
 export default class Input extends DomNode<HTMLLabelElement, {
-    valueChanged: (value: string) => void;
+    valueChanged: (newValue: string) => void;
 }> {
     private input;
     private previousValue;

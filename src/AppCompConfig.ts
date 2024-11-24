@@ -2,6 +2,12 @@ import { DomNode } from "@common-module/app";
 
 type DomNodeConstructor = new () => DomNode;
 
+class DefaultCloseIcon extends DomNode {
+  constructor() {
+    super("span.icon.close", "❌");
+  }
+}
+
 class DefaultLoadingSpinner extends DomNode {
   constructor() {
     super(".loading-spinner");
@@ -46,6 +52,7 @@ class DefaultAccordionCloseIcon extends DomNode {
 
 class AppCompConfig {
   public LoadingSpinner: DomNodeConstructor = DefaultLoadingSpinner;
+  public CloseIcon: DomNodeConstructor = DefaultCloseIcon;
 
   public SuccessIcon: DomNodeConstructor = DefaultSuccessIcon;
   public InfoIcon: DomNodeConstructor = DefaultInfoIcon;
