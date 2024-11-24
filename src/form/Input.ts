@@ -10,12 +10,12 @@ interface InputOptions {
   readOnly?: boolean;
   autoCapitalize?: "off" | "none" | "on" | "sentences" | "words" | "characters";
   onKeyDown?: (event: KeyboardEvent) => void;
-  onChange?: (value: string) => void;
+  onChange?: (newValue: string) => void;
   onClick?: (input: Input) => void;
 }
 
 export default class Input extends DomNode<HTMLLabelElement, {
-  valueChanged: (value: string) => void;
+  valueChanged: (newValue: string) => void;
 }> {
   private input: DomNode<HTMLInputElement | HTMLTextAreaElement>;
   private previousValue: string = "";
@@ -56,11 +56,11 @@ export default class Input extends DomNode<HTMLLabelElement, {
     );
 
     if (options.onKeyDown) {
-      this.input.onDom("keydown", (event) => options.onKeyDown!(event));
+      this.input.onDom("keydown", (e) => options.onKeyDown!(e));
     }
 
     if (options.onChange) {
-      this.on("valueChanged", (value) => options.onChange!(value));
+      this.on("valueChanged", (v) => options.onChange!(v));
     }
 
     if (options.onClick) {
