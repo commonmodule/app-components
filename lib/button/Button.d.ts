@@ -13,7 +13,9 @@ interface ButtonOptions {
     disabled?: boolean;
     onClick?: (button: Button, event: MouseEvent) => Promise<void> | DomNode | void;
 }
-export default class Button extends DomNode<HTMLButtonElement> {
+export default class Button extends DomNode<HTMLButtonElement, {
+    click: () => Promise<void> | void;
+}> {
     private options;
     private titleContainer;
     private iconContainer;

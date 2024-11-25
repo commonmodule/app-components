@@ -20,7 +20,9 @@ interface ButtonOptions {
   ) => Promise<void> | DomNode | void;
 }
 
-export default class Button extends DomNode<HTMLButtonElement> {
+export default class Button extends DomNode<HTMLButtonElement, {
+  click: () => Promise<void> | void;
+}> {
   private options: ButtonOptions;
 
   private titleContainer: DomNode;
@@ -77,11 +79,21 @@ export default class Button extends DomNode<HTMLButtonElement> {
     }
 
     this.onDom("click", (event) => {
-      if (!this.loading && options.onClick) {
-        const promise = options.onClick(this, event);
-        if (promise instanceof Promise) {
-          this.startLoading();
-          promise.finally(() => this.stopLoading());
+      if (!this.loading) {
+        if (options.onClick) {
+          const promise = options.onClick(this, event);
+          if (promise instanceof Promise) {
+            this.startLoading();
+            promise.finally(() => this.stopLoading());
+          }
+        }
+
+        if (this.hasEvent("click")) {
+          const promise = this.emit("click");
+          if (promise instanceof Promise) {
+            this.startLoading();
+            promise.finally(() => this.stopLoading());
+          }
         }
       }
     });
