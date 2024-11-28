@@ -5,6 +5,7 @@ export { default as WarningAlert } from "./alerts/WarningAlert.js";
 export { default as AppCompConfig } from "./AppCompConfig.js";
 export { default as Button, ButtonType } from "./button/Button.js";
 export { default as ButtonGroup } from "./button/ButtonGroup.js";
+export { default as DefaultAvatar } from "./DefaultAvatar.js";
 export { default as AlertDialog } from "./dialogs/AlertDialog.js";
 export { default as ConfirmDialog } from "./dialogs/ConfirmDialog.js";
 export { default as ErrorDialog } from "./dialogs/ErrorDialog.js";
