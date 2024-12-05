@@ -7,12 +7,15 @@ interface FileDropzoneOptions {
   onUpload: (files: File[]) => void;
 }
 
-export default class FileDropzone extends DomNode {
+export default class FileDropzone<
+  HE extends HTMLElement = HTMLElement,
+  ET extends Record<string, (...args: any[]) => any> = {},
+> extends DomNode<HE, ET> {
   private invisibleFileInput: InvisibleFileInput;
 
   constructor(
     classNames: `.${string}`,
-    private options: FileDropzoneOptions,
+    options: FileDropzoneOptions,
     ...children: DomNode[]
   ) {
     super(`.file-dropzone${classNames}`, ...children);
@@ -22,7 +25,7 @@ export default class FileDropzone extends DomNode {
         accept: options.accept,
         multiple: options.multiple,
         onChange: (files) => {
-          if (files.length > 0) this.options.onUpload(files);
+          if (files.length > 0) options.onUpload(files);
         },
       }),
     );
@@ -50,7 +53,7 @@ export default class FileDropzone extends DomNode {
       event.preventDefault();
       this.removeClass("drag-hover");
       if (event.dataTransfer && event.dataTransfer.files.length > 0) {
-        this.options.onUpload(Array.from(event.dataTransfer.files));
+        options.onUpload(Array.from(event.dataTransfer.files));
       }
     });
   }
