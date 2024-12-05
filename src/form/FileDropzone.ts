@@ -3,7 +3,7 @@ import InvisibleFileInput from "./InvisibleFileInput.js";
 
 interface FileDropzoneOptions {
   accept: string;
-  multiple: boolean;
+  multiple?: boolean;
   onUpload: (files: File[]) => void;
 }
 

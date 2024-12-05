@@ -1,7 +1,7 @@
 import { DomNode } from "@common-module/app";
 interface FileDropzoneOptions {
     accept: string;
-    multiple: boolean;
+    multiple?: boolean;
     onUpload: (files: File[]) => void;
 }
 export default class FileDropzone extends DomNode {
