@@ -8,9 +8,9 @@ interface FileDropzoneOptions {
 }
 
 export default class FileDropzone<
-  HE extends HTMLElement = HTMLElement,
-  ET extends Record<string, (...args: any[]) => any> = {},
-> extends DomNode<HE, ET> {
+  H extends HTMLElement = HTMLElement,
+  E extends Record<string, (...args: any[]) => any> = {},
+> extends DomNode<H, E> {
   private invisibleFileInput: InvisibleFileInput;
 
   constructor(
