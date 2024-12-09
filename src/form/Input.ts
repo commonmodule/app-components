@@ -20,10 +20,10 @@ export default class Input extends DomNode<HTMLLabelElement, {
   private input: DomNode<HTMLInputElement | HTMLTextAreaElement>;
   private previousValue: string = "";
 
-  constructor(options: InputOptions);
-  constructor(classNames: `.${string}`, options: InputOptions);
+  constructor(options?: InputOptions);
+  constructor(classNames?: `.${string}`, options?: InputOptions);
   constructor(
-    classNamesOrOptions: `.${string}` | InputOptions,
+    classNamesOrOptions?: `.${string}` | InputOptions,
     optionsOrUndefined?: InputOptions,
   ) {
     let classNames: "" | `.${string}` = "";
@@ -33,7 +33,7 @@ export default class Input extends DomNode<HTMLLabelElement, {
       classNames = classNamesOrOptions;
       options = optionsOrUndefined ?? {};
     } else {
-      options = classNamesOrOptions;
+      options = classNamesOrOptions ?? {};
     }
 
     super(
