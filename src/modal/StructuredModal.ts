@@ -2,7 +2,7 @@ import { DomChild, el } from "@common-module/app";
 import Modal from "./Modal.js";
 
 export default class StructuredModal extends Modal {
-  private header;
+  protected header;
   protected main;
   private footer;
 
