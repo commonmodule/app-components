@@ -1,4 +1,5 @@
 import { DomNode } from "@common-module/app";
+import Tab from "./tab/Tab.js";
 
 type DomNodeConstructor = new () => DomNode;
 
@@ -61,6 +62,11 @@ class AppCompConfig {
 
   public AccordionOpenIcon: DomNodeConstructor = DefaultAccordionOpenIcon;
   public AccordionCloseIcon: DomNodeConstructor = DefaultAccordionCloseIcon;
+
+  public updateTabBackgroundOnSelect: (
+    tabBackground: DomNode,
+    tab: Tab<any>,
+  ) => void = () => {};
 }
 
 export default new AppCompConfig();

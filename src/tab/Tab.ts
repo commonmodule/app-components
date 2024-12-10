@@ -1,18 +1,23 @@
 import { DomNode } from "@common-module/app";
 
-interface TabOptions {
+interface TabOptions<Value> {
   label: string;
+  value: Value;
 }
 
-export default class Tab extends DomNode<HTMLDivElement, {
+export default class Tab<Value> extends DomNode<HTMLDivElement, {
   selected: () => void;
   deselected: () => void;
 }> {
-  constructor(options: TabOptions) {
+  constructor(private options: TabOptions<Value>) {
     super(".tab");
     this.text = options.label;
 
     this.onDom("click", () => this.select());
+  }
+
+  public getValue(): Value {
+    return this.options.value;
   }
 
   public select(): void {

@@ -1,7 +1,7 @@
 import { DomChild } from "@common-module/app";
 import Modal from "./Modal.js";
 export default class StructuredModal extends Modal {
-    protected header: import("@common-module/app").DomNode<HTMLElement, {}>;
+    private header;
     protected main: import("@common-module/app").DomNode<HTMLElement, {}>;
     private footer;
     constructor(classNames: `.${string}`, modal?: boolean);

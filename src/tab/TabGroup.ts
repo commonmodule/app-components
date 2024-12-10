@@ -1,14 +1,17 @@
 import { DomNode, el } from "@common-module/app";
+import AppCompConfig from "../AppCompConfig.js";
 import Tab from "./Tab.js";
 
-export default class TabGroup extends DomNode {
-  private tabBackground: DomNode;
-  private tabs: Tab[] = [];
-  private selectedTab: Tab | undefined;
+export default class TabGroup<Value> extends DomNode<HTMLDivElement, {
+  tabSelected: (value: Value) => void;
+}> {
+  private background: DomNode;
+  private tabs: Tab<Value>[] = [];
+  private selectedTab: Tab<Value> | undefined;
 
-  constructor(...tabs: Tab[]) {
+  constructor(...tabs: Tab<Value>[]) {
     super(".tab-group");
-    this.tabBackground = el(".tab-background").appendTo(this);
+    this.background = el(".background").appendTo(this);
 
     for (const tab of tabs) {
       this.addTab(tab);
@@ -17,20 +20,19 @@ export default class TabGroup extends DomNode {
     this.on("visible", () => this.tabs[0]?.select());
   }
 
-  public addTab(tab: Tab) {
+  public getSelectedValue(): Value | undefined {
+    return this.selectedTab?.getValue();
+  }
+
+  public addTab(tab: Tab<Value>) {
     tab.on("selected", () => {
       if (this.selectedTab === tab) return;
       this.selectedTab?.deselect();
       this.selectedTab = tab;
 
-      const tabGroupRect = this.calculateRect();
-      const tabRect = tab.calculateRect();
-      const rightInset = tabGroupRect.width - tabRect.left - tabRect.width;
+      AppCompConfig.updateTabBackgroundOnSelect(this.background, tab);
 
-      this.tabBackground.style({
-        clipPath:
-          `inset(0px ${rightInset}px 0px ${tabRect.left}px round 9999px)`,
-      });
+      this.emit("tabSelected", tab.getValue());
     });
 
     this.tabs.push(tab);

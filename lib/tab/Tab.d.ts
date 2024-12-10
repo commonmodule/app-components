@@ -1,12 +1,15 @@
 import { DomNode } from "@common-module/app";
-interface TabOptions {
+interface TabOptions<Value> {
     label: string;
+    value: Value;
 }
-export default class Tab extends DomNode<HTMLDivElement, {
+export default class Tab<Value> extends DomNode<HTMLDivElement, {
     selected: () => void;
     deselected: () => void;
 }> {
-    constructor(options: TabOptions);
+    private options;
+    constructor(options: TabOptions<Value>);
+    getValue(): Value;
     select(): void;
     deselect(): void;
 }
