@@ -21,4 +21,6 @@ export { default as DropdownMenuItem } from "./menu/DropdownMenuItem.js";
 export { default as StructuredModal } from "./modal/StructuredModal.js";
 export { default as Snackbar } from "./Snackbar.js";
 export { default as SvgIcon } from "./SvgIcon.js";
+export { default as Tab } from "./tab/Tab.js";
+export { default as Tabs } from "./tab/TabGroup.js";
 //# sourceMappingURL=index.d.ts.map
