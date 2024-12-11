@@ -17,7 +17,7 @@ interface ButtonOptions {
   onClick?: (
     button: Button,
     event: MouseEvent,
-  ) => Promise<any> | DomNode | void;
+  ) => Promise<any> | DomNode | void | void[];
 }
 
 export default class Button extends DomNode<HTMLButtonElement, {

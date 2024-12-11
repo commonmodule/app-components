@@ -17,7 +17,7 @@ nonModalDialogContainer.onDom("click", (event) => {
 export default abstract class Modal extends DomNode<HTMLDialogElement> {
   protected closeListener = () => this.remove();
 
-  constructor(classNames: `.${string}`, modal = true) {
+  constructor(classNames: `.${string}`, private modal = true) {
     super(`dialog.modal${classNames}`);
     this
       .onDom("close", this.closeListener)
@@ -35,5 +35,23 @@ export default abstract class Modal extends DomNode<HTMLDialogElement> {
       .appendTo(modal ? BodyNode : nonModalDialogContainer);
 
     modal ? this.htmlElement.showModal() : this.htmlElement.show();
+
+    if (!modal) {
+      for (const bodyNodeChild of BodyNode.children) {
+        if (bodyNodeChild instanceof Modal && bodyNodeChild.modal) {
+          bodyNodeChild.off("remove", bodyNodeChild.closeListener);
+          bodyNodeChild.htmlElement.close();
+        }
+      }
+
+      this.on("remove", () => {
+        for (const bodyNodeChild of BodyNode.children) {
+          if (bodyNodeChild instanceof Modal && bodyNodeChild.modal) {
+            bodyNodeChild.htmlElement.showModal();
+            bodyNodeChild.on("remove", bodyNodeChild.closeListener);
+          }
+        }
+      });
+    }
   }
 }
