@@ -14,7 +14,9 @@ nonModalDialogContainer.onDom("click", (event) => {
   }
 });
 
-export default abstract class Modal extends DomNode<HTMLDialogElement> {
+export default abstract class Modal<
+  E extends Record<string, (...args: any[]) => any> = {},
+> extends DomNode<HTMLDialogElement, E> {
   protected closeListener = () => this.remove();
 
   constructor(classNames: `.${string}`, private modal = true) {
@@ -44,14 +46,17 @@ export default abstract class Modal extends DomNode<HTMLDialogElement> {
         }
       }
 
-      this.on("remove", () => {
-        for (const bodyNodeChild of BodyNode.children) {
-          if (bodyNodeChild instanceof Modal && bodyNodeChild.modal) {
-            bodyNodeChild.htmlElement.showModal();
-            bodyNodeChild.on("remove", bodyNodeChild.closeListener);
+      this.on(
+        "remove",
+        (() => {
+          for (const bodyNodeChild of BodyNode.children) {
+            if (bodyNodeChild instanceof Modal && bodyNodeChild.modal) {
+              bodyNodeChild.htmlElement.showModal();
+              bodyNodeChild.on("remove", bodyNodeChild.closeListener);
+            }
           }
-        }
-      });
+        }) as any,
+      );
     }
   }
 }
