@@ -7,7 +7,7 @@ interface AlertDialogOptions {
   title: string;
   message: string | DomChild | DomChild[];
   confirmButtonTitle?: string;
-  onConfirm?: () => Promise<void> | void;
+  onConfirm?: () => any;
 }
 
 export default class AlertDialog extends StructuredModal {

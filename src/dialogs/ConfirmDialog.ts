@@ -7,7 +7,7 @@ interface ConfirmDialogOptions {
   title: string;
   message: DomChild[] | string;
   confirmButtonTitle?: string;
-  onConfirm?: () => Promise<void> | void;
+  onConfirm?: () => any;
 }
 
 export default class ConfirmDialog extends StructuredModal {

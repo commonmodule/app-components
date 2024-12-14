@@ -6,7 +6,7 @@ interface PromptDialogOptions {
     message: DomChild[] | string;
     value?: string;
     confirmButtonTitle?: string;
-    onConfirm?: () => Promise<void> | void;
+    onConfirm?: () => any;
 }
 export default class PromptDialog extends StructuredModal {
     private resolveConfirm;

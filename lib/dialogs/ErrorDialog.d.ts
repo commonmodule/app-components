@@ -5,7 +5,7 @@ export default class ErrorDialog extends AlertDialog {
         title: string;
         message: string | DomChild | DomChild[];
         confirmButtonTitle?: string;
-        onConfirm?: () => Promise<void> | void;
+        onConfirm?: () => any;
     });
 }
 //# sourceMappingURL=ErrorDialog.d.ts.map
