@@ -10,6 +10,7 @@ export { default as AlertDialog } from "./dialogs/AlertDialog.js";
 export { default as ConfirmDialog } from "./dialogs/ConfirmDialog.js";
 export { default as ErrorDialog } from "./dialogs/ErrorDialog.js";
 export { default as PromptDialog } from "./dialogs/PromptDialog.js";
+export { default as QuantityInputDialog } from "./dialogs/QuantityInputDialog.js";
 export { default as FileDropzone } from "./form/FileDropzone.js";
 export { default as Form } from "./form/Form.js";
 export { default as Input } from "./form/Input.js";

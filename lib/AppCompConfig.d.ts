@@ -10,6 +10,8 @@ declare class AppCompConfig {
     ErrorIcon: DomNodeConstructor;
     AccordionOpenIcon: DomNodeConstructor;
     AccordionCloseIcon: DomNodeConstructor;
+    MinusIcon: DomNodeConstructor;
+    PlusIcon: DomNodeConstructor;
     updateTabBackgroundOnSelect: (tabBackground: DomNode, tab: Tab<any>) => void;
 }
 declare const _default: AppCompConfig;

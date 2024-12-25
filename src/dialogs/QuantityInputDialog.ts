@@ -1,31 +1,33 @@
 import { DomChild, DomNode, el } from "@common-module/app";
 import Button, { ButtonType } from "../button/Button.js";
-import Input from "../form/Input.js";
+import QuantityInput from "../form/QuantityInput.js";
 import StructuredModal from "../modal/StructuredModal.js";
 
-interface PromptDialogOptions {
+interface QuantityInputDialogOptions {
   icon?: DomNode;
   title: string;
   message: DomChild[] | string;
-  value?: string;
+  value?: number;
+  min?: number;
+  max?: number;
   confirmButtonTitle?: string;
-  onConfirm?: (value: string) => any;
+  onConfirm?: (value: number) => any;
 }
 
-export default class PromptDialog extends StructuredModal {
-  private resolveConfirm: ((value: string) => void) | undefined;
+export default class QuantityInputDialog extends StructuredModal {
+  private resolveConfirm: ((value: number) => void) | undefined;
   private rejectConfirm: ((reason: Error) => void) | undefined;
 
-  private input: Input;
+  private input: QuantityInput;
 
-  constructor(options: PromptDialogOptions);
-  constructor(classNames: `.${string}`, options: PromptDialogOptions);
+  constructor(options: QuantityInputDialogOptions);
+  constructor(classNames: `.${string}`, options: QuantityInputDialogOptions);
   constructor(
-    classNamesOrOptions: `.${string}` | PromptDialogOptions,
-    optionsOrUndefined?: PromptDialogOptions,
+    classNamesOrOptions: `.${string}` | QuantityInputDialogOptions,
+    optionsOrUndefined?: QuantityInputDialogOptions,
   ) {
     let classNames: "" | `.${string}` = "";
-    let options: PromptDialogOptions;
+    let options: QuantityInputDialogOptions;
 
     if (typeof classNamesOrOptions === "string") {
       classNames = classNamesOrOptions;
@@ -37,7 +39,7 @@ export default class PromptDialog extends StructuredModal {
       options = classNamesOrOptions;
     }
 
-    super(`.prompt-dialog${classNames}`);
+    super(`.quantity-input-dialog${classNames}`);
     this
       .on(
         "remove",
@@ -48,7 +50,11 @@ export default class PromptDialog extends StructuredModal {
         ...(typeof options.message === "string"
           ? [el("p", options.message)]
           : options.message),
-        this.input = new Input({ value: options.value }),
+        this.input = new QuantityInput({
+          value: options.value,
+          min: options.min,
+          max: options.max,
+        }),
       )
       .appendToFooter(
         new Button(".cancel", {
@@ -59,17 +65,20 @@ export default class PromptDialog extends StructuredModal {
           type: ButtonType.Contained,
           title: options.confirmButtonTitle ?? "Confirm",
           onClick: async () => {
-            if (options.onConfirm) await options.onConfirm(this.input.value);
-            this.resolveConfirm?.(this.input.value);
-            this.rejectConfirm = undefined;
-            this.remove();
+            const value = this.input.value;
+            if (value !== undefined) {
+              if (options.onConfirm) await options.onConfirm(value);
+              this.resolveConfirm?.(value);
+              this.rejectConfirm = undefined;
+              this.remove();
+            }
           },
         }),
       );
   }
 
   public async waitForConfirmation() {
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       this.resolveConfirm = resolve;
       this.rejectConfirm = reject;
     });

@@ -51,6 +51,18 @@ class DefaultAccordionCloseIcon extends DomNode {
   }
 }
 
+class DefaultMinusIcon extends DomNode {
+  constructor() {
+    super("span.icon.minus", "-");
+  }
+}
+
+class DefaultPlusIcon extends DomNode {
+  constructor() {
+    super("span.icon.plus", "+");
+  }
+}
+
 class AppCompConfig {
   public LoadingSpinner: DomNodeConstructor = DefaultLoadingSpinner;
   public CloseIcon: DomNodeConstructor = DefaultCloseIcon;
@@ -62,6 +74,9 @@ class AppCompConfig {
 
   public AccordionOpenIcon: DomNodeConstructor = DefaultAccordionOpenIcon;
   public AccordionCloseIcon: DomNodeConstructor = DefaultAccordionCloseIcon;
+
+  public MinusIcon: DomNodeConstructor = DefaultMinusIcon;
+  public PlusIcon: DomNodeConstructor = DefaultPlusIcon;
 
   public updateTabBackgroundOnSelect: (
     tabBackground: DomNode,
