@@ -1,7 +1,8 @@
-import { DomChild, DomNode } from "@common-module/app";
+import { DomNode } from "@common-module/app";
+import DropdownMenuItem from "./DropdownMenuItem.js";
 
 export default class DropdownMenuGroup extends DomNode {
-  constructor(...children: DomChild[]) {
-    super(".dropdown-menu-group", ...children);
+  constructor(...items: DropdownMenuItem[]) {
+    super(".dropdown-menu-group", ...items);
   }
 }

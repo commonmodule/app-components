@@ -1,7 +1,8 @@
-import { DomChild, DomNode } from "@common-module/app";
+import { DomNode } from "@common-module/app";
+import Button from "./Button.js";
 
 export default class ButtonGroup extends DomNode {
-  constructor(...children: DomChild[]) {
-    super(".button-group", ...children);
+  constructor(...buttons: Button[]) {
+    super(".button-group", ...buttons);
   }
 }
