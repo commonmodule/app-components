@@ -22,8 +22,8 @@ export default class Button extends DomNode<HTMLButtonElement, {
 }> {
   private options: ButtonOptions;
 
-  private titleContainer: DomNode;
   private iconContainer: DomNode | undefined;
+  private titleContainer: DomNode;
   private loadingSpinner: DomNode | undefined;
 
   private loading = false;

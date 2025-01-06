@@ -1,10 +1,10 @@
-import { DomNode } from "@common-module/app";
+import { DomChild, DomNode, el } from "@common-module/app";
 import FileTree from "./FileTree.js";
 
 interface FileTreeNodeBaseData {
   id: string;
   icon?: DomNode;
-  name: string;
+  name: string | DomChild | DomChild[];
 }
 
 interface FileTreeNodeFileData extends FileTreeNodeBaseData {
@@ -19,10 +19,24 @@ interface FileTreeNodeDirectoryData extends FileTreeNodeBaseData {
 export type FileTreeNodeData = FileTreeNodeFileData | FileTreeNodeDirectoryData;
 
 export default class FileTreeNode extends DomNode {
+  private expanded = false;
+
+  private iconContainer: DomNode | undefined;
+  private nameContainer: DomNode;
   private childrenContainer: DomNode<HTMLUListElement> | undefined;
 
   constructor(private tree: FileTree, public data: FileTreeNodeData) {
     super("li.file-tree-node");
+
+    this.append(
+      data.icon
+        ? this.iconContainer = el(".icon-container", data.icon.clone())
+        : undefined,
+      this.nameContainer = el(
+        ".name",
+        ...(Array.isArray(data.name) ? data.name : [data.name]),
+      ),
+    );
 
     if (data.type === "directory") {
       this.childrenContainer = new DomNode<HTMLUListElement>(
@@ -32,7 +46,20 @@ export default class FileTreeNode extends DomNode {
       for (const childData of data.children) {
         this.add(childData);
       }
+
+      this.onDom(
+        "click",
+        () => this.expanded ? this.collapse() : this.expand(),
+      );
     }
+  }
+
+  private expand(): void {
+    this.addClass("expanded");
+  }
+
+  private collapse(): void {
+    this.removeClass("expanded");
   }
 
   public findNode(id: string): FileTreeNode | undefined {
