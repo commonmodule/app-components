@@ -23,6 +23,16 @@ export default class FileTreeNode extends DomNode {
 
   constructor(private tree: FileTree, public data: FileTreeNodeData) {
     super("li.file-tree-node");
+
+    if (data.type === "directory") {
+      this.childrenContainer = new DomNode<HTMLUListElement>(
+        "ul.children-container",
+      ).appendTo(this);
+
+      for (const childData of data.children) {
+        this.add(childData);
+      }
+    }
   }
 
   public findNode(id: string): FileTreeNode | undefined {
