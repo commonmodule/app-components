@@ -4,7 +4,7 @@ export default class FileNameInput extends DomNode<HTMLInputElement> {
   private removing = false;
 
   constructor(onConfirm: (name: string) => void) {
-    super("input.filename-input");
+    super("input.file-name-input");
 
     this.on("visible", () => this.htmlElement.focus());
 

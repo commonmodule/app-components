@@ -26,6 +26,7 @@ export type FileTreeNodeData<Data> =
 export default class FileTreeNode<Data> extends DomNode {
   private expanded = false;
 
+  private main: DomNode;
   private folderToggleIconContainer: DomNode | undefined;
   private iconContainer: DomNode | undefined;
   private nameContainer: DomNode;
@@ -38,7 +39,7 @@ export default class FileTreeNode<Data> extends DomNode {
     super("li.file-tree-node");
 
     this.append(
-      el(
+      this.main = el(
         "main",
         data.type === "directory"
           ? this.folderToggleIconContainer = el(
@@ -56,7 +57,7 @@ export default class FileTreeNode<Data> extends DomNode {
       ),
     );
 
-    this.onDom(
+    this.main.onDom(
       "click",
       () => this.tree.emitNodeSelected(data.id, data.data),
     );
@@ -70,7 +71,7 @@ export default class FileTreeNode<Data> extends DomNode {
         this.add(childData);
       }
 
-      this.onDom(
+      this.main.onDom(
         "click",
         () => this.expanded ? this.collapse() : this.expand(),
       );
@@ -86,7 +87,7 @@ export default class FileTreeNode<Data> extends DomNode {
     });
   }
 
-  private expand(): void {
+  public expand(): void {
     this.expanded = true;
     this.addClass("expanded");
     this.folderToggleIconContainer?.clear().append(
@@ -94,7 +95,7 @@ export default class FileTreeNode<Data> extends DomNode {
     );
   }
 
-  private collapse(): void {
+  public collapse(): void {
     this.expanded = false;
     this.removeClass("expanded");
     this.folderToggleIconContainer?.clear().append(
@@ -123,6 +124,7 @@ export default class FileTreeNode<Data> extends DomNode {
   }
 
   public createFileNameInput() {
+    this.expand();
     new FileNameInput((name) => this.tree.emitNodeCreated(this.data.id, name))
       .appendTo(this);
   }

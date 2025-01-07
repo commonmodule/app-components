@@ -18,13 +18,14 @@ export default class FileTreeNode<Data> extends DomNode {
     private tree;
     private data;
     private expanded;
+    private main;
     private folderToggleIconContainer;
     private iconContainer;
     private nameContainer;
     private childrenContainer;
     constructor(tree: FileTree<Data>, data: FileTreeNodeData<Data>);
-    private expand;
-    private collapse;
+    expand(): void;
+    collapse(): void;
     findNode(id: string): FileTreeNode<Data> | undefined;
     add(data: FileTreeNodeData<Data>): void;
     createFileNameInput(): void;
