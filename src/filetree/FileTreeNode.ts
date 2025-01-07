@@ -98,24 +98,13 @@ export default class FileTreeNode extends DomNode {
     );
   }
 
-  public findNode(id: string): FileTreeNode | undefined {
-    if (this.data.id === id) return this;
-    if (this.data.type === "directory") {
-      for (const child of this.childrenContainer!.children ?? []) {
-        const node = child as FileTreeNode;
-        const found = node.findNode(id);
-        if (found) return found;
-      }
-    }
-  }
-
   public add(data: FileTreeNodeData): void {
     if (this.data.type !== "directory") {
       throw new Error("Cannot add child to a file node");
     }
-    this.childrenContainer!.append(
-      new FileTreeNode(this.tree, data),
-    );
+    const node = new FileTreeNode(this.tree, data);
+    this.tree.registerNode(data.id, node);
+    this.childrenContainer!.append(node);
   }
 
   public createFileNameInput() {

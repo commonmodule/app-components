@@ -18,8 +18,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
   nodeCreated: (parentId: string | undefined, name: string) => void;
 }> {
   private selectedNodeId: string | undefined;
-
-  public children: FileTreeNode[] = [];
+  private fileTreeNodeMap = new Map<string, FileTreeNode>();
 
   constructor(
     private options: FileTreeOptions,
@@ -36,10 +35,14 @@ export default class FileTree extends DomNode<HTMLUListElement, {
   }
 
   private findNode(id: string): FileTreeNode | undefined {
-    for (const node of this.children) {
-      const found = node.findNode(id);
-      if (found) return found;
+    return this.fileTreeNodeMap.get(id);
+  }
+
+  public registerNode(id: string, node: FileTreeNode) {
+    if (this.fileTreeNodeMap.has(id)) {
+      throw new Error(`Node with id ${id} already exists`);
     }
+    this.fileTreeNodeMap.set(id, node);
   }
 
   public add(data: FileTreeNodeData): void;
@@ -62,7 +65,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     }
 
     if (parentId === undefined) {
-      new FileTreeNode(this, data).appendTo(this);
+      this.registerNode(data.id, new FileTreeNode(this, data).appendTo(this));
     } else {
       const parent = this.findNode(parentId);
       if (!parent) {

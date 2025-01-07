@@ -11,10 +11,11 @@ export default class FileTree extends DomNode<HTMLUListElement, {
 }> {
     private options;
     private selectedNodeId;
-    children: FileTreeNode[];
+    private fileTreeNodeMap;
     constructor(options: FileTreeOptions, data: FileTreeNodeData[]);
     isAlwaysExpanded(): boolean;
     private findNode;
+    registerNode(id: string, node: FileTreeNode): void;
     add(data: FileTreeNodeData): void;
     add(parentId: string, data: FileTreeNodeData): void;
     openContextMenu(left: number, top: number, id: string): void;

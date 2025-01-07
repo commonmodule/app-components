@@ -25,7 +25,6 @@ export default class FileTreeNode extends DomNode {
     constructor(tree: FileTree, data: FileTreeNodeData);
     expand(): void;
     collapse(): void;
-    findNode(id: string): FileTreeNode | undefined;
     add(data: FileTreeNodeData): void;
     createFileNameInput(): void;
 }
