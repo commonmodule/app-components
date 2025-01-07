@@ -51,6 +51,18 @@ class DefaultAccordionCloseIcon extends DomNode {
   }
 }
 
+class DefaultFolderCollapsedIcon extends DomNode {
+  constructor() {
+    super("span.icon.folder-collapse", "📁");
+  }
+}
+
+class DefaultFolderExpandedIcon extends DomNode {
+  constructor() {
+    super("span.icon.folder-expand", "📂");
+  }
+}
+
 class DefaultMinusIcon extends DomNode {
   constructor() {
     super("span.icon.minus", "-");
@@ -74,6 +86,9 @@ class AppCompConfig {
 
   public AccordionOpenIcon: DomNodeConstructor = DefaultAccordionOpenIcon;
   public AccordionCloseIcon: DomNodeConstructor = DefaultAccordionCloseIcon;
+
+  public FolderCollapsedIcon: DomNodeConstructor = DefaultFolderCollapsedIcon;
+  public FolderExpandedIcon: DomNodeConstructor = DefaultFolderExpandedIcon;
 
   public MinusIcon: DomNodeConstructor = DefaultMinusIcon;
   public PlusIcon: DomNodeConstructor = DefaultPlusIcon;

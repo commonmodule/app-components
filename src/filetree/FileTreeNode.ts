@@ -1,4 +1,6 @@
 import { DomChild, DomNode, DomUtils, el } from "@common-module/app";
+import AppCompConfig from "../AppCompConfig.js";
+import FileNameInput from "./FileNameInput.js";
 import FileTree from "./FileTree.js";
 
 interface FileTreeNodeBaseData<Data> {
@@ -24,19 +26,26 @@ export type FileTreeNodeData<Data> =
 export default class FileTreeNode<Data> extends DomNode {
   private expanded = false;
 
+  private folderToggleIconContainer: DomNode | undefined;
   private iconContainer: DomNode | undefined;
   private nameContainer: DomNode;
   private childrenContainer: DomNode<HTMLUListElement> | undefined;
 
   constructor(
     private tree: FileTree<Data>,
-    public data: FileTreeNodeData<Data>,
+    private data: FileTreeNodeData<Data>,
   ) {
     super("li.file-tree-node");
 
     this.append(
       el(
         "main",
+        data.type === "directory"
+          ? this.folderToggleIconContainer = el(
+            ".icon-container",
+            new AppCompConfig.FolderCollapsedIcon(),
+          )
+          : undefined,
         data.icon
           ? this.iconContainer = el(".icon-container", data.icon.clone())
           : undefined,
@@ -45,6 +54,11 @@ export default class FileTreeNode<Data> extends DomNode {
           ...(Array.isArray(data.name) ? data.name : [data.name]),
         ),
       ),
+    );
+
+    this.onDom(
+      "click",
+      () => this.tree.emitNodeSelected(data.id, data.data),
     );
 
     if (data.type === "directory") {
@@ -73,11 +87,19 @@ export default class FileTreeNode<Data> extends DomNode {
   }
 
   private expand(): void {
+    this.expanded = true;
     this.addClass("expanded");
+    this.folderToggleIconContainer?.clear().append(
+      new AppCompConfig.FolderExpandedIcon(),
+    );
   }
 
   private collapse(): void {
+    this.expanded = false;
     this.removeClass("expanded");
+    this.folderToggleIconContainer?.clear().append(
+      new AppCompConfig.FolderCollapsedIcon(),
+    );
   }
 
   public findNode(id: string): FileTreeNode<Data> | undefined {
@@ -95,6 +117,13 @@ export default class FileTreeNode<Data> extends DomNode {
     if (this.data.type !== "directory") {
       throw new Error("Cannot add child to a file node");
     }
-    this.childrenContainer!.append(new FileTreeNode(this.tree, data));
+    this.childrenContainer!.append(
+      new FileTreeNode(this.tree, data),
+    );
+  }
+
+  public createFileNameInput() {
+    new FileNameInput((name) => this.tree.emitNodeCreated(this.data.id, name))
+      .appendTo(this);
   }
 }

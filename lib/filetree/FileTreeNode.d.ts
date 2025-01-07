@@ -16,8 +16,9 @@ interface FileTreeNodeDirectoryData<Data> extends FileTreeNodeBaseData<Data> {
 export type FileTreeNodeData<Data> = FileTreeNodeFileData<Data> | FileTreeNodeDirectoryData<Data>;
 export default class FileTreeNode<Data> extends DomNode {
     private tree;
-    data: FileTreeNodeData<Data>;
+    private data;
     private expanded;
+    private folderToggleIconContainer;
     private iconContainer;
     private nameContainer;
     private childrenContainer;
@@ -26,6 +27,7 @@ export default class FileTreeNode<Data> extends DomNode {
     private collapse;
     findNode(id: string): FileTreeNode<Data> | undefined;
     add(data: FileTreeNodeData<Data>): void;
+    createFileNameInput(): void;
 }
 export {};
 //# sourceMappingURL=FileTreeNode.d.ts.map

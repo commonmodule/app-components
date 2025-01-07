@@ -1,19 +1,21 @@
 import { DomNode } from "@common-module/app";
+import FileNameInput from "./FileNameInput.js";
 import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 
 interface FileTreeOptions<Data> {
+  id?: string;
   ContextMenu: new (
     left: number,
     top: number,
+    fileTree: FileTree<Data>,
     id: string,
     data: Data,
   ) => DomNode;
 }
 
 export default class FileTree<Data> extends DomNode<HTMLUListElement, {
-  nodeSelected: (node: FileTreeNode<Data>) => void;
-  nodeExpanded: (node: FileTreeNode<Data>) => void;
-  nodeCollapsed: (node: FileTreeNode<Data>) => void;
+  nodeSelected: (id: string, data: Data) => void;
+  nodeCreated: (parentId: string | undefined, name: string) => void;
 }> {
   public children: FileTreeNode<Data>[] = [];
 
@@ -54,7 +56,7 @@ export default class FileTree<Data> extends DomNode<HTMLUListElement, {
     }
 
     if (parentId === undefined) {
-      this.append(new FileTreeNode(this, data));
+      new FileTreeNode(this, data).appendTo(this);
     } else {
       const parent = this.findNode(parentId);
       if (!parent) {
@@ -70,6 +72,27 @@ export default class FileTree<Data> extends DomNode<HTMLUListElement, {
     id: string,
     data: Data,
   ): void {
-    new this.options.ContextMenu(left, top, id, data);
+    new this.options.ContextMenu(left, top, this, id, data);
+  }
+
+  public emitNodeSelected(id: string, data: Data) {
+    this.emit("nodeSelected", id, data);
+  }
+
+  public emitNodeCreated(parentId: string | undefined, name: string) {
+    this.emit("nodeCreated", parentId, name);
+  }
+
+  public createFileNameInput(parentId: string | undefined) {
+    if (parentId === undefined) {
+      new FileNameInput((name) => this.emitNodeCreated(parentId, name))
+        .appendTo(this);
+    } else {
+      const parent = this.findNode(parentId);
+      if (!parent) {
+        throw new Error(`Parent node with id ${parentId} not found`);
+      }
+      parent.createFileNameInput();
+    }
   }
 }
