@@ -77,7 +77,7 @@ export default class FileTreeNode extends DomNode {
       }
     }
 
-    DomUtils.enhanceWithContextMenu(this, (event) => {
+    DomUtils.enhanceWithContextMenu(this.main, (event) => {
       this.tree.openContextMenu(event.clientX, event.clientY, this.data.id);
     });
   }

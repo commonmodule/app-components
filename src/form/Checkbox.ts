@@ -3,10 +3,12 @@ import { DomNode, el } from "@common-module/app";
 interface CheckboxOptions {
   label?: string;
   required?: boolean;
+  checked?: boolean;
+  onChange?: (checked: boolean) => void;
 }
 
 export default class Checkbox extends DomNode<HTMLLabelElement, {
-  valueChanged: (newValue: string) => void;
+  valueChanged: (newValue: boolean) => void;
 }> {
   private input: DomNode<HTMLInputElement>;
 
@@ -33,7 +35,14 @@ export default class Checkbox extends DomNode<HTMLLabelElement, {
     );
 
     this.append(
-      this.input = el("input", { type: "checkbox" }),
+      this.input = el("input", {
+        type: "checkbox",
+        checked: options.checked,
+        onchange: () => {
+          options.onChange?.(this.input.htmlElement.checked);
+          this.emit("valueChanged", this.input.htmlElement.checked);
+        },
+      }),
       options.label ? el("span.label", options.label) : undefined,
     );
   }
