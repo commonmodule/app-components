@@ -19,6 +19,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     add(data: FileTreeNodeData): void;
     add(parentId: string, data: FileTreeNodeData): void;
     openContextMenu(left: number, top: number, id: string): void;
+    setSelectedNodeId(id: string): void;
     nodeSelected(id: string): void;
     nodeCreated(parentId: string | undefined, name: string): void;
     createFileNameInput(parentId: string | undefined): void;

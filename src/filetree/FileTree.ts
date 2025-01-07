@@ -26,7 +26,10 @@ export default class FileTree extends DomNode<HTMLUListElement, {
   ) {
     super("ul.file-tree");
     for (const nodeData of data) {
-      this.append(new FileTreeNode(this, nodeData));
+      this.registerNode(
+        nodeData.id,
+        new FileTreeNode(this, nodeData).appendTo(this),
+      );
     }
   }
 
@@ -79,7 +82,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     new this.options.ContextMenu(left, top, this, id);
   }
 
-  public nodeSelected(id: string) {
+  public setSelectedNodeId(id: string) {
     if (this.selectedNodeId === id) return;
     if (this.selectedNodeId) {
       const previousNode = this.findNode(this.selectedNodeId);
@@ -88,6 +91,11 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     const node = this.findNode(id);
     node?.addClass("selected");
     this.selectedNodeId = id;
+  }
+
+  public nodeSelected(id: string) {
+    if (this.selectedNodeId === id) return;
+    this.setSelectedNodeId(id);
     this.emit("nodeSelected", id);
   }
 
