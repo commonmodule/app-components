@@ -1,5 +1,6 @@
-import { DomChild, DomNode } from "@common-module/app";
+import { DomNode } from "@common-module/app";
+import Button from "./Button.js";
 export default class ButtonGroup extends DomNode {
-    constructor(...children: DomChild[]);
+    constructor(...buttons: Button[]);
 }
 //# sourceMappingURL=ButtonGroup.d.ts.map

@@ -1,6 +1,10 @@
 import { DomNode } from "@common-module/app";
 import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 
+interface FileTreeOptions {
+  ContextMenu: new (left: number, top: number, id: string) => DomNode;
+}
+
 export default class FileTree extends DomNode<HTMLUListElement, {
   nodeSelected: (node: FileTreeNode) => void;
   nodeExpanded: (node: FileTreeNode) => void;
@@ -8,7 +12,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
 }> {
   public children: FileTreeNode[] = [];
 
-  constructor(data: FileTreeNodeData[]) {
+  constructor(private options: FileTreeOptions, data: FileTreeNodeData[]) {
     super("ul.file-tree");
     for (const nodeData of data) {
       this.append(new FileTreeNode(this, nodeData));
@@ -50,5 +54,9 @@ export default class FileTree extends DomNode<HTMLUListElement, {
       }
       parent.add(data);
     }
+  }
+
+  public openContextMenu(left: number, top: number, id: string): void {
+    new this.options.ContextMenu(left, top, id);
   }
 }

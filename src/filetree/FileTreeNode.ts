@@ -1,4 +1,4 @@
-import { DomChild, DomNode, el } from "@common-module/app";
+import { DomChild, DomNode, DomUtils, el } from "@common-module/app";
 import FileTree from "./FileTree.js";
 
 interface FileTreeNodeBaseData {
@@ -52,6 +52,10 @@ export default class FileTreeNode extends DomNode {
         () => this.expanded ? this.collapse() : this.expand(),
       );
     }
+
+    DomUtils.enhanceWithContextMenu(this, (event) => {
+      this.tree.openContextMenu(event.clientX, event.clientY, this.data.id);
+    });
   }
 
   private expand(): void {

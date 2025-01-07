@@ -1,5 +1,6 @@
-import { DomChild, DomNode } from "@common-module/app";
+import { DomNode } from "@common-module/app";
+import DropdownMenuItem from "./DropdownMenuItem.js";
 export default class DropdownMenuGroup extends DomNode {
-    constructor(...children: DomChild[]);
+    constructor(...items: DropdownMenuItem[]);
 }
 //# sourceMappingURL=DropdownMenuGroup.d.ts.map

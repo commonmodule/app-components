@@ -17,8 +17,8 @@ export default class Button extends DomNode<HTMLButtonElement, {
     click: () => Promise<void> | void;
 }> {
     private options;
-    private titleContainer;
     private iconContainer;
+    private titleContainer;
     private loadingSpinner;
     private loading;
     constructor(options: ButtonOptions);
