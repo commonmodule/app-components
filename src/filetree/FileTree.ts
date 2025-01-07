@@ -2,26 +2,28 @@ import { DomNode } from "@common-module/app";
 import FileNameInput from "./FileNameInput.js";
 import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 
-interface FileTreeOptions<Data> {
+interface FileTreeOptions {
   id?: string;
+  alwaysExpanded?: boolean;
   ContextMenu: new (
     left: number,
     top: number,
-    fileTree: FileTree<Data>,
+    fileTree: FileTree,
     id: string,
-    data: Data,
   ) => DomNode;
 }
 
-export default class FileTree<Data> extends DomNode<HTMLUListElement, {
-  nodeSelected: (id: string, data: Data) => void;
+export default class FileTree extends DomNode<HTMLUListElement, {
+  nodeSelected: (id: string) => void;
   nodeCreated: (parentId: string | undefined, name: string) => void;
 }> {
-  public children: FileTreeNode<Data>[] = [];
+  private selectedNodeId: string | undefined;
+
+  public children: FileTreeNode[] = [];
 
   constructor(
-    private options: FileTreeOptions<Data>,
-    data: FileTreeNodeData<Data>[],
+    private options: FileTreeOptions,
+    data: FileTreeNodeData[],
   ) {
     super("ul.file-tree");
     for (const nodeData of data) {
@@ -29,21 +31,25 @@ export default class FileTree<Data> extends DomNode<HTMLUListElement, {
     }
   }
 
-  private findNode(id: string): FileTreeNode<Data> | undefined {
+  public isAlwaysExpanded(): boolean {
+    return this.options.alwaysExpanded ?? false;
+  }
+
+  private findNode(id: string): FileTreeNode | undefined {
     for (const node of this.children) {
       const found = node.findNode(id);
       if (found) return found;
     }
   }
 
-  public add(data: FileTreeNodeData<Data>): void;
-  public add(parentId: string, data: FileTreeNodeData<Data>): void;
+  public add(data: FileTreeNodeData): void;
+  public add(parentId: string, data: FileTreeNodeData): void;
   public add(
-    parentIdOrData: string | FileTreeNodeData<Data>,
-    dataOrUndefined?: FileTreeNodeData<Data>,
+    parentIdOrData: string | FileTreeNodeData,
+    dataOrUndefined?: FileTreeNodeData,
   ) {
     let parentId: string | undefined;
-    let data: FileTreeNodeData<Data>;
+    let data: FileTreeNodeData;
 
     if (typeof parentIdOrData === "string") {
       parentId = parentIdOrData;
@@ -66,27 +72,31 @@ export default class FileTree<Data> extends DomNode<HTMLUListElement, {
     }
   }
 
-  public openContextMenu(
-    left: number,
-    top: number,
-    id: string,
-    data: Data,
-  ): void {
-    new this.options.ContextMenu(left, top, this, id, data);
+  public openContextMenu(left: number, top: number, id: string): void {
+    new this.options.ContextMenu(left, top, this, id);
   }
 
-  public emitNodeSelected(id: string, data: Data) {
-    this.emit("nodeSelected", id, data);
+  public nodeSelected(id: string) {
+    if (this.selectedNodeId === id) return;
+    if (this.selectedNodeId) {
+      const previousNode = this.findNode(this.selectedNodeId);
+      previousNode?.removeClass("selected");
+    }
+    const node = this.findNode(id);
+    node?.addClass("selected");
+    this.selectedNodeId = id;
+    this.emit("nodeSelected", id);
   }
 
-  public emitNodeCreated(parentId: string | undefined, name: string) {
+  public nodeCreated(parentId: string | undefined, name: string) {
     this.emit("nodeCreated", parentId, name);
   }
 
   public createFileNameInput(parentId: string | undefined) {
     if (parentId === undefined) {
-      new FileNameInput((name) => this.emitNodeCreated(parentId, name))
-        .appendTo(this);
+      new FileNameInput((name) => this.nodeCreated(parentId, name)).appendTo(
+        this,
+      );
     } else {
       const parent = this.findNode(parentId);
       if (!parent) {

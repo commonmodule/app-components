@@ -3,27 +3,26 @@ import AppCompConfig from "../AppCompConfig.js";
 import FileNameInput from "./FileNameInput.js";
 import FileTree from "./FileTree.js";
 
-interface FileTreeNodeBaseData<Data> {
+interface FileTreeNodeBaseData {
   id: string;
   icon?: DomNode;
   name: string | DomChild | DomChild[];
-  data: Data;
 }
 
-interface FileTreeNodeFileData<Data> extends FileTreeNodeBaseData<Data> {
+interface FileTreeNodeFileData extends FileTreeNodeBaseData {
   type: "file";
 }
 
-interface FileTreeNodeDirectoryData<Data> extends FileTreeNodeBaseData<Data> {
+interface FileTreeNodeDirectoryData extends FileTreeNodeBaseData {
   type: "directory";
-  children: FileTreeNodeData<Data>[];
+  children: FileTreeNodeData[];
 }
 
-export type FileTreeNodeData<Data> =
-  | FileTreeNodeFileData<Data>
-  | FileTreeNodeDirectoryData<Data>;
+export type FileTreeNodeData =
+  | FileTreeNodeFileData
+  | FileTreeNodeDirectoryData;
 
-export default class FileTreeNode<Data> extends DomNode {
+export default class FileTreeNode extends DomNode {
   private expanded = false;
 
   private main: DomNode;
@@ -33,8 +32,8 @@ export default class FileTreeNode<Data> extends DomNode {
   private childrenContainer: DomNode<HTMLUListElement> | undefined;
 
   constructor(
-    private tree: FileTree<Data>,
-    private data: FileTreeNodeData<Data>,
+    private tree: FileTree,
+    private data: FileTreeNodeData,
   ) {
     super("li.file-tree-node");
 
@@ -57,10 +56,7 @@ export default class FileTreeNode<Data> extends DomNode {
       ),
     );
 
-    this.main.onDom(
-      "click",
-      () => this.tree.emitNodeSelected(data.id, data.data),
-    );
+    this.main.onDom("click", () => this.tree.nodeSelected(data.id));
 
     if (data.type === "directory") {
       this.childrenContainer = new DomNode<HTMLUListElement>(
@@ -71,19 +67,18 @@ export default class FileTreeNode<Data> extends DomNode {
         this.add(childData);
       }
 
-      this.main.onDom(
-        "click",
-        () => this.expanded ? this.collapse() : this.expand(),
-      );
+      if (this.tree.isAlwaysExpanded()) {
+        this.expand();
+      } else {
+        this.main.onDom(
+          "click",
+          () => this.expanded ? this.collapse() : this.expand(),
+        );
+      }
     }
 
     DomUtils.enhanceWithContextMenu(this, (event) => {
-      this.tree.openContextMenu(
-        event.clientX,
-        event.clientY,
-        this.data.id,
-        this.data.data,
-      );
+      this.tree.openContextMenu(event.clientX, event.clientY, this.data.id);
     });
   }
 
@@ -103,18 +98,18 @@ export default class FileTreeNode<Data> extends DomNode {
     );
   }
 
-  public findNode(id: string): FileTreeNode<Data> | undefined {
+  public findNode(id: string): FileTreeNode | undefined {
     if (this.data.id === id) return this;
     if (this.data.type === "directory") {
       for (const child of this.childrenContainer!.children ?? []) {
-        const node = child as FileTreeNode<Data>;
+        const node = child as FileTreeNode;
         const found = node.findNode(id);
         if (found) return found;
       }
     }
   }
 
-  public add(data: FileTreeNodeData<Data>): void {
+  public add(data: FileTreeNodeData): void {
     if (this.data.type !== "directory") {
       throw new Error("Cannot add child to a file node");
     }
@@ -125,7 +120,7 @@ export default class FileTreeNode<Data> extends DomNode {
 
   public createFileNameInput() {
     this.expand();
-    new FileNameInput((name) => this.tree.emitNodeCreated(this.data.id, name))
+    new FileNameInput((name) => this.tree.nodeCreated(this.data.id, name))
       .appendTo(this);
   }
 }

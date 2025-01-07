@@ -1,22 +1,25 @@
 import { DomNode } from "@common-module/app";
 import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
-interface FileTreeOptions<Data> {
+interface FileTreeOptions {
     id?: string;
-    ContextMenu: new (left: number, top: number, fileTree: FileTree<Data>, id: string, data: Data) => DomNode;
+    alwaysExpanded?: boolean;
+    ContextMenu: new (left: number, top: number, fileTree: FileTree, id: string) => DomNode;
 }
-export default class FileTree<Data> extends DomNode<HTMLUListElement, {
-    nodeSelected: (id: string, data: Data) => void;
+export default class FileTree extends DomNode<HTMLUListElement, {
+    nodeSelected: (id: string) => void;
     nodeCreated: (parentId: string | undefined, name: string) => void;
 }> {
     private options;
-    children: FileTreeNode<Data>[];
-    constructor(options: FileTreeOptions<Data>, data: FileTreeNodeData<Data>[]);
+    private selectedNodeId;
+    children: FileTreeNode[];
+    constructor(options: FileTreeOptions, data: FileTreeNodeData[]);
+    isAlwaysExpanded(): boolean;
     private findNode;
-    add(data: FileTreeNodeData<Data>): void;
-    add(parentId: string, data: FileTreeNodeData<Data>): void;
-    openContextMenu(left: number, top: number, id: string, data: Data): void;
-    emitNodeSelected(id: string, data: Data): void;
-    emitNodeCreated(parentId: string | undefined, name: string): void;
+    add(data: FileTreeNodeData): void;
+    add(parentId: string, data: FileTreeNodeData): void;
+    openContextMenu(left: number, top: number, id: string): void;
+    nodeSelected(id: string): void;
+    nodeCreated(parentId: string | undefined, name: string): void;
     createFileNameInput(parentId: string | undefined): void;
 }
 export {};

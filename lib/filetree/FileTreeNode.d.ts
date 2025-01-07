@@ -1,20 +1,19 @@
 import { DomChild, DomNode } from "@common-module/app";
 import FileTree from "./FileTree.js";
-interface FileTreeNodeBaseData<Data> {
+interface FileTreeNodeBaseData {
     id: string;
     icon?: DomNode;
     name: string | DomChild | DomChild[];
-    data: Data;
 }
-interface FileTreeNodeFileData<Data> extends FileTreeNodeBaseData<Data> {
+interface FileTreeNodeFileData extends FileTreeNodeBaseData {
     type: "file";
 }
-interface FileTreeNodeDirectoryData<Data> extends FileTreeNodeBaseData<Data> {
+interface FileTreeNodeDirectoryData extends FileTreeNodeBaseData {
     type: "directory";
-    children: FileTreeNodeData<Data>[];
+    children: FileTreeNodeData[];
 }
-export type FileTreeNodeData<Data> = FileTreeNodeFileData<Data> | FileTreeNodeDirectoryData<Data>;
-export default class FileTreeNode<Data> extends DomNode {
+export type FileTreeNodeData = FileTreeNodeFileData | FileTreeNodeDirectoryData;
+export default class FileTreeNode extends DomNode {
     private tree;
     private data;
     private expanded;
@@ -23,11 +22,11 @@ export default class FileTreeNode<Data> extends DomNode {
     private iconContainer;
     private nameContainer;
     private childrenContainer;
-    constructor(tree: FileTree<Data>, data: FileTreeNodeData<Data>);
+    constructor(tree: FileTree, data: FileTreeNodeData);
     expand(): void;
     collapse(): void;
-    findNode(id: string): FileTreeNode<Data> | undefined;
-    add(data: FileTreeNodeData<Data>): void;
+    findNode(id: string): FileTreeNode | undefined;
+    add(data: FileTreeNodeData): void;
     createFileNameInput(): void;
 }
 export {};
