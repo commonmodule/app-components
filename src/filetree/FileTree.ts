@@ -1,39 +1,47 @@
 import { DomNode } from "@common-module/app";
 import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 
-interface FileTreeOptions {
-  ContextMenu: new (left: number, top: number, id: string) => DomNode;
+interface FileTreeOptions<Data> {
+  ContextMenu: new (
+    left: number,
+    top: number,
+    id: string,
+    data: Data,
+  ) => DomNode;
 }
 
-export default class FileTree extends DomNode<HTMLUListElement, {
-  nodeSelected: (node: FileTreeNode) => void;
-  nodeExpanded: (node: FileTreeNode) => void;
-  nodeCollapsed: (node: FileTreeNode) => void;
+export default class FileTree<Data> extends DomNode<HTMLUListElement, {
+  nodeSelected: (node: FileTreeNode<Data>) => void;
+  nodeExpanded: (node: FileTreeNode<Data>) => void;
+  nodeCollapsed: (node: FileTreeNode<Data>) => void;
 }> {
-  public children: FileTreeNode[] = [];
+  public children: FileTreeNode<Data>[] = [];
 
-  constructor(private options: FileTreeOptions, data: FileTreeNodeData[]) {
+  constructor(
+    private options: FileTreeOptions<Data>,
+    data: FileTreeNodeData<Data>[],
+  ) {
     super("ul.file-tree");
     for (const nodeData of data) {
       this.append(new FileTreeNode(this, nodeData));
     }
   }
 
-  private findNode(id: string): FileTreeNode | undefined {
+  private findNode(id: string): FileTreeNode<Data> | undefined {
     for (const node of this.children) {
       const found = node.findNode(id);
       if (found) return found;
     }
   }
 
-  public add(data: FileTreeNodeData): void;
-  public add(parentId: string, data: FileTreeNodeData): void;
+  public add(data: FileTreeNodeData<Data>): void;
+  public add(parentId: string, data: FileTreeNodeData<Data>): void;
   public add(
-    parentIdOrData: string | FileTreeNodeData,
-    dataOrUndefined?: FileTreeNodeData,
+    parentIdOrData: string | FileTreeNodeData<Data>,
+    dataOrUndefined?: FileTreeNodeData<Data>,
   ) {
     let parentId: string | undefined;
-    let data: FileTreeNodeData;
+    let data: FileTreeNodeData<Data>;
 
     if (typeof parentIdOrData === "string") {
       parentId = parentIdOrData;
@@ -56,7 +64,12 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     }
   }
 
-  public openContextMenu(left: number, top: number, id: string): void {
-    new this.options.ContextMenu(left, top, id);
+  public openContextMenu(
+    left: number,
+    top: number,
+    id: string,
+    data: Data,
+  ): void {
+    new this.options.ContextMenu(left, top, id, data);
   }
 }

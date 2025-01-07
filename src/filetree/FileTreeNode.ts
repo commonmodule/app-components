@@ -1,40 +1,49 @@
 import { DomChild, DomNode, DomUtils, el } from "@common-module/app";
 import FileTree from "./FileTree.js";
 
-interface FileTreeNodeBaseData {
+interface FileTreeNodeBaseData<Data> {
   id: string;
   icon?: DomNode;
   name: string | DomChild | DomChild[];
+  data: Data;
 }
 
-interface FileTreeNodeFileData extends FileTreeNodeBaseData {
+interface FileTreeNodeFileData<Data> extends FileTreeNodeBaseData<Data> {
   type: "file";
 }
 
-interface FileTreeNodeDirectoryData extends FileTreeNodeBaseData {
+interface FileTreeNodeDirectoryData<Data> extends FileTreeNodeBaseData<Data> {
   type: "directory";
-  children: FileTreeNodeData[];
+  children: FileTreeNodeData<Data>[];
 }
 
-export type FileTreeNodeData = FileTreeNodeFileData | FileTreeNodeDirectoryData;
+export type FileTreeNodeData<Data> =
+  | FileTreeNodeFileData<Data>
+  | FileTreeNodeDirectoryData<Data>;
 
-export default class FileTreeNode extends DomNode {
+export default class FileTreeNode<Data> extends DomNode {
   private expanded = false;
 
   private iconContainer: DomNode | undefined;
   private nameContainer: DomNode;
   private childrenContainer: DomNode<HTMLUListElement> | undefined;
 
-  constructor(private tree: FileTree, public data: FileTreeNodeData) {
+  constructor(
+    private tree: FileTree<Data>,
+    public data: FileTreeNodeData<Data>,
+  ) {
     super("li.file-tree-node");
 
     this.append(
-      data.icon
-        ? this.iconContainer = el(".icon-container", data.icon.clone())
-        : undefined,
-      this.nameContainer = el(
-        ".name",
-        ...(Array.isArray(data.name) ? data.name : [data.name]),
+      el(
+        "main",
+        data.icon
+          ? this.iconContainer = el(".icon-container", data.icon.clone())
+          : undefined,
+        this.nameContainer = el(
+          ".name",
+          ...(Array.isArray(data.name) ? data.name : [data.name]),
+        ),
       ),
     );
 
@@ -54,7 +63,12 @@ export default class FileTreeNode extends DomNode {
     }
 
     DomUtils.enhanceWithContextMenu(this, (event) => {
-      this.tree.openContextMenu(event.clientX, event.clientY, this.data.id);
+      this.tree.openContextMenu(
+        event.clientX,
+        event.clientY,
+        this.data.id,
+        this.data.data,
+      );
     });
   }
 
@@ -66,18 +80,18 @@ export default class FileTreeNode extends DomNode {
     this.removeClass("expanded");
   }
 
-  public findNode(id: string): FileTreeNode | undefined {
+  public findNode(id: string): FileTreeNode<Data> | undefined {
     if (this.data.id === id) return this;
     if (this.data.type === "directory") {
       for (const child of this.childrenContainer!.children ?? []) {
-        const node = child as FileTreeNode;
+        const node = child as FileTreeNode<Data>;
         const found = node.findNode(id);
         if (found) return found;
       }
     }
   }
 
-  public add(data: FileTreeNodeData): void {
+  public add(data: FileTreeNodeData<Data>): void {
     if (this.data.type !== "directory") {
       throw new Error("Cannot add child to a file node");
     }

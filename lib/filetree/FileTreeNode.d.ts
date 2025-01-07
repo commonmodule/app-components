@@ -1,30 +1,31 @@
 import { DomChild, DomNode } from "@common-module/app";
 import FileTree from "./FileTree.js";
-interface FileTreeNodeBaseData {
+interface FileTreeNodeBaseData<Data> {
     id: string;
     icon?: DomNode;
     name: string | DomChild | DomChild[];
+    data: Data;
 }
-interface FileTreeNodeFileData extends FileTreeNodeBaseData {
+interface FileTreeNodeFileData<Data> extends FileTreeNodeBaseData<Data> {
     type: "file";
 }
-interface FileTreeNodeDirectoryData extends FileTreeNodeBaseData {
+interface FileTreeNodeDirectoryData<Data> extends FileTreeNodeBaseData<Data> {
     type: "directory";
-    children: FileTreeNodeData[];
+    children: FileTreeNodeData<Data>[];
 }
-export type FileTreeNodeData = FileTreeNodeFileData | FileTreeNodeDirectoryData;
-export default class FileTreeNode extends DomNode {
+export type FileTreeNodeData<Data> = FileTreeNodeFileData<Data> | FileTreeNodeDirectoryData<Data>;
+export default class FileTreeNode<Data> extends DomNode {
     private tree;
-    data: FileTreeNodeData;
+    data: FileTreeNodeData<Data>;
     private expanded;
     private iconContainer;
     private nameContainer;
     private childrenContainer;
-    constructor(tree: FileTree, data: FileTreeNodeData);
+    constructor(tree: FileTree<Data>, data: FileTreeNodeData<Data>);
     private expand;
     private collapse;
-    findNode(id: string): FileTreeNode | undefined;
-    add(data: FileTreeNodeData): void;
+    findNode(id: string): FileTreeNode<Data> | undefined;
+    add(data: FileTreeNodeData<Data>): void;
 }
 export {};
 //# sourceMappingURL=FileTreeNode.d.ts.map
