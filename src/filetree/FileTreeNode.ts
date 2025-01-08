@@ -1,4 +1,4 @@
-import { DomChild, DomNode, DomUtils, el } from "@common-module/app";
+import { DomNode, DomUtils, el } from "@common-module/app";
 import AppCompConfig from "../AppCompConfig.js";
 import FileNameInput from "./FileNameInput.js";
 import FileTree from "./FileTree.js";
@@ -6,7 +6,7 @@ import FileTree from "./FileTree.js";
 interface FileTreeNodeBaseData {
   id: string;
   icon?: DomNode;
-  name: string | DomChild | DomChild[];
+  name: string;
 }
 
 interface FileTreeNodeFileData extends FileTreeNodeBaseData {
@@ -63,7 +63,11 @@ export default class FileTreeNode extends DomNode {
         "ul.children-container",
       ).appendTo(this);
 
-      for (const childData of data.children) {
+      const sortedChildren = [...data.children].sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+
+      for (const childData of sortedChildren) {
         this.add(childData);
       }
 
@@ -80,6 +84,10 @@ export default class FileTreeNode extends DomNode {
     DomUtils.enhanceWithContextMenu(this.main, (event) => {
       this.tree.openContextMenu(event.clientX, event.clientY, this.data.id);
     });
+  }
+
+  public getName() {
+    return this.data.name;
   }
 
   public expand(): void {
@@ -104,7 +112,20 @@ export default class FileTreeNode extends DomNode {
     }
     const node = new FileTreeNode(this.tree, data);
     this.tree.registerNode(data.id, node);
-    this.childrenContainer!.append(node);
+
+    const children = this.childrenContainer!.children as FileTreeNode[];
+    let inserted = false;
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i];
+      if (node.getName().localeCompare(child.getName()) < 0) {
+        node.appendTo(this.childrenContainer!, i);
+        inserted = true;
+        break;
+      }
+    }
+    if (!inserted) {
+      node.appendTo(this.childrenContainer!);
+    }
   }
 
   public createFileNameInput() {

@@ -1,9 +1,9 @@
-import { DomChild, DomNode } from "@common-module/app";
+import { DomNode } from "@common-module/app";
 import FileTree from "./FileTree.js";
 interface FileTreeNodeBaseData {
     id: string;
     icon?: DomNode;
-    name: string | DomChild | DomChild[];
+    name: string;
 }
 interface FileTreeNodeFileData extends FileTreeNodeBaseData {
     type: "file";
@@ -23,6 +23,7 @@ export default class FileTreeNode extends DomNode {
     private nameContainer;
     private childrenContainer;
     constructor(tree: FileTree, data: FileTreeNodeData);
+    getName(): string;
     expand(): void;
     collapse(): void;
     add(data: FileTreeNodeData): void;

@@ -25,7 +25,12 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     data: FileTreeNodeData[],
   ) {
     super("ul.file-tree");
-    for (const nodeData of data) {
+
+    const sortedData = [...data].sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+
+    for (const nodeData of sortedData) {
       this.registerNode(
         nodeData.id,
         new FileTreeNode(this, nodeData).appendTo(this),
@@ -68,7 +73,22 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     }
 
     if (parentId === undefined) {
-      this.registerNode(data.id, new FileTreeNode(this, data).appendTo(this));
+      const node = new FileTreeNode(this, data);
+      this.registerNode(data.id, node);
+
+      const children = this.children as FileTreeNode[];
+      let inserted = false;
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (data.name.localeCompare(child.getName()) < 0) {
+          node.appendTo(this, i);
+          inserted = true;
+          break;
+        }
+      }
+      if (!inserted) {
+        node.appendTo(this);
+      }
     } else {
       const parent = this.findNode(parentId);
       if (!parent) {
