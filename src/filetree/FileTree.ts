@@ -5,6 +5,7 @@ import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 interface FileTreeOptions {
   id?: string;
   alwaysExpanded?: boolean;
+  sortByName?: boolean;
   ContextMenu?: new (
     left: number,
     top: number,
@@ -22,16 +23,17 @@ export default class FileTree extends DomNode<HTMLUListElement, {
   private fileTreeNodeMap = new Map<string, FileTreeNode>();
 
   constructor(
-    private options: FileTreeOptions,
+    public options: FileTreeOptions,
     data: FileTreeNodeData[],
   ) {
     super("ul.file-tree");
 
-    const sortedData = [...data].sort((a, b) => {
-      return a.name.localeCompare(b.name);
-    });
+    const processedData = [...data];
+    if (this.options.sortByName ?? true) {
+      processedData.sort((a, b) => a.name.localeCompare(b.name));
+    }
 
-    for (const nodeData of sortedData) {
+    for (const nodeData of processedData) {
       this.registerNode(
         nodeData.id,
         new FileTreeNode(this, nodeData).appendTo(this),
@@ -77,17 +79,21 @@ export default class FileTree extends DomNode<HTMLUListElement, {
       const node = new FileTreeNode(this, data);
       this.registerNode(data.id, node);
 
-      const children = this.children as FileTreeNode[];
-      let inserted = false;
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        if (data.name.localeCompare(child.getName()) < 0) {
-          node.appendTo(this, i);
-          inserted = true;
-          break;
+      if (this.options.sortByName ?? true) {
+        const children = this.children as FileTreeNode[];
+        let inserted = false;
+        for (let i = 0; i < children.length; i++) {
+          const child = children[i];
+          if (data.name.localeCompare(child.getName()) < 0) {
+            node.appendTo(this, i);
+            inserted = true;
+            break;
+          }
         }
-      }
-      if (!inserted) {
+        if (!inserted) {
+          node.appendTo(this);
+        }
+      } else {
         node.appendTo(this);
       }
     } else {
@@ -115,14 +121,16 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     }
   }
 
-  public setSelectedNodeId(id: string) {
+  public setSelectedNodeId(id: string | undefined) {
     if (this.selectedNodeId === id) return;
     if (this.selectedNodeId) {
       const previousNode = this.findNode(this.selectedNodeId);
       previousNode?.removeClass("selected");
     }
-    const node = this.findNode(id);
-    node?.addClass("selected");
+    if (id) {
+      const node = this.findNode(id);
+      node?.addClass("selected");
+    }
     this.selectedNodeId = id;
   }
 

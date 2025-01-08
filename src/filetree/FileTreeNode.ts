@@ -63,11 +63,12 @@ export default class FileTreeNode extends DomNode {
         "ul.children-container",
       ).appendTo(this);
 
-      const sortedChildren = [...data.children].sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      });
+      const processedChildren = [...data.children];
+      if (this.tree.options.sortByName ?? true) {
+        processedChildren.sort((a, b) => a.name.localeCompare(b.name));
+      }
 
-      for (const childData of sortedChildren) {
+      for (const childData of processedChildren) {
         this.add(childData);
       }
 
@@ -81,9 +82,11 @@ export default class FileTreeNode extends DomNode {
       }
     }
 
-    DomUtils.enhanceWithContextMenu(this.main, (event) => {
-      this.tree.openContextMenu(event.clientX, event.clientY, this.data.id);
-    });
+    if (this.tree.options.ContextMenu) {
+      DomUtils.enhanceWithContextMenu(this.main, (event) => {
+        this.tree.openContextMenu(event.clientX, event.clientY, this.data.id);
+      });
+    }
   }
 
   public getName() {
@@ -113,17 +116,21 @@ export default class FileTreeNode extends DomNode {
     const node = new FileTreeNode(this.tree, data);
     this.tree.registerNode(data.id, node);
 
-    const children = this.childrenContainer!.children as FileTreeNode[];
-    let inserted = false;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      if (node.getName().localeCompare(child.getName()) < 0) {
-        node.appendTo(this.childrenContainer!, i);
-        inserted = true;
-        break;
+    if (this.tree.options.sortByName ?? true) {
+      const children = this.childrenContainer!.children as FileTreeNode[];
+      let inserted = false;
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (node.getName().localeCompare(child.getName()) < 0) {
+          node.appendTo(this.childrenContainer!, i);
+          inserted = true;
+          break;
+        }
       }
-    }
-    if (!inserted) {
+      if (!inserted) {
+        node.appendTo(this.childrenContainer!);
+      }
+    } else {
       node.appendTo(this.childrenContainer!);
     }
   }

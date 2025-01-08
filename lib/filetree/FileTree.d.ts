@@ -3,6 +3,7 @@ import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 interface FileTreeOptions {
     id?: string;
     alwaysExpanded?: boolean;
+    sortByName?: boolean;
     ContextMenu?: new (left: number, top: number, fileTree: FileTree, id: string) => DomNode;
 }
 export default class FileTree extends DomNode<HTMLUListElement, {
@@ -10,7 +11,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     nodeCreated: (parentId: string | undefined, name: string) => void;
     nodeRemoved: (id: string) => void;
 }> {
-    private options;
+    options: FileTreeOptions;
     private selectedNodeId;
     private fileTreeNodeMap;
     constructor(options: FileTreeOptions, data: FileTreeNodeData[]);
@@ -21,7 +22,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     add(parentId: string, data: FileTreeNodeData): void;
     removeNode(id: string): void;
     openContextMenu(left: number, top: number, id: string): void;
-    setSelectedNodeId(id: string): void;
+    setSelectedNodeId(id: string | undefined): void;
     nodeSelected(id: string): void;
     nodeCreated(parentId: string | undefined, name: string): void;
     createFileNameInput(parentId: string | undefined): void;
