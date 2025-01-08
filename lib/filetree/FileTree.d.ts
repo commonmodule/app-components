@@ -3,7 +3,7 @@ import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 interface FileTreeOptions {
     id?: string;
     alwaysExpanded?: boolean;
-    ContextMenu: new (left: number, top: number, fileTree: FileTree, id: string) => DomNode;
+    ContextMenu?: new (left: number, top: number, fileTree: FileTree, id: string) => DomNode;
 }
 export default class FileTree extends DomNode<HTMLUListElement, {
     nodeSelected: (id: string) => void;

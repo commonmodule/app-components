@@ -5,7 +5,7 @@ import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 interface FileTreeOptions {
   id?: string;
   alwaysExpanded?: boolean;
-  ContextMenu: new (
+  ContextMenu?: new (
     left: number,
     top: number,
     fileTree: FileTree,
@@ -79,7 +79,9 @@ export default class FileTree extends DomNode<HTMLUListElement, {
   }
 
   public openContextMenu(left: number, top: number, id: string): void {
-    new this.options.ContextMenu(left, top, this, id);
+    if (this.options.ContextMenu) {
+      new this.options.ContextMenu(left, top, this, id);
+    }
   }
 
   public setSelectedNodeId(id: string) {
