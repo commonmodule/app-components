@@ -8,6 +8,7 @@ interface FileTreeOptions {
 export default class FileTree extends DomNode<HTMLUListElement, {
     nodeSelected: (id: string) => void;
     nodeCreated: (parentId: string | undefined, name: string) => void;
+    nodeRemoved: (id: string) => void;
 }> {
     private options;
     private selectedNodeId;
@@ -18,6 +19,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     registerNode(id: string, node: FileTreeNode): void;
     add(data: FileTreeNodeData): void;
     add(parentId: string, data: FileTreeNodeData): void;
+    removeNode(id: string): void;
     openContextMenu(left: number, top: number, id: string): void;
     setSelectedNodeId(id: string): void;
     nodeSelected(id: string): void;

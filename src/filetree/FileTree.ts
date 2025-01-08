@@ -16,6 +16,7 @@ interface FileTreeOptions {
 export default class FileTree extends DomNode<HTMLUListElement, {
   nodeSelected: (id: string) => void;
   nodeCreated: (parentId: string | undefined, name: string) => void;
+  nodeRemoved: (id: string) => void;
 }> {
   private selectedNodeId: string | undefined;
   private fileTreeNodeMap = new Map<string, FileTreeNode>();
@@ -96,6 +97,16 @@ export default class FileTree extends DomNode<HTMLUListElement, {
       }
       parent.add(data);
     }
+  }
+
+  public removeNode(id: string) {
+    const node = this.findNode(id);
+    if (!node) {
+      throw new Error(`Node with id ${id} not found`);
+    }
+    node.remove();
+    this.fileTreeNodeMap.delete(id);
+    this.emit("nodeRemoved", id);
   }
 
   public openContextMenu(left: number, top: number, id: string): void {

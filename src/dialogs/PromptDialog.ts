@@ -66,6 +66,16 @@ export default class PromptDialog extends StructuredModal {
           },
         }),
       );
+
+    this.input.focus();
+    this.input.onDom("keydown", async (e) => {
+      if (e.key === "Enter") {
+        if (options.onConfirm) await options.onConfirm(this.input.value);
+        this.resolveConfirm?.(this.input.value);
+        this.rejectConfirm = undefined;
+        this.remove();
+      }
+    });
   }
 
   public async waitForConfirmation() {
