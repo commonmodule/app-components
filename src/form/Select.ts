@@ -5,6 +5,8 @@ interface SelectOptions {
   placeholder: string;
   required?: boolean;
   options: { value: string; label: string }[];
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 export default class Select extends DomNode<HTMLLabelElement> {
@@ -25,8 +27,13 @@ export default class Select extends DomNode<HTMLLabelElement> {
         ...options.options.map((option) =>
           el("option", { value: option.value }, option.label)
         ),
+        { value: options.value },
       ),
     );
+
+    this.select.onDom("change", () => {
+      if (options.onChange) options.onChange(this.value);
+    });
   }
 
   public get value(): string {

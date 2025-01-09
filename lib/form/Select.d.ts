@@ -7,6 +7,8 @@ interface SelectOptions {
         value: string;
         label: string;
     }[];
+    value?: string;
+    onChange?: (value: string) => void;
 }
 export default class Select extends DomNode<HTMLLabelElement> {
     private select;
