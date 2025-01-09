@@ -68,16 +68,16 @@ export default class TabGroup<T> extends DomNode<HTMLDivElement, {
   }
 
   public selectTab(value: T): void {
-    const targetTab = this.tabs.find((tab) => tab.getValue() === value);
-    if (targetTab) targetTab.select();
+    const foundTab = this.tabs.find((tab) => tab.getValue() === value);
+    if (foundTab) foundTab.select();
     else this.tabs[0]?.select();
   }
 
   public removeTab(value: T): void {
-    const targetTab = this.tabs.find((tab) => tab.getValue() === value);
-    if (targetTab) {
-      targetTab.remove();
-      if (this.selectedTab === targetTab) {
+    const foundTab = this.tabs.find((tab) => tab.getValue() === value);
+    if (foundTab) {
+      foundTab.remove();
+      if (this.selectedTab === foundTab) {
         this.selectedTab = undefined;
         this.tabs[0]?.select();
       }
