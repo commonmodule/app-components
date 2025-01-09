@@ -157,4 +157,12 @@ export default class FileTree extends DomNode<HTMLUListElement, {
       parent.createFileNameInput();
     }
   }
+
+  public selectNode(id: string) {
+    const node = this.findNode(id);
+    if (!node) {
+      throw new Error(`Node with id ${id} not found`);
+    }
+    node.select();
+  }
 }

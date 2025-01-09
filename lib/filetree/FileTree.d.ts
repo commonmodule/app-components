@@ -26,6 +26,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     nodeSelected(id: string): void;
     nodeCreated(parentId: string | undefined, name: string): void;
     createFileNameInput(parentId: string | undefined): void;
+    selectNode(id: string): void;
 }
 export {};
 //# sourceMappingURL=FileTree.d.ts.map

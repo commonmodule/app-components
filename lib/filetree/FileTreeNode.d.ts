@@ -23,6 +23,7 @@ export default class FileTreeNode extends DomNode {
     private nameContainer;
     private childrenContainer;
     constructor(tree: FileTree, data: FileTreeNodeData);
+    select(): void;
     getName(): string;
     expand(): void;
     collapse(): void;

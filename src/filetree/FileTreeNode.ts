@@ -56,7 +56,7 @@ export default class FileTreeNode extends DomNode {
       ),
     );
 
-    this.main.onDom("click", () => this.tree.nodeSelected(data.id));
+    this.main.onDom("click", () => this.select());
 
     if (data.type === "directory") {
       this.childrenContainer = new DomNode<HTMLUListElement>(
@@ -87,6 +87,10 @@ export default class FileTreeNode extends DomNode {
         this.tree.openContextMenu(event.clientX, event.clientY, this.data.id);
       });
     }
+  }
+
+  public select(): void {
+    this.tree.nodeSelected(this.data.id);
   }
 
   public getName() {
