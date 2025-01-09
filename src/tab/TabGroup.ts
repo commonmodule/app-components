@@ -3,16 +3,17 @@ import { KebabCase } from "../../../ts-module/lib/index.js";
 import AppCompConfig from "../AppCompConfig.js";
 import Tab from "./Tab.js";
 
-export default class TabGroup<Value> extends DomNode<HTMLDivElement, {
-  tabSelected: (value: Value) => void;
+export default class TabGroup<T> extends DomNode<HTMLDivElement, {
+  tabSelected: (value: T) => void;
 }> {
-  private store: Store<string> | undefined;
+  private store?: Store<string>;
   private background: DomNode;
-  private tabs: Tab<Value>[] = [];
-  private selectedTab: Tab<Value> | undefined;
+  private tabs: Tab<T>[] = [];
+  private selectedTab?: Tab<T>;
 
-  constructor(id?: string | Tab<Value>, ...tabs: Tab<Value>[]) {
+  constructor(id?: string | Tab<T>, ...tabs: Tab<T>[]) {
     super(".tab-group");
+
     if (typeof id === "string") {
       this.store = new Store(`tab-group-${id}` as KebabCase<string>);
     } else if (id) {
@@ -26,26 +27,39 @@ export default class TabGroup<Value> extends DomNode<HTMLDivElement, {
     }
   }
 
-  public init() {
-    const storedValue = this.store?.get<Value>("selected");
-    if (storedValue) this.selectTab(storedValue);
-    else this.tabs[0]?.select();
+  public init(): this {
+    const storedValue = this.store?.get<T>("selected");
+    if (storedValue) {
+      this.selectTab(storedValue);
+    } else {
+      this.tabs[0]?.select();
+    }
     return this;
   }
 
-  public getSelectedValue(): Value | undefined {
+  public getSelectedValue(): T | undefined {
     return this.selectedTab?.getValue();
   }
 
-  public addTab(tab: Tab<Value>) {
+  public updateTabBackgroundOnSelect(): void {
+    if (this.selectedTab) {
+      AppCompConfig.updateTabBackgroundOnSelect(
+        this.background,
+        this.selectedTab,
+      );
+    }
+  }
+
+  public addTab(tab: Tab<T>): void {
     tab.on("selected", () => {
       if (this.selectedTab === tab) return;
+
       this.selectedTab?.deselect();
       this.selectedTab = tab;
+
       this.store?.setPermanent("selected", tab.getValue());
 
-      AppCompConfig.updateTabBackgroundOnSelect(this.background, tab);
-
+      this.updateTabBackgroundOnSelect();
       this.emit("tabSelected", tab.getValue());
     });
 
@@ -53,8 +67,21 @@ export default class TabGroup<Value> extends DomNode<HTMLDivElement, {
     this.append(tab);
   }
 
-  public selectTab(value: Value) {
-    const tab = this.tabs.find((t) => t.getValue() === value);
-    if (tab) tab.select();
+  public selectTab(value: T): void {
+    const targetTab = this.tabs.find((tab) => tab.getValue() === value);
+    if (targetTab) targetTab.select();
+    else this.tabs[0]?.select();
+  }
+
+  public removeTab(value: T): void {
+    const targetTab = this.tabs.find((tab) => tab.getValue() === value);
+    if (targetTab) {
+      targetTab.remove();
+      if (this.selectedTab === targetTab) {
+        this.selectedTab = undefined;
+        this.tabs[0]?.select();
+      }
+      this.tabs = this.tabs.filter((tab) => tab.getValue() !== value);
+    }
   }
 }
