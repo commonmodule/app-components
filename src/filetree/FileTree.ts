@@ -6,12 +6,7 @@ interface FileTreeOptions {
   id?: string;
   alwaysExpanded?: boolean;
   sortByName?: boolean;
-  ContextMenu?: new (
-    left: number,
-    top: number,
-    fileTree: FileTree,
-    id: string,
-  ) => DomNode;
+  openContextMenu?: (left: number, top: number, id: string) => DomNode;
 }
 
 export default class FileTree extends DomNode<HTMLUListElement, {
@@ -113,12 +108,6 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     node.remove();
     this.fileTreeNodeMap.delete(id);
     this.emit("nodeRemoved", id);
-  }
-
-  public openContextMenu(left: number, top: number, id: string): void {
-    if (this.options.ContextMenu) {
-      new this.options.ContextMenu(left, top, this, id);
-    }
   }
 
   public setSelectedNodeId(id: string | undefined) {

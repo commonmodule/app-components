@@ -82,9 +82,13 @@ export default class FileTreeNode extends DomNode {
       }
     }
 
-    if (this.tree.options.ContextMenu) {
+    if (this.tree.options.openContextMenu) {
       DomUtils.enhanceWithContextMenu(this.main, (event) => {
-        this.tree.openContextMenu(event.clientX, event.clientY, this.data.id);
+        this.tree.options.openContextMenu?.(
+          event.clientX,
+          event.clientY,
+          this.data.id,
+        );
       });
     }
   }
