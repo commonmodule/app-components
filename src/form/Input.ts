@@ -83,7 +83,7 @@ export default class Input extends DomNode<HTMLLabelElement, {
   public set value(value: string) {
     if (this.input.htmlElement.value === value) return;
     this.input.htmlElement.value = value;
-    this.handleInput();
+    if (!this.readOnly) this.handleInput();
   }
 
   public get readOnly(): boolean {
