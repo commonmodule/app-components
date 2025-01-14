@@ -8,7 +8,7 @@ export enum ButtonType {
   Icon = "icon",
 }
 
-interface ButtonOptions {
+export interface ButtonOptions {
   type?: ButtonType;
   icon?: DomNode;
   iconPosition?: "left" | "right";

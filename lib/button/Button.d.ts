@@ -5,7 +5,7 @@ export declare enum ButtonType {
     Outlined = "outlined",
     Icon = "icon"
 }
-interface ButtonOptions {
+export interface ButtonOptions {
     type?: ButtonType;
     icon?: DomNode;
     iconPosition?: "left" | "right";
@@ -30,5 +30,4 @@ export default class Button extends DomNode<HTMLButtonElement, {
     startLoading(): this;
     stopLoading(): this;
 }
-export {};
 //# sourceMappingURL=Button.d.ts.map

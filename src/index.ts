@@ -3,7 +3,7 @@ export { default as AccordionItem } from "./accordion/AccordionItem.js";
 export { default as InfoAlert } from "./alerts/InfoAlert.js";
 export { default as WarningAlert } from "./alerts/WarningAlert.js";
 export { default as AppCompConfig } from "./AppCompConfig.js";
-export { ButtonType, default as Button } from "./button/Button.js";
+export { default as Button, ButtonOptions, ButtonType } from "./button/Button.js";
 export { default as ButtonGroup } from "./button/ButtonGroup.js";
 export { default as DefaultAvatar } from "./DefaultAvatar.js";
 export { default as AlertDialog } from "./dialogs/AlertDialog.js";
@@ -29,3 +29,4 @@ export { default as Snackbar } from "./Snackbar.js";
 export { default as SvgIcon } from "./SvgIcon.js";
 export { default as Tab } from "./tab/Tab.js";
 export { default as TabGroup } from "./tab/TabGroup.js";
+
