@@ -32,7 +32,7 @@ export default class Snackbar extends DomNode {
       el(
         ".button-container",
         new Button(".close", {
-          type: ButtonType.Circle,
+          type: ButtonType.Icon,
           icon: new AppCompConfig.CloseIcon(),
           onClick: () => this.remove(),
         }),

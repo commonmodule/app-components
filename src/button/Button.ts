@@ -5,7 +5,7 @@ export enum ButtonType {
   Text = "text",
   Contained = "contained",
   Outlined = "outlined",
-  Circle = "circle",
+  Icon = "icon",
 }
 
 interface ButtonOptions {

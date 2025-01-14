@@ -46,4 +46,8 @@ export default class Checkbox extends DomNode<HTMLLabelElement, {
       options.label ? el("span.label", options.label) : undefined,
     );
   }
+
+  public isChecked(): boolean {
+    return this.input.htmlElement.checked;
+  }
 }

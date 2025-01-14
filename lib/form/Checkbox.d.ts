@@ -11,6 +11,7 @@ export default class Checkbox extends DomNode<HTMLLabelElement, {
     private input;
     constructor(options?: CheckboxOptions);
     constructor(classNames?: `.${string}`, options?: CheckboxOptions);
+    isChecked(): boolean;
 }
 export {};
 //# sourceMappingURL=Checkbox.d.ts.map

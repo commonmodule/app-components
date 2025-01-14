@@ -52,7 +52,7 @@ export default class QuantityInput extends DomNode<HTMLLabelElement, {
       el(
         "main",
         this.minusButton = new Button({
-          type: ButtonType.Circle,
+          type: ButtonType.Icon,
           icon: new AppCompConfig.MinusIcon(),
           disabled: options.readOnly || options.value === options.min,
           onClick: () => {
@@ -71,7 +71,7 @@ export default class QuantityInput extends DomNode<HTMLLabelElement, {
           onkeyup: () => this.handleQuantityInput(),
         }),
         this.plusButton = new Button({
-          type: ButtonType.Circle,
+          type: ButtonType.Icon,
           icon: new AppCompConfig.PlusIcon(),
           disabled: options.readOnly || options.value === options.max,
           onClick: () => {
