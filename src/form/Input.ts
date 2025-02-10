@@ -55,14 +55,14 @@ export default class Input extends DomNode<HTMLLabelElement, {
       options.suffixIcon ? el(".suffix-icon", options.suffixIcon) : undefined,
     );
 
+    if (options.value) this.previousValue = options.value;
+
     if (options.onKeyDown) {
       this.input.onDom("keydown", (e) => options.onKeyDown!(e));
     }
-
     if (options.onChange) {
       this.on("valueChanged", (v) => options.onChange!(v));
     }
-
     if (options.onClick) {
       this.onDom("click", () => options.onClick!(this));
     }
