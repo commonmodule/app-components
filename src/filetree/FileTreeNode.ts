@@ -9,7 +9,7 @@ interface FileTreeNodeBaseData {
   name: string;
 }
 
-interface FileTreeNodeFileData extends FileTreeNodeBaseData {
+export interface FileTreeNodeFileData extends FileTreeNodeBaseData {
   type: "file";
 }
 

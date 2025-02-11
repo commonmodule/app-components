@@ -3,7 +3,11 @@ export { default as AccordionItem } from "./accordion/AccordionItem.js";
 export { default as InfoAlert } from "./alerts/InfoAlert.js";
 export { default as WarningAlert } from "./alerts/WarningAlert.js";
 export { default as AppCompConfig } from "./AppCompConfig.js";
-export { default as Button, ButtonOptions, ButtonType } from "./button/Button.js";
+export {
+  ButtonOptions,
+  ButtonType,
+  default as Button,
+} from "./button/Button.js";
 export { default as ButtonGroup } from "./button/ButtonGroup.js";
 export { default as DefaultAvatar } from "./DefaultAvatar.js";
 export { default as AlertDialog } from "./dialogs/AlertDialog.js";
@@ -12,7 +16,10 @@ export { default as ErrorDialog } from "./dialogs/ErrorDialog.js";
 export { default as PromptDialog } from "./dialogs/PromptDialog.js";
 export { default as QuantityInputDialog } from "./dialogs/QuantityInputDialog.js";
 export { default as FileTree } from "./filetree/FileTree.js";
-export { FileTreeNodeData } from "./filetree/FileTreeNode.js";
+export {
+  FileTreeNodeData,
+  FileTreeNodeFileData,
+} from "./filetree/FileTreeNode.js";
 export { default as Checkbox } from "./form/Checkbox.js";
 export { default as FileDropzone } from "./form/FileDropzone.js";
 export { default as Form } from "./form/Form.js";
@@ -29,4 +36,3 @@ export { default as Snackbar } from "./Snackbar.js";
 export { default as SvgIcon } from "./SvgIcon.js";
 export { default as Tab } from "./tab/Tab.js";
 export { default as TabGroup } from "./tab/TabGroup.js";
-

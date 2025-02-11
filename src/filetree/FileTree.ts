@@ -22,6 +22,11 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     data: FileTreeNodeData[],
   ) {
     super("ul.file-tree");
+    this.setData(data);
+  }
+
+  public setData(data: FileTreeNodeData[]) {
+    this.clear();
 
     const processedData = [...data];
     if (this.options.sortByName ?? true) {
@@ -153,5 +158,10 @@ export default class FileTree extends DomNode<HTMLUListElement, {
       throw new Error(`Node with id ${id} not found`);
     }
     node.select();
+  }
+
+  public clear(...except: (DomNode | undefined)[]) {
+    this.fileTreeNodeMap.clear();
+    return super.clear(...except);
   }
 }
