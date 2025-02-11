@@ -27,6 +27,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     nodeCreated(parentId: string | undefined, name: string): void;
     createFileNameInput(parentId: string | undefined): void;
     selectNode(id: string): void;
+    deselectNode(): void;
     clear(...except: (DomNode | undefined)[]): this;
 }
 export {};

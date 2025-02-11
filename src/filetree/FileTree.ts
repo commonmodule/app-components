@@ -160,6 +160,10 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     node.select();
   }
 
+  public deselectNode() {
+    this.setSelectedNodeId(undefined);
+  }
+
   public clear(...except: (DomNode | undefined)[]) {
     this.fileTreeNodeMap.clear();
     return super.clear(...except);
