@@ -1,12 +1,11 @@
 import { DomNode, el, Store } from "@common-module/app";
-import { KebabCase } from "../../../ts-module/lib/index.js";
 import AppCompConfig from "../AppCompConfig.js";
 import Tab from "./Tab.js";
 
 export default class TabGroup<T> extends DomNode<HTMLDivElement, {
   tabSelected: (value: T) => void;
 }> {
-  private store?: Store<string>;
+  private store?: Store;
   private background: DomNode;
   private tabs: Tab<T>[] = [];
   private selectedTab?: Tab<T>;
@@ -15,7 +14,7 @@ export default class TabGroup<T> extends DomNode<HTMLDivElement, {
     super(".tab-group");
 
     if (typeof id === "string") {
-      this.store = new Store(`tab-group-${id}` as KebabCase<string>);
+      this.store = new Store(`tab-group-${id}`);
     } else if (id) {
       tabs.unshift(id);
     }
