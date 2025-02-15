@@ -29,7 +29,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     this.clear();
 
     const processedData = [...data];
-    if (this.options.sortByName ?? true) {
+    if (this.options.sortByName) {
       processedData.sort((a, b) => a.name.localeCompare(b.name));
     }
 
@@ -79,7 +79,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
       const node = new FileTreeNode(this, data);
       this.registerNode(data.id, node);
 
-      if (this.options.sortByName ?? true) {
+      if (this.options.sortByName) {
         const children = this.children as FileTreeNode[];
         let inserted = false;
         for (let i = 0; i < children.length; i++) {

@@ -64,7 +64,7 @@ export default class FileTreeNode extends DomNode {
       ).appendTo(this);
 
       const processedChildren = [...data.children];
-      if (this.tree.options.sortByName ?? true) {
+      if (this.tree.options.sortByName) {
         processedChildren.sort((a, b) => a.name.localeCompare(b.name));
       }
 
@@ -124,7 +124,7 @@ export default class FileTreeNode extends DomNode {
     const node = new FileTreeNode(this.tree, data);
     this.tree.registerNode(data.id, node);
 
-    if (this.tree.options.sortByName ?? true) {
+    if (this.tree.options.sortByName) {
       const children = this.childrenContainer!.children as FileTreeNode[];
       let inserted = false;
       for (let i = 0; i < children.length; i++) {
