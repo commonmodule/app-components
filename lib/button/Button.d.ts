@@ -25,6 +25,8 @@ export default class Button extends DomNode<HTMLButtonElement, {
     constructor(classNames: `.${string}`, options: ButtonOptions);
     set title(title: string | DomChild | DomChild[]);
     get title(): string;
+    set icon(icon: DomNode | undefined);
+    get icon(): DomNode | undefined;
     disable(): this;
     enable(): this;
     startLoading(): this;

@@ -108,6 +108,19 @@ export default class Button extends DomNode<HTMLButtonElement, {
     return this.titleContainer.text;
   }
 
+  public set icon(icon: DomNode | undefined) {
+    if (this.iconContainer) {
+      this.iconContainer.clear();
+      if (icon) this.iconContainer.append(icon.clone());
+    } else {
+      this.prepend(icon?.clone());
+    }
+  }
+
+  public get icon(): DomNode | undefined {
+    return this.iconContainer?.children[0];
+  }
+
   public disable(): this {
     this.htmlElement.setAttribute("disabled", "disabled");
     this.addClass("disabled");
