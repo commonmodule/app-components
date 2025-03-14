@@ -1,4 +1,4 @@
-import { el } from "@common-module/app";
+import { DomNode, el } from "@common-module/app";
 import AppCompConfig from "../AppCompConfig.js";
 import Button, { ButtonType } from "../button/Button.js";
 import Modal from "../modal/Modal.js";
@@ -7,11 +7,19 @@ import MainImageViewer from "./MainImageViewer.js";
 import ThumbnailList from "./ThumbnailList.js";
 
 export default class ImageViewer extends Modal {
+  private images: ImageInfo[] = [];
+  private currentImageIndex = 0;
+
+  private imageCounter: DomNode;
   private mainImageViewer: MainImageViewer;
   private thumbnailList: ThumbnailList;
 
   constructor(options: { images: ImageInfo[]; initialIndex: number }) {
     super(".image-viewer");
+
+    this.images = options.images;
+    this.currentImageIndex = options.initialIndex;
+
     this.append(
       el(
         "header",
@@ -22,7 +30,10 @@ export default class ImageViewer extends Modal {
             icon: new AppCompConfig.ShareIcon(),
           }),
         ),
-        el(".image-counter"),
+        this.imageCounter = el(
+          ".image-counter",
+          `${this.currentImageIndex + 1} / ${this.images.length}`,
+        ),
         el(
           ".button-container.right",
           new Button(".fullscreen", {
@@ -36,6 +47,7 @@ export default class ImageViewer extends Modal {
           new Button(".close", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.CloseIcon(),
+            onClick: () => this.remove(),
           }),
         ),
         { onclick: (event) => event.stopPropagation() },
@@ -45,6 +57,12 @@ export default class ImageViewer extends Modal {
         icon: new AppCompConfig.PrevIcon(),
         onClick: (button, event) => {
           event.stopPropagation();
+          this.navigateToImage(
+            this.currentImageIndex <= 0
+              ? this.images.length - 1
+              : this.currentImageIndex - 1,
+            "left",
+          );
         },
       }),
       this.mainImageViewer = new MainImageViewer(
@@ -55,6 +73,12 @@ export default class ImageViewer extends Modal {
         icon: new AppCompConfig.NextIcon(),
         onClick: (button, event) => {
           event.stopPropagation();
+          this.navigateToImage(
+            this.currentImageIndex >= this.images.length - 1
+              ? 0
+              : this.currentImageIndex + 1,
+            "right",
+          );
         },
       }),
       el(
@@ -81,5 +105,10 @@ export default class ImageViewer extends Modal {
 
     this.mainImageViewer.onDom("click", (event) => event.stopPropagation());
     this.thumbnailList.onDom("click", (event) => event.stopPropagation());
+  }
+
+  private navigateToImage(index: number, direction?: "left" | "right") {
+    this.currentImageIndex = index;
+    this.imageCounter.text = `${index + 1} / ${this.images.length}`;
   }
 }
