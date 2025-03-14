@@ -1,0 +1,1 @@
+{"version":3,"file":"ThumbnailListItem.js","sourceRoot":"","sources":["../../src/image-viewer/ThumbnailListItem.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,oBAAoB,CAAC;AAE7C,MAAM,CAAC,OAAO,OAAO,iBAAkB,SAAQ,OAAO;IACpD,YAAY,YAAoB;QAC9B,KAAK,CAAC,sBAAsB,CAAC,CAAC;IAChC,CAAC;CACF"}

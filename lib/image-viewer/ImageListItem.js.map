@@ -1,0 +1,1 @@
+{"version":3,"file":"ImageListItem.js","sourceRoot":"","sources":["../../src/image-viewer/ImageListItem.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,oBAAoB,CAAC;AAE7C,MAAM,CAAC,OAAO,OAAO,aAAc,SAAQ,OAAO;IAChD,YAAY,QAAgB;QAC1B,KAAK,CAAC,kBAAkB,CAAC,CAAC;IAC5B,CAAC;CACF"}

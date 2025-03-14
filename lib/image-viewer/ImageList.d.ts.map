@@ -1,0 +1,1 @@
+{"version":3,"file":"ImageList.d.ts","sourceRoot":"","sources":["../../src/image-viewer/ImageList.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,oBAAoB,CAAC;AAE7C,MAAM,CAAC,OAAO,OAAO,SAAU,SAAQ,OAAO;gBAChC,OAAO,EAAE;QAAE,SAAS,EAAE,MAAM,EAAE,CAAC;QAAC,YAAY,EAAE,MAAM,CAAA;KAAE;CAGnE"}

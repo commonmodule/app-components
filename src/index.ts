@@ -4,9 +4,8 @@ export { default as InfoAlert } from "./alerts/InfoAlert.js";
 export { default as WarningAlert } from "./alerts/WarningAlert.js";
 export { default as AppCompConfig } from "./AppCompConfig.js";
 export {
-  ButtonOptions,
-  ButtonType,
-  default as Button,
+  default as Button, ButtonOptions,
+  ButtonType
 } from "./button/Button.js";
 export { default as ButtonGroup } from "./button/ButtonGroup.js";
 export { default as DefaultAvatar } from "./DefaultAvatar.js";
@@ -18,7 +17,7 @@ export { default as QuantityInputDialog } from "./dialogs/QuantityInputDialog.js
 export { default as FileTree } from "./filetree/FileTree.js";
 export {
   FileTreeNodeData,
-  FileTreeNodeFileData,
+  FileTreeNodeFileData
 } from "./filetree/FileTreeNode.js";
 export { default as Checkbox } from "./form/Checkbox.js";
 export { default as FileDropzone } from "./form/FileDropzone.js";
@@ -27,6 +26,7 @@ export { default as Input } from "./form/Input.js";
 export { default as InvisibleFileInput } from "./form/InvisibleFileInput.js";
 export { default as QuantityInput } from "./form/QuantityInput.js";
 export { default as Select } from "./form/Select.js";
+export { default as ImageViewer } from "./image-viewer/ImageViewer.js";
 export { default as DropdownMenu } from "./menu/DropdownMenu.js";
 export { default as DropdownMenuGroup } from "./menu/DropdownMenuGroup.js";
 export { default as DropdownMenuItem } from "./menu/DropdownMenuItem.js";
@@ -36,3 +36,4 @@ export { default as Snackbar } from "./Snackbar.js";
 export { default as SvgIcon } from "./SvgIcon.js";
 export { default as Tab } from "./tab/Tab.js";
 export { default as TabGroup } from "./tab/TabGroup.js";
+

@@ -1,0 +1,1 @@
+{"version":3,"file":"MainImageViewer.d.ts","sourceRoot":"","sources":["../../src/image-viewer/MainImageViewer.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,oBAAoB,CAAC;AAE7C,MAAM,CAAC,OAAO,OAAO,eAAgB,SAAQ,OAAO;gBACtC,eAAe,EAAE,MAAM;IAK5B,WAAW,CAAC,GAAG,EAAE,MAAM;CAE/B"}
