@@ -9,6 +9,12 @@ class DefaultCloseIcon extends DomNode {
   }
 }
 
+class DefaultShareIcon extends DomNode {
+  constructor() {
+    super("span.icon.share", "🔗");
+  }
+}
+
 class DefaultLoadingSpinner extends DomNode {
   constructor() {
     super(".loading-spinner");
@@ -75,9 +81,52 @@ class DefaultPlusIcon extends DomNode {
   }
 }
 
+class DefaultPrevIcon extends DomNode {
+  constructor() {
+    super("span.icon.prev", "←");
+  }
+}
+
+class DefaultNextIcon extends DomNode {
+  constructor() {
+    super("span.icon.next", "→");
+  }
+}
+
+class DefaultZoomInIcon extends DomNode {
+  constructor() {
+    super("span.icon.zoom-in", "🔍");
+  }
+}
+
+class DefaultZoomOutIcon extends DomNode {
+  constructor() {
+    super("span.icon.zoom-out", "🔍");
+  }
+}
+
+class DefaultResetZoomIcon extends DomNode {
+  constructor() {
+    super("span.icon.reset-zoom", "🔍");
+  }
+}
+
+class DefaultFullscreenIcon extends DomNode {
+  constructor() {
+    super("span.icon.fullscreen", "⛶");
+  }
+}
+
+class DefaultExitFullscreenIcon extends DomNode {
+  constructor() {
+    super("span.icon.exit-fullscreen", "⛶");
+  }
+}
+
 class AppCompConfig {
   public LoadingSpinner: DomNodeConstructor = DefaultLoadingSpinner;
   public CloseIcon: DomNodeConstructor = DefaultCloseIcon;
+  public ShareIcon: DomNodeConstructor = DefaultShareIcon;
 
   public SuccessIcon: DomNodeConstructor = DefaultSuccessIcon;
   public InfoIcon: DomNodeConstructor = DefaultInfoIcon;
@@ -92,6 +141,16 @@ class AppCompConfig {
 
   public MinusIcon: DomNodeConstructor = DefaultMinusIcon;
   public PlusIcon: DomNodeConstructor = DefaultPlusIcon;
+
+  public PrevIcon: DomNodeConstructor = DefaultPrevIcon;
+  public NextIcon: DomNodeConstructor = DefaultNextIcon;
+
+  public ZoomInIcon: DomNodeConstructor = DefaultZoomInIcon;
+  public ZoomOutIcon: DomNodeConstructor = DefaultZoomOutIcon;
+  public ResetZoomIcon: DomNodeConstructor = DefaultResetZoomIcon;
+
+  public FullscreenIcon: DomNodeConstructor = DefaultFullscreenIcon;
+  public ExitFullscreenIcon: DomNodeConstructor = DefaultExitFullscreenIcon;
 
   public updateTabBackgroundOnSelect: (
     tabBackground: DomNode,

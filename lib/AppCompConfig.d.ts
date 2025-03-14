@@ -4,6 +4,7 @@ type DomNodeConstructor = new () => DomNode;
 declare class AppCompConfig {
     LoadingSpinner: DomNodeConstructor;
     CloseIcon: DomNodeConstructor;
+    ShareIcon: DomNodeConstructor;
     SuccessIcon: DomNodeConstructor;
     InfoIcon: DomNodeConstructor;
     WarningIcon: DomNodeConstructor;
@@ -14,6 +15,13 @@ declare class AppCompConfig {
     FolderExpandedIcon: DomNodeConstructor;
     MinusIcon: DomNodeConstructor;
     PlusIcon: DomNodeConstructor;
+    PrevIcon: DomNodeConstructor;
+    NextIcon: DomNodeConstructor;
+    ZoomInIcon: DomNodeConstructor;
+    ZoomOutIcon: DomNodeConstructor;
+    ResetZoomIcon: DomNodeConstructor;
+    FullscreenIcon: DomNodeConstructor;
+    ExitFullscreenIcon: DomNodeConstructor;
     updateTabBackgroundOnSelect: (tabBackground: DomNode, tab: Tab<any>) => void;
 }
 declare const _default: AppCompConfig;
