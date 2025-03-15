@@ -11,5 +11,6 @@ export default class ImageViewer extends Modal {
         initialIndex: number;
     });
     private navigateToImage;
+    private shareCurrentImage;
 }
 //# sourceMappingURL=ImageViewer.d.ts.map

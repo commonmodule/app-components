@@ -1,4 +1,4 @@
-import { DomNode, el } from "@common-module/app";
+import { BrowserInfo, DomNode, el } from "@common-module/app";
 import AppCompConfig from "../AppCompConfig.js";
 import Button, { ButtonType } from "../button/Button.js";
 import Modal from "../modal/Modal.js";
@@ -28,6 +28,7 @@ export default class ImageViewer extends Modal {
           new Button(".share", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ShareIcon(),
+            onClick: () => this.shareCurrentImage(),
           }),
         ),
         this.imageCounter = el(
@@ -43,6 +44,7 @@ export default class ImageViewer extends Modal {
           new Button(".share", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ShareIcon(),
+            onClick: () => this.shareCurrentImage(),
           }),
           new Button(".close", {
             type: ButtonType.Icon,
@@ -110,5 +112,10 @@ export default class ImageViewer extends Modal {
   private navigateToImage(index: number, direction?: "left" | "right") {
     this.currentImageIndex = index;
     this.imageCounter.text = `${index + 1} / ${this.images.length}`;
+  }
+
+  private shareCurrentImage() {
+    const image = this.images[this.currentImageIndex];
+    BrowserInfo.share({ title: "Shared Image", url: image.imageUrl });
   }
 }
