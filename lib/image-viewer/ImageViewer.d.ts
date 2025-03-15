@@ -3,6 +3,7 @@ import ImageInfo from "./ImageInfo.js";
 export default class ImageViewer extends Modal {
     private images;
     private currentImageIndex;
+    private container;
     private imageCounter;
     private mainImageViewer;
     private thumbnailList;
@@ -12,5 +13,6 @@ export default class ImageViewer extends Modal {
     });
     private navigateToImage;
     private shareCurrentImage;
+    private toggleFullscreen;
 }
 //# sourceMappingURL=ImageViewer.d.ts.map
