@@ -109,8 +109,8 @@ export default class ImageViewer extends Modal {
 
     this.mainImageViewer
       .onDom("click", (event) => event.stopPropagation())
-      .on("swipeLeft", () => this.prevImage())
-      .on("swipeRight", () => this.nextImage());
+      .on("swipeLeft", () => this.nextImage())
+      .on("swipeRight", () => this.prevImage());
 
     this.thumbnailList
       .onDom("click", (event) => event.stopPropagation())
