@@ -65,9 +65,9 @@ export default class MainImageViewer extends DomNode {
       this.nextImage.htmlElement.src = nextImageUrl;
     }
 
-    this.prevImage?.style({ left: "0", transition: "none" });
-    this.currentImage.style({ left: "50%", transition: "none" });
-    this.nextImage?.style({ left: "100%", transition: "none" });
+    this.prevImage?.style({ left: "0", opacity: "0", transition: "none" });
+    this.currentImage.style({ left: "50%", opacity: "1", transition: "none" });
+    this.nextImage?.style({ left: "100%", opacity: "0", transition: "none" });
   }
 
   private updateTransform() {
@@ -142,46 +142,33 @@ export default class MainImageViewer extends DomNode {
     if (
       imageIndex - this.currentImageIndex < -1 && transitionDirection === "left"
     ) {
-      const centerImageIndex = imageIndex + 1;
-      const prevImageUrl = centerImageIndex <= 0
+      const prevImageUrl = imageIndex + 1 <= 0
         ? this.imageUrls[this.imageUrls.length - 1]
-        : this.imageUrls[centerImageIndex - 1];
-      const imageUrl = this.imageUrls[centerImageIndex];
-      const nextImageUrl = centerImageIndex >= this.imageUrls.length - 1
-        ? this.imageUrls[0]
-        : this.imageUrls[centerImageIndex + 1];
-
+        : this.imageUrls[imageIndex];
       if (this.prevImage) this.prevImage.htmlElement.src = prevImageUrl;
-      this.currentImage.htmlElement.src = imageUrl;
-      if (this.nextImage) this.nextImage.htmlElement.src = nextImageUrl;
     } else if (
       imageIndex - this.currentImageIndex > 1 && transitionDirection === "right"
     ) {
-      const centerImageIndex = imageIndex - 1;
-      const prevImageUrl = centerImageIndex <= 0
-        ? this.imageUrls[this.imageUrls.length - 1]
-        : this.imageUrls[centerImageIndex - 1];
-      const imageUrl = this.imageUrls[centerImageIndex];
-      const nextImageUrl = centerImageIndex >= this.imageUrls.length - 1
+      const nextImageUrl = imageIndex - 1 >= this.imageUrls.length - 1
         ? this.imageUrls[0]
-        : this.imageUrls[centerImageIndex + 1];
-
-      if (this.prevImage) this.prevImage.htmlElement.src = prevImageUrl;
-      this.currentImage.htmlElement.src = imageUrl;
+        : this.imageUrls[imageIndex];
       if (this.nextImage) this.nextImage.htmlElement.src = nextImageUrl;
     }
 
     this.prevImage?.style({
       left: transitionDirection === "right" ? "-50%" : "50%",
-      transition: "left 0.2s ease-in-out",
+      opacity: transitionDirection === "right" ? "0" : "1",
+      transition: "left 0.2s ease-in-out, opacity 0.2s ease-in-out",
     });
     this.currentImage.style({
       left: transitionDirection === "right" ? "0" : "100%",
-      transition: "left 0.2s ease-in-out",
+      opacity: "0",
+      transition: "left 0.2s ease-in-out, opacity 0.2s ease-in-out",
     });
     this.nextImage?.style({
       left: transitionDirection === "right" ? "50%" : "150%",
-      transition: "left 0.2s ease-in-out",
+      opacity: transitionDirection === "right" ? "1" : "0",
+      transition: "left 0.2s ease-in-out, opacity 0.2s ease-in-out",
     });
 
     this.currentImageIndex = imageIndex;
