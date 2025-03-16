@@ -11,12 +11,12 @@ export default class MainImageViewer extends DomNode {
   private currentImage: DomNode<HTMLImageElement>;
   private nextImage?: DomNode<HTMLImageElement>;
 
-  /*private isDragging = false;
+  private isDragging = false;
   private dragStartX = 0;
   private dragStartY = 0;
   private translateX = 0;
   private translateY = 0;
-  private scale = 1;*/
+  private scale = 1;
 
   constructor(options: { imageUrls: string[]; initialIndex: number }) {
     super(".main-image-viewer");
@@ -65,64 +65,83 @@ export default class MainImageViewer extends DomNode {
       this.nextImage.htmlElement.src = nextImageUrl;
     }
 
-    this.prevImage?.style({ left: "0", opacity: "0", transition: "none" });
-    this.currentImage.style({ left: "50%", opacity: "1", transition: "none" });
-    this.nextImage?.style({ left: "100%", opacity: "0", transition: "none" });
+    this.prevImage?.style({
+      display: "none",
+      left: "0",
+      opacity: "0",
+      transition: "transform 0.2s ease-in-out",
+    });
+    this.currentImage.style({
+      left: "50%",
+      opacity: "1",
+      transition: "transform 0.2s ease-in-out",
+    });
+    this.nextImage?.style({
+      display: "none",
+      left: "100%",
+      opacity: "0",
+      transition: "transform 0.2s ease-in-out",
+    });
   }
 
   private updateTransform() {
-    /*this.currentImage.style({
+    this.currentImage.style({
       transform:
-        `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`,
-    });*/
+        `translate(calc(-50% + ${this.translateX}px), calc(-50% + ${this.translateY}px)) scale(${this.scale})`,
+    });
   }
 
   private startDrag(event: MouseEvent) {
     event.preventDefault();
-    /*if (this.scale > 1) {
+    if (this.scale > 1) {
       this.isDragging = true;
       this.dragStartX = event.clientX - this.translateX;
       this.dragStartY = event.clientY - this.translateY;
-      this.currentImage.addClass("dragging");
-    }*/
+      this.currentImage.style({ cursor: "grabbing", transition: "none" });
+    }
   }
 
   private drag(event: MouseEvent) {
-    /*if (this.isDragging) {
+    if (this.isDragging) {
       this.translateX = event.clientX - this.dragStartX;
       this.translateY = event.clientY - this.dragStartY;
       this.updateTransform();
-    }*/
+    }
   }
 
   private endDrag() {
-    /*this.isDragging = false;
-    this.currentImage.removeClass("dragging");*/
+    if (this.isDragging) {
+      this.isDragging = false;
+      this.currentImage.style({
+        cursor: "auto",
+        transition: "transform 0.2s ease-in-out",
+      });
+    }
   }
 
   public zoomIn() {
-    /*this.scale = Math.min(this.scale + 0.25, MAX_ZOOM);
-    this.updateTransform();*/
+    this.scale = Math.min(this.scale + 0.25, MAX_ZOOM);
+    this.updateTransform();
   }
 
   public zoomOut() {
-    /*this.scale = Math.max(this.scale - 0.25, MIN_ZOOM);
-    this.updateTransform();*/
+    this.scale = Math.max(this.scale - 0.25, MIN_ZOOM);
+    this.updateTransform();
   }
 
   public resetZoom() {
-    /*this.scale = 1;
+    this.scale = 1;
     this.translateX = 0;
     this.translateY = 0;
-    this.updateTransform();*/
+    this.updateTransform();
   }
 
   private handleWheelZoom(event: WheelEvent) {
-    /*event.preventDefault();
+    event.preventDefault();
 
     this.scale -= event.deltaY / 100;
     this.scale = Math.max(MIN_ZOOM, Math.min(this.scale, MAX_ZOOM));
-    this.updateTransform();*/
+    this.updateTransform();
   }
 
   public updateImage(
@@ -158,17 +177,20 @@ export default class MainImageViewer extends DomNode {
     this.prevImage?.style({
       left: transitionDirection === "right" ? "-50%" : "50%",
       opacity: transitionDirection === "right" ? "0" : "1",
-      transition: "left 0.2s ease-in-out, opacity 0.2s ease-in-out",
+      transition:
+        "left 0.2s ease-in-out, opacity 0.2s ease-in-out, transform 0.2s ease-in-out",
     });
     this.currentImage.style({
       left: transitionDirection === "right" ? "0" : "100%",
       opacity: "0",
-      transition: "left 0.2s ease-in-out, opacity 0.2s ease-in-out",
+      transition:
+        "left 0.2s ease-in-out, opacity 0.2s ease-in-out, transform 0.2s ease-in-out",
     });
     this.nextImage?.style({
       left: transitionDirection === "right" ? "50%" : "150%",
       opacity: transitionDirection === "right" ? "1" : "0",
-      transition: "left 0.2s ease-in-out, opacity 0.2s ease-in-out",
+      transition:
+        "left 0.2s ease-in-out, opacity 0.2s ease-in-out, transform 0.2s ease-in-out",
     });
 
     this.currentImageIndex = imageIndex;

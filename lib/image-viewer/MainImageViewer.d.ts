@@ -5,6 +5,12 @@ export default class MainImageViewer extends DomNode {
     private prevImage?;
     private currentImage;
     private nextImage?;
+    private isDragging;
+    private dragStartX;
+    private dragStartY;
+    private translateX;
+    private translateY;
+    private scale;
     constructor(options: {
         imageUrls: string[];
         initialIndex: number;
