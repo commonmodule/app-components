@@ -19,6 +19,8 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
     private swipeStartX;
     private swipeThreshold;
     private isSwipeInProgress;
+    private lastTap;
+    private doubleTapDelay;
     constructor(options: {
         imageUrls: string[];
         initialIndex: number;
@@ -35,6 +37,7 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
     zoomIn(): void;
     zoomOut(): void;
     resetZoom(): void;
+    toggleZoom(): void;
     private handleWheelZoom;
     updateImage(imageIndex: number, transitionDirection?: "left" | "right"): void;
 }

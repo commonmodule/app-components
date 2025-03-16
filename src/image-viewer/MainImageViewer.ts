@@ -30,6 +30,9 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
   private swipeThreshold = 100;
   private isSwipeInProgress = false;
 
+  private lastTap = 0;
+  private doubleTapDelay = 300;
+
   constructor(options: { imageUrls: string[]; initialIndex: number }) {
     super(".main-image-viewer");
 
@@ -141,6 +144,21 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
   }
 
   private startTouch(event: TouchEvent): void {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - this.lastTap;
+
+    if (
+      tapLength < this.doubleTapDelay && tapLength > 0 &&
+      event.touches.length === 1
+    ) {
+      event.preventDefault();
+      this.toggleZoom();
+      this.lastTap = 0;
+      return;
+    }
+
+    this.lastTap = currentTime;
+
     if (event.touches.length === 1 && this.scale === 1) {
       this.swipeStartX = event.touches[0].clientX;
       this.isSwipeInProgress = true;
@@ -219,6 +237,15 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
     this.translateX = 0;
     this.translateY = 0;
     this.updateTransform();
+  }
+
+  public toggleZoom(): void {
+    if (this.scale > 1) {
+      this.resetZoom();
+    } else {
+      this.scale = 2;
+      this.updateTransform();
+    }
   }
 
   private handleWheelZoom(event: WheelEvent) {
