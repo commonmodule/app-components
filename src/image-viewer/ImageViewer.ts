@@ -67,7 +67,6 @@ export default class ImageViewer extends Modal {
               this.currentImageIndex <= 0
                 ? this.images.length - 1
                 : this.currentImageIndex - 1,
-              "left",
             );
           },
         }),
@@ -83,7 +82,6 @@ export default class ImageViewer extends Modal {
               this.currentImageIndex >= this.images.length - 1
                 ? 0
                 : this.currentImageIndex + 1,
-              "right",
             );
           },
         }),
@@ -137,11 +135,8 @@ export default class ImageViewer extends Modal {
     }
   }
 
-  private selectImage(index: number, direction?: "left" | "right") {
-    this.mainImageViewer.updateImage(
-      this.images[index].imageUrl,
-      direction ?? index < this.currentImageIndex ? "left" : "right",
-    );
+  private selectImage(index: number) {
+    this.mainImageViewer.updateImage(this.images[index].imageUrl);
     this.currentImageIndex = index;
     this.imageCounter.text = `${index + 1} / ${this.images.length}`;
     this.thumbnailList.selectThumbnail(index);

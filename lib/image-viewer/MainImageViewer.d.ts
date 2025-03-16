@@ -16,6 +16,6 @@ export default class MainImageViewer extends DomNode {
     zoomOut(): void;
     resetZoom(): void;
     private handleWheelZoom;
-    updateImage(imageUrl: string, direction: "left" | "right"): void;
+    updateImage(imageUrl: string): void;
 }
 //# sourceMappingURL=MainImageViewer.d.ts.map

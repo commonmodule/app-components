@@ -81,25 +81,8 @@ export default class MainImageViewer extends DomNode {
     this.updateTransform();
   }
 
-  public updateImage(imageUrl: string, direction: "left" | "right") {
-    const newImage = el("img", { src: imageUrl });
-    newImage.addClass(
-      direction === "left" ? "enter-from-left" : "enter-from-right",
-    );
-    this.image.addClass(
-      direction === "left" ? "exit-to-right" : "exit-to-left",
-    );
-    this.append(newImage);
-
-    newImage.htmlElement.offsetWidth;
-    newImage.removeClass(
-      direction === "left" ? "enter-from-left" : "enter-from-right",
-    );
-
-    newImage.onDom("transitionend", () => {
-      this.image.remove();
-      this.image = newImage;
-      this.resetZoom();
-    });
+  public updateImage(imageUrl: string) {
+    this.image.htmlElement.src = imageUrl;
+    this.resetZoom();
   }
 }
