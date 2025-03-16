@@ -92,14 +92,17 @@ export default class ImageViewer extends Modal {
           new Button(".zoom-in", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ZoomInIcon(),
+            onClick: () => this.mainImageViewer.zoomIn(),
           }),
           new Button(".zoom-out", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ZoomOutIcon(),
+            onClick: () => this.mainImageViewer.zoomOut(),
           }),
           new Button(".reset-zoom", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ResetZoomIcon(),
+            onClick: () => this.mainImageViewer.resetZoom(),
           }),
           { onclick: (event) => event.stopPropagation() },
         ),

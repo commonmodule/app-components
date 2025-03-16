@@ -8,6 +8,7 @@ export default class MainImageViewer extends DomNode {
   private dragStartY = 0;
   private translateX = 0;
   private translateY = 0;
+  private scale = 1;
 
   constructor(imageUrl: string) {
     super(".main-image-viewer");
@@ -20,24 +21,48 @@ export default class MainImageViewer extends DomNode {
     this.onWindow("mouseup", () => this.endDrag());
   }
 
+  private updateTransform() {
+    this.image.style({
+      transform:
+        `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`,
+    });
+  }
+
   private startDrag(event: MouseEvent) {
     event.preventDefault();
     this.isDragging = true;
     this.dragStartX = event.clientX - this.translateX;
     this.dragStartY = event.clientY - this.translateY;
+    this.image.addClass("dragging");
   }
 
   private drag(event: MouseEvent) {
     if (this.isDragging) {
       this.translateX = event.clientX - this.dragStartX;
       this.translateY = event.clientY - this.dragStartY;
-      this.image.style({
-        transform: `translate(${this.translateX}px, ${this.translateY}px)`,
-      });
+      this.updateTransform();
     }
   }
 
   private endDrag() {
     this.isDragging = false;
+    this.image.removeClass("dragging");
+  }
+
+  public zoomIn() {
+    this.scale = Math.min(this.scale + 0.25, 3);
+    this.updateTransform();
+  }
+
+  public zoomOut() {
+    this.scale = Math.max(this.scale - 0.25, 1);
+    this.updateTransform();
+  }
+
+  public resetZoom() {
+    this.scale = 1;
+    this.translateX = 0;
+    this.translateY = 0;
+    this.updateTransform();
   }
 }
