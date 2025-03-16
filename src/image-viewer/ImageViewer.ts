@@ -63,7 +63,7 @@ export default class ImageViewer extends Modal {
           icon: new AppCompConfig.PrevIcon(),
           onClick: (button, event) => {
             event.stopPropagation();
-            this.navigateToImage(
+            this.selectImage(
               this.currentImageIndex <= 0
                 ? this.images.length - 1
                 : this.currentImageIndex - 1,
@@ -79,7 +79,7 @@ export default class ImageViewer extends Modal {
           icon: new AppCompConfig.NextIcon(),
           onClick: (button, event) => {
             event.stopPropagation();
-            this.navigateToImage(
+            this.selectImage(
               this.currentImageIndex >= this.images.length - 1
                 ? 0
                 : this.currentImageIndex + 1,
@@ -106,20 +106,22 @@ export default class ImageViewer extends Modal {
           }),
           { onclick: (event) => event.stopPropagation() },
         ),
-        this.thumbnailList = new ThumbnailList({
-          thumbnailUrls: options.images.map((image) => image.thumbnailUrl),
-          initialIndex: options.initialIndex,
-        }),
+        el(
+          "footer",
+          this.thumbnailList = new ThumbnailList({
+            thumbnailUrls: options.images.map((image) => image.thumbnailUrl),
+            initialIndex: options.initialIndex,
+          }),
+        ),
       ),
     );
 
     this.mainImageViewer.onDom("click", (event) => event.stopPropagation());
     this.thumbnailList.onDom("click", (event) => event.stopPropagation());
-  }
-
-  private navigateToImage(index: number, direction?: "left" | "right") {
-    this.currentImageIndex = index;
-    this.imageCounter.text = `${index + 1} / ${this.images.length}`;
+    this.thumbnailList.on(
+      "thumbnailSelected",
+      (index) => this.selectImage(index),
+    );
   }
 
   private shareCurrentImage() {
@@ -133,5 +135,11 @@ export default class ImageViewer extends Modal {
     } else {
       Browser.exitFullscreen();
     }
+  }
+
+  private selectImage(index: number, direction?: "left" | "right") {
+    this.currentImageIndex = index;
+    this.imageCounter.text = `${index + 1} / ${this.images.length}`;
+    this.thumbnailList.selectThumbnail(index);
   }
 }

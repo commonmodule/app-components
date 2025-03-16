@@ -11,8 +11,8 @@ export default class ImageViewer extends Modal {
         images: ImageInfo[];
         initialIndex: number;
     });
-    private navigateToImage;
     private shareCurrentImage;
     private toggleFullscreen;
+    private selectImage;
 }
 //# sourceMappingURL=ImageViewer.d.ts.map
