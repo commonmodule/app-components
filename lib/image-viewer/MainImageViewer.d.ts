@@ -1,13 +1,15 @@
 import { DomNode } from "@common-module/app";
 export default class MainImageViewer extends DomNode {
-    private image;
-    private isDragging;
-    private dragStartX;
-    private dragStartY;
-    private translateX;
-    private translateY;
-    private scale;
-    constructor(imageUrl: string);
+    private imageUrls;
+    private currentImageIndex;
+    private prevImage?;
+    private currentImage;
+    private nextImage?;
+    constructor(options: {
+        imageUrls: string[];
+        initialIndex: number;
+    });
+    private resetImages;
     private updateTransform;
     private startDrag;
     private drag;
@@ -16,6 +18,6 @@ export default class MainImageViewer extends DomNode {
     zoomOut(): void;
     resetZoom(): void;
     private handleWheelZoom;
-    updateImage(imageUrl: string): void;
+    updateImage(imageIndex: number, transitionDirection?: "left" | "right"): void;
 }
 //# sourceMappingURL=MainImageViewer.d.ts.map

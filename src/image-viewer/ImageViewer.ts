@@ -63,25 +63,28 @@ export default class ImageViewer extends Modal {
           icon: new AppCompConfig.PrevIcon(),
           onClick: (button, event) => {
             event.stopPropagation();
-            this.selectImage(
+            this.updateImage(
               this.currentImageIndex <= 0
                 ? this.images.length - 1
                 : this.currentImageIndex - 1,
+              "left",
             );
           },
         }),
-        this.mainImageViewer = new MainImageViewer(
-          options.images[options.initialIndex].imageUrl,
-        ),
+        this.mainImageViewer = new MainImageViewer({
+          imageUrls: this.images.map((image) => image.imageUrl),
+          initialIndex: options.initialIndex,
+        }),
         new Button(".next", {
           type: ButtonType.Icon,
           icon: new AppCompConfig.NextIcon(),
           onClick: (button, event) => {
             event.stopPropagation();
-            this.selectImage(
+            this.updateImage(
               this.currentImageIndex >= this.images.length - 1
                 ? 0
                 : this.currentImageIndex + 1,
+              "right",
             );
           },
         }),
@@ -118,7 +121,7 @@ export default class ImageViewer extends Modal {
     this.thumbnailList.onDom("click", (event) => event.stopPropagation());
     this.thumbnailList.on(
       "thumbnailSelected",
-      (index) => this.selectImage(index),
+      (index) => this.updateImage(index),
     );
   }
 
@@ -135,10 +138,13 @@ export default class ImageViewer extends Modal {
     }
   }
 
-  private selectImage(index: number) {
-    this.mainImageViewer.updateImage(this.images[index].imageUrl);
-    this.currentImageIndex = index;
-    this.imageCounter.text = `${index + 1} / ${this.images.length}`;
-    this.thumbnailList.selectThumbnail(index);
+  private updateImage(
+    imageIndex: number,
+    transitionDirection?: "left" | "right",
+  ) {
+    this.mainImageViewer.updateImage(imageIndex, transitionDirection);
+    this.currentImageIndex = imageIndex;
+    this.imageCounter.text = `${imageIndex + 1} / ${this.images.length}`;
+    this.thumbnailList.selectThumbnail(imageIndex);
   }
 }

@@ -13,6 +13,6 @@ export default class ImageViewer extends Modal {
     });
     private shareCurrentImage;
     private toggleFullscreen;
-    private selectImage;
+    private updateImage;
 }
 //# sourceMappingURL=ImageViewer.d.ts.map

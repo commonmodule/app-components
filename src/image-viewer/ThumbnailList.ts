@@ -12,7 +12,10 @@ export default class ThumbnailList extends DomNode<HTMLDivElement, {
     super(".thumbnail-list");
     for (const [index, thumbnailUrl] of options.thumbnailUrls.entries()) {
       const item = new ThumbnailListItem(thumbnailUrl);
-      item.on("selected", () => this.selectThumbnail(index));
+      item.onDom("click", () => {
+        this.selectThumbnail(index);
+        this.emit("thumbnailSelected", index);
+      });
       this.append(item);
     }
 
@@ -26,6 +29,5 @@ export default class ThumbnailList extends DomNode<HTMLDivElement, {
     }
     this.selectedThumbnailIndex = index;
     this.children[index]?.select();
-    this.emit("thumbnailSelected", index);
   }
 }

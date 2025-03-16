@@ -1,8 +1,5 @@
 import { DomNode } from "@common-module/app";
-export default class ThumbnailListItem extends DomNode<HTMLDivElement, {
-    selected: () => void;
-    deselected: () => void;
-}> {
+export default class ThumbnailListItem extends DomNode {
     constructor(thumbnailUrl: string);
     select(): void;
     deselect(): void;
