@@ -11,6 +11,8 @@ export default class MainImageViewer extends DomNode {
     private translateX;
     private translateY;
     private scale;
+    private initialDistance;
+    private initialScale;
     constructor(options: {
         imageUrls: string[];
         initialIndex: number;
@@ -20,6 +22,10 @@ export default class MainImageViewer extends DomNode {
     private startDrag;
     private drag;
     private endDrag;
+    private getDistance;
+    private startTouch;
+    private moveTouch;
+    private endTouch;
     zoomIn(): void;
     zoomOut(): void;
     resetZoom(): void;

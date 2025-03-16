@@ -2,6 +2,7 @@ import { DomNode, el } from "@common-module/app";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;
+const DEFAULT_TRANSITION = "transform 0.2s ease-in-out";
 
 export default class MainImageViewer extends DomNode {
   private imageUrls: string[] = [];
@@ -17,6 +18,8 @@ export default class MainImageViewer extends DomNode {
   private translateX = 0;
   private translateY = 0;
   private scale = 1;
+  private initialDistance = 0;
+  private initialScale = 1;
 
   constructor(options: { imageUrls: string[]; initialIndex: number }) {
     super(".main-image-viewer");
@@ -39,6 +42,10 @@ export default class MainImageViewer extends DomNode {
     this.currentImage.onDom("mousedown", (event) => this.startDrag(event));
     this.onWindow("mousemove", (event) => this.drag(event));
     this.onWindow("mouseup", () => this.endDrag());
+
+    this.currentImage.onDom("touchstart", (event) => this.startTouch(event));
+    this.onWindow("touchmove", (event) => this.moveTouch(event));
+    this.onWindow("touchend", (event) => this.endTouch(event));
 
     this.currentImage.onDom("wheel", (event) => this.handleWheelZoom(event));
     this.currentImage.onDom("transitionend", () => this.resetImages());
@@ -68,17 +75,17 @@ export default class MainImageViewer extends DomNode {
     this.prevImage?.style({
       left: "0",
       opacity: "0",
-      transition: "transform 0.2s ease-in-out",
+      transition: DEFAULT_TRANSITION,
     });
     this.currentImage.style({
       left: "50%",
       opacity: "1",
-      transition: "transform 0.2s ease-in-out",
+      transition: DEFAULT_TRANSITION,
     });
     this.nextImage?.style({
       left: "100%",
       opacity: "0",
-      transition: "transform 0.2s ease-in-out",
+      transition: DEFAULT_TRANSITION,
     });
   }
 
@@ -112,8 +119,56 @@ export default class MainImageViewer extends DomNode {
       this.isDragging = false;
       this.currentImage.style({
         cursor: "auto",
-        transition: "transform 0.2s ease-in-out",
+        transition: DEFAULT_TRANSITION,
       });
+    }
+  }
+
+  private getDistance(touches: TouchList): number {
+    if (touches.length < 2) return 0;
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  private startTouch(event: TouchEvent): void {
+    if (event.touches.length >= 2) {
+      event.preventDefault();
+      this.initialDistance = this.getDistance(event.touches);
+      this.initialScale = this.scale;
+    } else if (this.scale > 1) {
+      this.isDragging = true;
+      this.dragStartX = event.touches[0].clientX - this.translateX;
+      this.dragStartY = event.touches[0].clientY - this.translateY;
+      this.currentImage.style({ transition: "none" });
+    }
+  }
+
+  private moveTouch(event: TouchEvent): void {
+    if (event.touches.length >= 2) {
+      event.preventDefault();
+      const currentDistance = this.getDistance(event.touches);
+      if (this.initialDistance > 0) {
+        let newScale = (currentDistance / this.initialDistance) *
+          this.initialScale;
+        newScale = Math.max(1, Math.min(newScale, 3));
+        this.scale = newScale;
+        this.updateTransform();
+      }
+    } else if (this.isDragging) {
+      event.preventDefault();
+      this.translateX = event.touches[0].clientX - this.dragStartX;
+      this.translateY = event.touches[0].clientY - this.dragStartY;
+      this.updateTransform();
+    }
+  }
+
+  private endTouch(event: TouchEvent): void {
+    if (event.touches.length === 0) {
+      this.initialDistance = 0;
+    } else if (this.isDragging) {
+      this.isDragging = false;
+      this.currentImage.style({ transition: DEFAULT_TRANSITION });
     }
   }
 
@@ -176,19 +231,19 @@ export default class MainImageViewer extends DomNode {
       left: transitionDirection === "right" ? "-50%" : "50%",
       opacity: transitionDirection === "right" ? "0" : "1",
       transition:
-        "left 0.2s ease-in-out, opacity 0.2s ease-in-out, transform 0.2s ease-in-out",
+        `left 0.2s ease-in-out, opacity 0.2s ease-in-out, ${DEFAULT_TRANSITION}`,
     });
     this.currentImage.style({
       left: transitionDirection === "right" ? "0" : "100%",
       opacity: "0",
       transition:
-        "left 0.2s ease-in-out, opacity 0.2s ease-in-out, transform 0.2s ease-in-out",
+        `left 0.2s ease-in-out, opacity 0.2s ease-in-out, ${DEFAULT_TRANSITION}`,
     });
     this.nextImage?.style({
       left: transitionDirection === "right" ? "50%" : "150%",
       opacity: transitionDirection === "right" ? "1" : "0",
       transition:
-        "left 0.2s ease-in-out, opacity 0.2s ease-in-out, transform 0.2s ease-in-out",
+        `left 0.2s ease-in-out, opacity 0.2s ease-in-out, ${DEFAULT_TRANSITION}`,
     });
 
     this.currentImageIndex = imageIndex;
