@@ -66,7 +66,6 @@ export default class MainImageViewer extends DomNode {
     }
 
     this.prevImage?.style({
-      display: "none",
       left: "0",
       opacity: "0",
       transition: "transform 0.2s ease-in-out",
@@ -77,7 +76,6 @@ export default class MainImageViewer extends DomNode {
       transition: "transform 0.2s ease-in-out",
     });
     this.nextImage?.style({
-      display: "none",
       left: "100%",
       opacity: "0",
       transition: "transform 0.2s ease-in-out",
