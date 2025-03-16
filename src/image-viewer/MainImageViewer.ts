@@ -153,6 +153,7 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
     ) {
       event.preventDefault();
       this.toggleZoom();
+      this.isDragging = false;
       this.lastTap = 0;
       return;
     }
@@ -194,7 +195,7 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
         this.scale = newScale;
         this.updateTransform();
       }
-    } else if (this.isDragging) {
+    } else if (this.isDragging && this.scale > 1) {
       event.preventDefault();
       this.translateX = event.touches[0].clientX - this.dragStartX;
       this.translateY = event.touches[0].clientY - this.dragStartY;
@@ -217,7 +218,7 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
       this.isSwipeInProgress = false;
     } else if (event.touches.length === 0) {
       this.initialDistance = 0;
-    } else if (this.isDragging) {
+    } else if (this.isDragging && this.scale > 1) {
       this.isDragging = false;
       this.currentImage.style({ transition: DEFAULT_TRANSITION });
     }
