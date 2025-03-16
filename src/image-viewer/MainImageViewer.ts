@@ -4,7 +4,10 @@ const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;
 const DEFAULT_TRANSITION = "transform 0.2s ease-in-out";
 
-export default class MainImageViewer extends DomNode {
+export default class MainImageViewer extends DomNode<HTMLDivElement, {
+  swipeLeft: () => void;
+  swipeRight: () => void;
+}> {
   private imageUrls: string[] = [];
   private currentImageIndex = 0;
 
@@ -12,14 +15,20 @@ export default class MainImageViewer extends DomNode {
   private currentImage: DomNode<HTMLImageElement>;
   private nextImage?: DomNode<HTMLImageElement>;
 
-  private isDragging = false;
-  private dragStartX = 0;
-  private dragStartY = 0;
   private translateX = 0;
   private translateY = 0;
   private scale = 1;
+
+  private isDragging = false;
+  private dragStartX = 0;
+  private dragStartY = 0;
+
   private initialDistance = 0;
   private initialScale = 1;
+
+  private swipeStartX = 0;
+  private swipeThreshold = 100;
+  private isSwipeInProgress = false;
 
   constructor(options: { imageUrls: string[]; initialIndex: number }) {
     super(".main-image-viewer");
@@ -132,7 +141,10 @@ export default class MainImageViewer extends DomNode {
   }
 
   private startTouch(event: TouchEvent): void {
-    if (event.touches.length >= 2) {
+    if (event.touches.length === 1 && this.scale === 1) {
+      this.swipeStartX = event.touches[0].clientX;
+      this.isSwipeInProgress = true;
+    } else if (event.touches.length >= 2) {
       event.preventDefault();
       this.initialDistance = this.getDistance(event.touches);
       this.initialScale = this.scale;
@@ -145,7 +157,15 @@ export default class MainImageViewer extends DomNode {
   }
 
   private moveTouch(event: TouchEvent): void {
-    if (event.touches.length >= 2) {
+    if (
+      this.isSwipeInProgress && event.touches.length === 1 && this.scale === 1
+    ) {
+      const currentX = event.touches[0].clientX;
+      const deltaX = currentX - this.swipeStartX;
+      if (Math.abs(deltaX) > 10) {
+        event.preventDefault();
+      }
+    } else if (event.touches.length >= 2) {
       event.preventDefault();
       const currentDistance = this.getDistance(event.touches);
       if (this.initialDistance > 0) {
@@ -164,7 +184,19 @@ export default class MainImageViewer extends DomNode {
   }
 
   private endTouch(event: TouchEvent): void {
-    if (event.touches.length === 0) {
+    if (this.isSwipeInProgress && this.scale === 1) {
+      const currentX = event.changedTouches
+        ? event.changedTouches[0].clientX
+        : 0;
+      const deltaX = currentX - this.swipeStartX;
+
+      if (Math.abs(deltaX) >= this.swipeThreshold) {
+        if (deltaX > 0) this.emit("swipeRight");
+        else if (deltaX < 0) this.emit("swipeLeft");
+      }
+
+      this.isSwipeInProgress = false;
+    } else if (event.touches.length === 0) {
       this.initialDistance = 0;
     } else if (this.isDragging) {
       this.isDragging = false;

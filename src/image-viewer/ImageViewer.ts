@@ -63,12 +63,7 @@ export default class ImageViewer extends Modal {
           icon: new AppCompConfig.PrevIcon(),
           onClick: (button, event) => {
             event.stopPropagation();
-            this.updateImage(
-              this.currentImageIndex <= 0
-                ? this.images.length - 1
-                : this.currentImageIndex - 1,
-              "left",
-            );
+            this.prevImage();
           },
         }),
         this.mainImageViewer = new MainImageViewer({
@@ -80,12 +75,7 @@ export default class ImageViewer extends Modal {
           icon: new AppCompConfig.NextIcon(),
           onClick: (button, event) => {
             event.stopPropagation();
-            this.updateImage(
-              this.currentImageIndex >= this.images.length - 1
-                ? 0
-                : this.currentImageIndex + 1,
-              "right",
-            );
+            this.nextImage();
           },
         }),
         el(
@@ -117,12 +107,14 @@ export default class ImageViewer extends Modal {
       ),
     );
 
-    this.mainImageViewer.onDom("click", (event) => event.stopPropagation());
-    this.thumbnailList.onDom("click", (event) => event.stopPropagation());
-    this.thumbnailList.on(
-      "thumbnailSelected",
-      (index) => this.updateImage(index),
-    );
+    this.mainImageViewer
+      .onDom("click", (event) => event.stopPropagation())
+      .on("swipeLeft", () => this.prevImage())
+      .on("swipeRight", () => this.nextImage());
+
+    this.thumbnailList
+      .onDom("click", (event) => event.stopPropagation())
+      .on("thumbnailSelected", (index) => this.updateImage(index));
   }
 
   private shareCurrentImage() {
@@ -146,5 +138,23 @@ export default class ImageViewer extends Modal {
     this.currentImageIndex = imageIndex;
     this.imageCounter.text = `${imageIndex + 1} / ${this.images.length}`;
     this.thumbnailList.selectThumbnail(imageIndex);
+  }
+
+  private prevImage() {
+    this.updateImage(
+      this.currentImageIndex <= 0
+        ? this.images.length - 1
+        : this.currentImageIndex - 1,
+      "left",
+    );
+  }
+
+  private nextImage() {
+    this.updateImage(
+      this.currentImageIndex >= this.images.length - 1
+        ? 0
+        : this.currentImageIndex + 1,
+      "right",
+    );
   }
 }

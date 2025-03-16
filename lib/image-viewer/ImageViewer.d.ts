@@ -14,5 +14,7 @@ export default class ImageViewer extends Modal {
     private shareCurrentImage;
     private toggleFullscreen;
     private updateImage;
+    private prevImage;
+    private nextImage;
 }
 //# sourceMappingURL=ImageViewer.d.ts.map
