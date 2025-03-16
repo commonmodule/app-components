@@ -167,6 +167,7 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
       this.initialDistance = this.getDistance(event.touches);
       this.initialScale = this.scale;
     } else if (this.scale > 1) {
+      event.preventDefault();
       this.isDragging = true;
       this.dragStartX = event.touches[0].clientX - this.translateX;
       this.dragStartY = event.touches[0].clientY - this.translateY;
