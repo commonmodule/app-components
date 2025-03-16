@@ -15,5 +15,6 @@ export default class MainImageViewer extends DomNode {
     zoomIn(): void;
     zoomOut(): void;
     resetZoom(): void;
+    private handleWheelZoom;
 }
 //# sourceMappingURL=MainImageViewer.d.ts.map

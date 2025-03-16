@@ -1,5 +1,8 @@
 import { DomNode, el } from "@common-module/app";
 
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 3;
+
 export default class MainImageViewer extends DomNode {
   private image: DomNode;
 
@@ -19,6 +22,8 @@ export default class MainImageViewer extends DomNode {
     this.image.onDom("mousedown", (event) => this.startDrag(event));
     this.onWindow("mousemove", (event) => this.drag(event));
     this.onWindow("mouseup", () => this.endDrag());
+
+    this.image.onDom("wheel", (event) => this.handleWheelZoom(event));
   }
 
   private updateTransform() {
@@ -30,10 +35,12 @@ export default class MainImageViewer extends DomNode {
 
   private startDrag(event: MouseEvent) {
     event.preventDefault();
-    this.isDragging = true;
-    this.dragStartX = event.clientX - this.translateX;
-    this.dragStartY = event.clientY - this.translateY;
-    this.image.addClass("dragging");
+    if (this.scale > 1) {
+      this.isDragging = true;
+      this.dragStartX = event.clientX - this.translateX;
+      this.dragStartY = event.clientY - this.translateY;
+      this.image.addClass("dragging");
+    }
   }
 
   private drag(event: MouseEvent) {
@@ -50,12 +57,12 @@ export default class MainImageViewer extends DomNode {
   }
 
   public zoomIn() {
-    this.scale = Math.min(this.scale + 0.25, 3);
+    this.scale = Math.min(this.scale + 0.25, MAX_ZOOM);
     this.updateTransform();
   }
 
   public zoomOut() {
-    this.scale = Math.max(this.scale - 0.25, 1);
+    this.scale = Math.max(this.scale - 0.25, MIN_ZOOM);
     this.updateTransform();
   }
 
@@ -63,6 +70,14 @@ export default class MainImageViewer extends DomNode {
     this.scale = 1;
     this.translateX = 0;
     this.translateY = 0;
+    this.updateTransform();
+  }
+
+  private handleWheelZoom(event: WheelEvent) {
+    event.preventDefault();
+
+    this.scale -= event.deltaY / 100;
+    this.scale = Math.max(MIN_ZOOM, Math.min(this.scale, MAX_ZOOM));
     this.updateTransform();
   }
 }
