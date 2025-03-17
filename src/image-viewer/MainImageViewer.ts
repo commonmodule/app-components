@@ -235,6 +235,7 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
   }
 
   public resetZoom() {
+    this.currentImage.style({ transition: DEFAULT_TRANSITION });
     this.scale = 1;
     this.translateX = 0;
     this.translateY = 0;
