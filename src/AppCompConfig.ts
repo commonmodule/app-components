@@ -101,19 +101,19 @@ class DefaultNextIcon extends DomNode {
 
 class DefaultZoomInIcon extends DomNode {
   constructor() {
-    super("span.icon.zoom-in", "🔍");
+    super("span.icon.zoom-in", "🔍+");
   }
 }
 
 class DefaultZoomOutIcon extends DomNode {
   constructor() {
-    super("span.icon.zoom-out", "🔍");
+    super("span.icon.zoom-out", "🔍-");
   }
 }
 
 class DefaultResetZoomIcon extends DomNode {
   constructor() {
-    super("span.icon.reset-zoom", "🔍");
+    super("span.icon.reset-zoom", "🔍1");
   }
 }
 
