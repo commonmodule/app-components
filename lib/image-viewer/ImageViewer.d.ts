@@ -12,6 +12,7 @@ export default class ImageViewer extends Modal {
         initialIndex: number;
     });
     private shareCurrentImage;
+    private downloadCurrentImage;
     private toggleFullscreen;
     private updateImage;
     private prevImage;

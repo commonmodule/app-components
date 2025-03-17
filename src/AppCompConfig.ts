@@ -15,6 +15,12 @@ class DefaultShareIcon extends DomNode {
   }
 }
 
+class DefaultDownloadIcon extends DomNode {
+  constructor() {
+    super("span.icon.download", "⬇️");
+  }
+}
+
 class DefaultLoadingSpinner extends DomNode {
   constructor() {
     super(".loading-spinner");
@@ -127,6 +133,7 @@ class AppCompConfig {
   public LoadingSpinner: DomNodeConstructor = DefaultLoadingSpinner;
   public CloseIcon: DomNodeConstructor = DefaultCloseIcon;
   public ShareIcon: DomNodeConstructor = DefaultShareIcon;
+  public DownloadIcon: DomNodeConstructor = DefaultDownloadIcon;
 
   public SuccessIcon: DomNodeConstructor = DefaultSuccessIcon;
   public InfoIcon: DomNodeConstructor = DefaultInfoIcon;

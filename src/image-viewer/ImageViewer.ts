@@ -33,6 +33,11 @@ export default class ImageViewer extends Modal {
               icon: new AppCompConfig.ShareIcon(),
               onClick: () => this.shareCurrentImage(),
             }),
+            new Button(".download", {
+              type: ButtonType.Icon,
+              icon: new AppCompConfig.DownloadIcon(),
+              onClick: () => this.downloadCurrentImage(),
+            }),
           ),
           this.imageCounter = el(
             ".image-counter",
@@ -49,6 +54,11 @@ export default class ImageViewer extends Modal {
               type: ButtonType.Icon,
               icon: new AppCompConfig.ShareIcon(),
               onClick: () => this.shareCurrentImage(),
+            }),
+            new Button(".download", {
+              type: ButtonType.Icon,
+              icon: new AppCompConfig.DownloadIcon(),
+              onClick: () => this.downloadCurrentImage(),
             }),
             new Button(".close", {
               type: ButtonType.Icon,
@@ -120,6 +130,11 @@ export default class ImageViewer extends Modal {
   private shareCurrentImage() {
     const image = this.images[this.currentImageIndex];
     Browser.share({ title: "Shared Image", url: image.imageUrl });
+  }
+
+  private downloadCurrentImage() {
+    const image = this.images[this.currentImageIndex];
+    Browser.download(image.imageUrl);
   }
 
   private toggleFullscreen() {

@@ -5,6 +5,7 @@ declare class AppCompConfig {
     LoadingSpinner: DomNodeConstructor;
     CloseIcon: DomNodeConstructor;
     ShareIcon: DomNodeConstructor;
+    DownloadIcon: DomNodeConstructor;
     SuccessIcon: DomNodeConstructor;
     InfoIcon: DomNodeConstructor;
     WarningIcon: DomNodeConstructor;
