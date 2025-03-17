@@ -2,6 +2,7 @@ import { Browser, DomNode, el } from "@common-module/app";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;
+const ZOOM_STEP = 0.25;
 
 const DEFAULT_TRANSITION = "transform 0.2s ease-in-out";
 const DOUBLE_TAP_DELAY = 300;
@@ -251,12 +252,12 @@ export default class MainImageDisplay extends DomNode<HTMLDivElement, {
   }
 
   public zoomIn() {
-    this.scale = Math.min(this.scale + 0.25, MAX_ZOOM);
+    this.scale = Math.min(this.scale + ZOOM_STEP, MAX_ZOOM);
     this.updateTransform();
   }
 
   public zoomOut() {
-    this.scale = Math.max(this.scale - 0.25, MIN_ZOOM);
+    this.scale = Math.max(this.scale - ZOOM_STEP, MIN_ZOOM);
     this.updateTransform();
   }
 

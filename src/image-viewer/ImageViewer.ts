@@ -2,12 +2,12 @@ import { Browser, DomNode, el } from "@common-module/app";
 import AppCompConfig from "../AppCompConfig.js";
 import Button, { ButtonType } from "../button/Button.js";
 import Modal from "../modal/Modal.js";
-import ImageInfo from "./ImageInfo.js";
+import ImageResource from "./ImageResource.js";
 import MainImageDisplay from "./MainImageDisplay.js";
 import ThumbnailList from "./ThumbnailList.js";
 
 export default class ImageViewer extends Modal {
-  private images: ImageInfo[] = [];
+  private images: ImageResource[] = [];
   private currentImageIndex = 0;
 
   private container: DomNode;
@@ -15,7 +15,7 @@ export default class ImageViewer extends Modal {
   private mainImageDisplay: MainImageDisplay;
   private thumbnailList: ThumbnailList;
 
-  constructor(options: { images: ImageInfo[]; initialIndex: number }) {
+  constructor(options: { images: ImageResource[]; initialIndex: number }) {
     super(".image-viewer");
 
     this.images = options.images;
@@ -26,46 +26,12 @@ export default class ImageViewer extends Modal {
         ".container",
         el(
           "header",
-          el(
-            ".button-container.left",
-            new Button(".share", {
-              type: ButtonType.Icon,
-              icon: new AppCompConfig.ShareIcon(),
-              onClick: () => this.shareCurrentImage(),
-            }),
-            new Button(".download", {
-              type: ButtonType.Icon,
-              icon: new AppCompConfig.DownloadIcon(),
-              onClick: () => this.downloadCurrentImage(),
-            }),
-          ),
+          this.createButtonContainer("left"),
           this.imageCounter = el(
             ".image-counter",
             `${this.currentImageIndex + 1} / ${this.images.length}`,
           ),
-          el(
-            ".button-container.right",
-            new Button(".fullscreen", {
-              type: ButtonType.Icon,
-              icon: new AppCompConfig.FullscreenIcon(),
-              onClick: () => this.toggleFullscreen(),
-            }),
-            new Button(".share", {
-              type: ButtonType.Icon,
-              icon: new AppCompConfig.ShareIcon(),
-              onClick: () => this.shareCurrentImage(),
-            }),
-            new Button(".download", {
-              type: ButtonType.Icon,
-              icon: new AppCompConfig.DownloadIcon(),
-              onClick: () => this.downloadCurrentImage(),
-            }),
-            new Button(".close", {
-              type: ButtonType.Icon,
-              icon: new AppCompConfig.CloseIcon(),
-              onClick: () => this.remove(),
-            }),
-          ),
+          this.createButtonContainer("right"),
           { onclick: (event) => event.stopPropagation() },
         ),
         new Button(".prev", {
@@ -73,7 +39,7 @@ export default class ImageViewer extends Modal {
           icon: new AppCompConfig.PrevIcon(),
           onClick: (button, event) => {
             event.stopPropagation();
-            this.prevImage();
+            this.goToPrevImage();
           },
         }),
         this.mainImageDisplay = new MainImageDisplay({
@@ -85,7 +51,7 @@ export default class ImageViewer extends Modal {
           icon: new AppCompConfig.NextIcon(),
           onClick: (button, event) => {
             event.stopPropagation();
-            this.nextImage();
+            this.goToNextImage();
           },
         }),
         el(
@@ -119,12 +85,42 @@ export default class ImageViewer extends Modal {
 
     this.mainImageDisplay
       .onDom("click", (event) => event.stopPropagation())
-      .on("swipeLeft", () => this.nextImage())
-      .on("swipeRight", () => this.prevImage());
+      .on("swipeLeft", () => this.goToNextImage())
+      .on("swipeRight", () => this.goToPrevImage());
 
     this.thumbnailList
       .onDom("click", (event) => event.stopPropagation())
       .on("thumbnailSelected", (index) => this.goToImage(index));
+  }
+
+  private createButtonContainer(position: "left" | "right"): DomNode {
+    return el(
+      `.button-container.${position}`,
+      position === "right"
+        ? new Button(".fullscreen", {
+          type: ButtonType.Icon,
+          icon: new AppCompConfig.FullscreenIcon(),
+          onClick: () => this.toggleFullscreen(),
+        })
+        : undefined,
+      new Button(".share", {
+        type: ButtonType.Icon,
+        icon: new AppCompConfig.ShareIcon(),
+        onClick: () => this.shareCurrentImage(),
+      }),
+      new Button(".download", {
+        type: ButtonType.Icon,
+        icon: new AppCompConfig.DownloadIcon(),
+        onClick: () => this.downloadCurrentImage(),
+      }),
+      position === "right"
+        ? new Button(".close", {
+          type: ButtonType.Icon,
+          icon: new AppCompConfig.CloseIcon(),
+          onClick: () => this.remove(),
+        })
+        : undefined,
+    );
   }
 
   private shareCurrentImage() {
@@ -155,7 +151,7 @@ export default class ImageViewer extends Modal {
     this.thumbnailList.selectThumbnail(imageIndex);
   }
 
-  private prevImage() {
+  private goToPrevImage() {
     this.goToImage(
       this.currentImageIndex <= 0
         ? this.images.length - 1
@@ -164,7 +160,7 @@ export default class ImageViewer extends Modal {
     );
   }
 
-  private nextImage() {
+  private goToNextImage() {
     this.goToImage(
       this.currentImageIndex >= this.images.length - 1
         ? 0

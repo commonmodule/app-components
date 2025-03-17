@@ -1,5 +1,5 @@
 import Modal from "../modal/Modal.js";
-import ImageInfo from "./ImageInfo.js";
+import ImageResource from "./ImageResource.js";
 export default class ImageViewer extends Modal {
     private images;
     private currentImageIndex;
@@ -8,14 +8,15 @@ export default class ImageViewer extends Modal {
     private mainImageDisplay;
     private thumbnailList;
     constructor(options: {
-        images: ImageInfo[];
+        images: ImageResource[];
         initialIndex: number;
     });
+    private createButtonContainer;
     private shareCurrentImage;
     private downloadCurrentImage;
     private toggleFullscreen;
     private goToImage;
-    private prevImage;
-    private nextImage;
+    private goToPrevImage;
+    private goToNextImage;
 }
 //# sourceMappingURL=ImageViewer.d.ts.map
