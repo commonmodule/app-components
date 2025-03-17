@@ -1,5 +1,5 @@
 import { DomNode } from "@common-module/app";
-export default class MainImageViewer extends DomNode<HTMLDivElement, {
+export default class MainImageDisplay extends DomNode<HTMLDivElement, {
     swipeLeft: () => void;
     swipeRight: () => void;
 }> {
@@ -20,7 +20,6 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
     private swipeThreshold;
     private isSwipeInProgress;
     private lastTap;
-    private doubleTapDelay;
     constructor(options: {
         imageUrls: string[];
         initialIndex: number;
@@ -41,4 +40,4 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
     private handleWheelZoom;
     goToImage(imageIndex: number, transitionDirection?: "left" | "right"): void;
 }
-//# sourceMappingURL=MainImageViewer.d.ts.map
+//# sourceMappingURL=MainImageDisplay.d.ts.map

@@ -2,9 +2,11 @@ import { Browser, DomNode, el } from "@common-module/app";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;
-const DEFAULT_TRANSITION = "transform 0.2s ease-in-out";
 
-export default class MainImageViewer extends DomNode<HTMLDivElement, {
+const DEFAULT_TRANSITION = "transform 0.2s ease-in-out";
+const DOUBLE_TAP_DELAY = 300;
+
+export default class MainImageDisplay extends DomNode<HTMLDivElement, {
   swipeLeft: () => void;
   swipeRight: () => void;
 }> {
@@ -31,7 +33,6 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
   private isSwipeInProgress = false;
 
   private lastTap = 0;
-  private doubleTapDelay = 300;
 
   constructor(options: { imageUrls: string[]; initialIndex: number }) {
     super(".main-image-viewer");
@@ -148,7 +149,7 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
     const tapLength = currentTime - this.lastTap;
 
     if (
-      tapLength < this.doubleTapDelay && tapLength > 0 &&
+      tapLength < DOUBLE_TAP_DELAY && tapLength > 0 &&
       event.touches.length === 1
     ) {
       event.preventDefault();
@@ -204,7 +205,7 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
       if (this.initialDistance > 0) {
         let newScale = (currentDistance / this.initialDistance) *
           this.initialScale;
-        newScale = Math.max(1, Math.min(newScale, 3));
+        newScale = Math.max(MIN_ZOOM, Math.min(newScale, MAX_ZOOM));
         this.scale = newScale;
         this.updateTransform();
       }
@@ -284,10 +285,7 @@ export default class MainImageViewer extends DomNode<HTMLDivElement, {
     this.updateTransform();
   }
 
-  public updateImage(
-    imageIndex: number,
-    transitionDirection?: "left" | "right",
-  ) {
+  public goToImage(imageIndex: number, transitionDirection?: "left" | "right") {
     if (imageIndex === this.currentImageIndex) return;
 
     this.resetZoom();

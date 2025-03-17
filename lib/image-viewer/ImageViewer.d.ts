@@ -5,7 +5,7 @@ export default class ImageViewer extends Modal {
     private currentImageIndex;
     private container;
     private imageCounter;
-    private mainImageViewer;
+    private mainImageDisplay;
     private thumbnailList;
     constructor(options: {
         images: ImageInfo[];
@@ -14,7 +14,7 @@ export default class ImageViewer extends Modal {
     private shareCurrentImage;
     private downloadCurrentImage;
     private toggleFullscreen;
-    private updateImage;
+    private goToImage;
     private prevImage;
     private nextImage;
 }

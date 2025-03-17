@@ -3,7 +3,7 @@ import AppCompConfig from "../AppCompConfig.js";
 import Button, { ButtonType } from "../button/Button.js";
 import Modal from "../modal/Modal.js";
 import ImageInfo from "./ImageInfo.js";
-import MainImageViewer from "./MainImageViewer.js";
+import MainImageDisplay from "./MainImageDisplay.js";
 import ThumbnailList from "./ThumbnailList.js";
 
 export default class ImageViewer extends Modal {
@@ -12,7 +12,7 @@ export default class ImageViewer extends Modal {
 
   private container: DomNode;
   private imageCounter: DomNode;
-  private mainImageViewer: MainImageViewer;
+  private mainImageDisplay: MainImageDisplay;
   private thumbnailList: ThumbnailList;
 
   constructor(options: { images: ImageInfo[]; initialIndex: number }) {
@@ -76,7 +76,7 @@ export default class ImageViewer extends Modal {
             this.prevImage();
           },
         }),
-        this.mainImageViewer = new MainImageViewer({
+        this.mainImageDisplay = new MainImageDisplay({
           imageUrls: this.images.map((image) => image.imageUrl),
           initialIndex: options.initialIndex,
         }),
@@ -93,17 +93,17 @@ export default class ImageViewer extends Modal {
           new Button(".zoom-in", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ZoomInIcon(),
-            onClick: () => this.mainImageViewer.zoomIn(),
+            onClick: () => this.mainImageDisplay.zoomIn(),
           }),
           new Button(".zoom-out", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ZoomOutIcon(),
-            onClick: () => this.mainImageViewer.zoomOut(),
+            onClick: () => this.mainImageDisplay.zoomOut(),
           }),
           new Button(".reset-zoom", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ResetZoomIcon(),
-            onClick: () => this.mainImageViewer.resetZoom(),
+            onClick: () => this.mainImageDisplay.resetZoom(),
           }),
           { onclick: (event) => event.stopPropagation() },
         ),
@@ -117,14 +117,14 @@ export default class ImageViewer extends Modal {
       ),
     );
 
-    this.mainImageViewer
+    this.mainImageDisplay
       .onDom("click", (event) => event.stopPropagation())
       .on("swipeLeft", () => this.nextImage())
       .on("swipeRight", () => this.prevImage());
 
     this.thumbnailList
       .onDom("click", (event) => event.stopPropagation())
-      .on("thumbnailSelected", (index) => this.updateImage(index));
+      .on("thumbnailSelected", (index) => this.goToImage(index));
   }
 
   private shareCurrentImage() {
@@ -145,18 +145,18 @@ export default class ImageViewer extends Modal {
     }
   }
 
-  private updateImage(
+  private goToImage(
     imageIndex: number,
     transitionDirection?: "left" | "right",
   ) {
-    this.mainImageViewer.updateImage(imageIndex, transitionDirection);
+    this.mainImageDisplay.goToImage(imageIndex, transitionDirection);
     this.currentImageIndex = imageIndex;
     this.imageCounter.text = `${imageIndex + 1} / ${this.images.length}`;
     this.thumbnailList.selectThumbnail(imageIndex);
   }
 
   private prevImage() {
-    this.updateImage(
+    this.goToImage(
       this.currentImageIndex <= 0
         ? this.images.length - 1
         : this.currentImageIndex - 1,
@@ -165,7 +165,7 @@ export default class ImageViewer extends Modal {
   }
 
   private nextImage() {
-    this.updateImage(
+    this.goToImage(
       this.currentImageIndex >= this.images.length - 1
         ? 0
         : this.currentImageIndex + 1,
