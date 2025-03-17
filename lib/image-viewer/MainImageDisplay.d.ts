@@ -19,7 +19,7 @@ export default class MainImageDisplay extends DomNode<HTMLDivElement, {
     private swipeStartX;
     private swipeThreshold;
     private isSwipeInProgress;
-    private lastTap;
+    private lastTapTimestamp;
     constructor(options: {
         imageUrls: string[];
         initialIndex: number;

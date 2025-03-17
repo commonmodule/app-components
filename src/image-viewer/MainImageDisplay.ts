@@ -33,7 +33,7 @@ export default class MainImageDisplay extends DomNode<HTMLDivElement, {
   private swipeThreshold = 40;
   private isSwipeInProgress = false;
 
-  private lastTap = 0;
+  private lastTapTimestamp = 0;
 
   constructor(options: { imageUrls: string[]; initialIndex: number }) {
     super(".main-image-viewer");
@@ -147,7 +147,7 @@ export default class MainImageDisplay extends DomNode<HTMLDivElement, {
 
   private startTouch(event: TouchEvent): void {
     const currentTime = new Date().getTime();
-    const tapLength = currentTime - this.lastTap;
+    const tapLength = currentTime - this.lastTapTimestamp;
 
     if (
       tapLength < DOUBLE_TAP_DELAY && tapLength > 0 &&
@@ -156,11 +156,11 @@ export default class MainImageDisplay extends DomNode<HTMLDivElement, {
       event.preventDefault();
       this.toggleZoom();
       this.isDragging = false;
-      this.lastTap = 0;
+      this.lastTapTimestamp = 0;
       return;
     }
 
-    this.lastTap = currentTime;
+    this.lastTapTimestamp = currentTime;
 
     if (event.touches.length === 1 && this.scale === 1) {
       this.swipeStartX = event.touches[0].clientX;
