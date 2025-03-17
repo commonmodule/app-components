@@ -28,6 +28,24 @@ export default class ThumbnailList extends DomNode<HTMLDivElement, {
       this.children[this.selectedThumbnailIndex]?.deselect();
     }
     this.selectedThumbnailIndex = index;
-    this.children[index]?.select();
+
+    const item = this.children[index];
+    if (item) {
+      item.select();
+
+      if (this.parent) {
+        const containerWidth = this.parent.htmlElement.clientWidth;
+        const thumbnailWidth = item.htmlElement.clientWidth;
+        const thumbOffsetLeft = item.htmlElement.offsetLeft;
+
+        const scrollTo = thumbOffsetLeft -
+          (containerWidth / 2 - thumbnailWidth / 2);
+
+        this.parent.htmlElement.scrollTo({
+          left: scrollTo,
+          behavior: "smooth",
+        });
+      }
+    }
   }
 }
