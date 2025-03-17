@@ -182,25 +182,27 @@ export default class MainImageDisplay extends DomNode<HTMLDivElement, {
     if (
       this.isSwipeInProgress && event.touches.length === 1 && this.scale === 1
     ) {
-      const currentX = event.touches[0].clientX;
-      const swipeTranslateX = currentX - this.swipeStartX;
+      if (this.imageUrls.length > 1) {
+        const currentX = event.touches[0].clientX;
+        const swipeTranslateX = currentX - this.swipeStartX;
 
-      this.prevImage?.style({
-        transition: "none",
-        left: `calc(${
-          Browser.isMobileDevice() ? -50 : 0
-        }% + ${swipeTranslateX}px)`,
-      });
-      this.currentImage.style({
-        transition: "none",
-        left: `calc(50% + ${swipeTranslateX}px)`,
-      });
-      this.nextImage?.style({
-        transition: "none",
-        left: `calc(${
-          Browser.isMobileDevice() ? 150 : 100
-        }% + ${swipeTranslateX}px)`,
-      });
+        this.prevImage?.style({
+          transition: "none",
+          left: `calc(${
+            Browser.isMobileDevice() ? -50 : 0
+          }% + ${swipeTranslateX}px)`,
+        });
+        this.currentImage.style({
+          transition: "none",
+          left: `calc(50% + ${swipeTranslateX}px)`,
+        });
+        this.nextImage?.style({
+          transition: "none",
+          left: `calc(${
+            Browser.isMobileDevice() ? 150 : 100
+          }% + ${swipeTranslateX}px)`,
+        });
+      }
     } else if (event.touches.length >= 2) {
       const currentDistance = this.getDistance(event.touches);
       if (this.initialDistance > 0) {
