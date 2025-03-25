@@ -24,6 +24,8 @@ export default class TabGroup<T> extends DomNode<HTMLDivElement, {
     for (const tab of tabs) {
       this.addTab(tab);
     }
+
+    this.onWindow("resize", () => this.updateTabBackgroundOnSelect());
   }
 
   public init(): this {
