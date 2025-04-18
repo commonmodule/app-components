@@ -1,4 +1,4 @@
-import { DomNode, DomUtils, el } from "@common-module/app";
+import { DomNode, DomUtils, el } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 import FileNameInput from "./FileNameInput.js";
 import FileTree from "./FileTree.js";

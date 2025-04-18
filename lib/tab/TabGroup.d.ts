@@ -1,4 +1,4 @@
-import { DomNode } from "@common-module/app";
+import { DomNode } from "@commonmodule/app";
 import Tab from "./Tab.js";
 export default class TabGroup<T> extends DomNode<HTMLDivElement, {
     tabSelected: (value: T) => void;

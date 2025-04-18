@@ -1,4 +1,4 @@
-import { DomChild, DomNode } from "@common-module/app";
+import { DomChild, DomNode } from "@commonmodule/app";
 export declare enum ButtonType {
     Text = "text",
     Contained = "contained",

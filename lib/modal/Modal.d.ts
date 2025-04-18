@@ -1,4 +1,4 @@
-import { DomNode } from "@common-module/app";
+import { DomNode } from "@commonmodule/app";
 export default abstract class Modal<E extends Record<string, (...args: any[]) => any> = {}> extends DomNode<HTMLDialogElement, E> {
     private modal;
     protected closeListener: () => void;

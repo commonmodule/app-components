@@ -1,4 +1,4 @@
-import { Browser, DomNode, el } from "@common-module/app";
+import { Browser, DomNode, el } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 import Button, { ButtonType } from "../button/Button.js";
 import Modal from "../modal/Modal.js";

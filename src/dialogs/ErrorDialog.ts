@@ -1,4 +1,4 @@
-import { DomChild } from "@common-module/app";
+import { DomChild } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 import AlertDialog from "./AlertDialog.js";
 

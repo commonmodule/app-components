@@ -1,4 +1,4 @@
-import { DomChild } from "@common-module/app";
+import { DomChild } from "@commonmodule/app";
 import AlertDialog from "./AlertDialog.js";
 export default class ErrorDialog extends AlertDialog {
     constructor(options: {

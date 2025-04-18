@@ -1,4 +1,4 @@
-import { DomChild, DomNode, el } from "@common-module/app";
+import { DomChild, DomNode, el } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 
 export enum ButtonType {

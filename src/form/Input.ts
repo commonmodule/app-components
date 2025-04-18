@@ -1,4 +1,4 @@
-import { DomNode, el } from "@common-module/app";
+import { DomNode, el } from "@commonmodule/app";
 
 interface InputOptions {
   multiline?: boolean;

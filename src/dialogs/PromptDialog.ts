@@ -1,4 +1,4 @@
-import { DomChild, DomNode, el } from "@common-module/app";
+import { DomChild, DomNode, el } from "@commonmodule/app";
 import Button, { ButtonType } from "../button/Button.js";
 import Input from "../form/Input.js";
 import StructuredModal from "../modal/StructuredModal.js";

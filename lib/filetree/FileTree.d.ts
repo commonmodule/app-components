@@ -1,4 +1,4 @@
-import { DomNode } from "@common-module/app";
+import { DomNode } from "@commonmodule/app";
 import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 interface FileTreeOptions {
     id?: string;

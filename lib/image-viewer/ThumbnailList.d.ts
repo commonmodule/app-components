@@ -1,4 +1,4 @@
-import { DomNode } from "@common-module/app";
+import { DomNode } from "@commonmodule/app";
 import ThumbnailListItem from "./ThumbnailListItem.js";
 export default class ThumbnailList extends DomNode<HTMLDivElement, {
     thumbnailSelected: (thumbnailIndex: number) => void;

@@ -1,4 +1,4 @@
-import { DomChild, el } from "@common-module/app";
+import { DomChild, el } from "@commonmodule/app";
 import Modal from "./Modal.js";
 
 export default class StructuredModal extends Modal {

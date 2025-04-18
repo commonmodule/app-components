@@ -1,4 +1,4 @@
-import { DomNode } from "@common-module/app";
+import { DomNode } from "@commonmodule/app";
 import FileNameInput from "./FileNameInput.js";
 import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 

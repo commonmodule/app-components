@@ -1,4 +1,4 @@
-import { DomNode } from "@common-module/app";
+import { DomNode } from "@commonmodule/app";
 
 export default abstract class SvgIcon extends DomNode {
   constructor(classNames: `.${string}`, viewBox: string, path: string);

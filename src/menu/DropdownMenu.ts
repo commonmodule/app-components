@@ -1,4 +1,4 @@
-import { BodyNode, DomChild, DomNode, el } from "@common-module/app";
+import { BodyNode, DomChild, DomNode, el } from "@commonmodule/app";
 
 interface DropdownMenuOptions {
   left?: number;

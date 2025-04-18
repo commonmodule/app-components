@@ -1,4 +1,4 @@
-import { DomNode, DomUtils } from "@common-module/app";
+import { DomNode, DomUtils } from "@commonmodule/app";
 
 interface TabOptions<Value> {
   label: string;

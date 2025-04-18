@@ -1,4 +1,4 @@
-import { BodyNode, DomNode, el } from "@common-module/app";
+import { BodyNode, DomNode, el } from "@commonmodule/app";
 import AppCompConfig from "./AppCompConfig.js";
 import Button, { ButtonType } from "./button/Button.js";
 

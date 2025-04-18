@@ -1,4 +1,4 @@
-import { Browser, DomNode, el } from "@common-module/app";
+import { Browser, DomNode, el } from "@commonmodule/app";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;

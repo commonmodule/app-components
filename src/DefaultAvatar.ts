@@ -1,4 +1,4 @@
-import { DomNode } from "@common-module/app";
+import { DomNode } from "@commonmodule/app";
 
 const ELEMENTS = 3;
 const SIZE = 80;
