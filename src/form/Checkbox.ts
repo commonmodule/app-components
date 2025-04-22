@@ -50,4 +50,12 @@ export default class Checkbox extends DomNode<HTMLLabelElement, {
   public isChecked(): boolean {
     return this.input.htmlElement.checked;
   }
+
+  public set checked(value: boolean) {
+    this.input.htmlElement.checked = value;
+  }
+
+  public get checked(): boolean {
+    return this.input.htmlElement.checked;
+  }
 }
