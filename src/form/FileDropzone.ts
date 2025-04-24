@@ -1,4 +1,5 @@
 import { DomNode } from "@commonmodule/app";
+import { EventRecord } from "@commonmodule/ts";
 import InvisibleFileInput from "./InvisibleFileInput.js";
 
 interface FileDropzoneOptions {
@@ -9,7 +10,7 @@ interface FileDropzoneOptions {
 
 export default class FileDropzone<
   H extends HTMLElement = HTMLElement,
-  E extends Record<string, (...args: any[]) => any> = {},
+  E extends EventRecord = EventRecord,
 > extends DomNode<H, E> {
   private invisibleFileInput: InvisibleFileInput;
 

@@ -1,10 +1,11 @@
 import { DomNode } from "@commonmodule/app";
+import { EventRecord } from "@commonmodule/ts";
 interface FileDropzoneOptions {
     accept: string;
     multiple?: boolean;
     onUpload: (files: File[]) => void;
 }
-export default class FileDropzone<H extends HTMLElement = HTMLElement, E extends Record<string, (...args: any[]) => any> = {}> extends DomNode<H, E> {
+export default class FileDropzone<H extends HTMLElement = HTMLElement, E extends EventRecord = EventRecord> extends DomNode<H, E> {
     private invisibleFileInput;
     constructor(classNames: `.${string}`, options: FileDropzoneOptions, ...children: DomNode[]);
 }
