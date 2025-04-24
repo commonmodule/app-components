@@ -35,10 +35,7 @@ export default class ConfirmDialog extends StructuredModal {
 
     super(`.confirm-dialog${classNames}`);
     this
-      .on(
-        "remove",
-        () => this.rejectConfirm?.(new Error("Canceled by user")),
-      )
+      .on("remove", () => this.rejectConfirm?.(new Error("Canceled by user")))
       .appendToHeader(el("h1", options.icon, options.title))
       .appendToMain(
         ...(typeof options.message === "string"
