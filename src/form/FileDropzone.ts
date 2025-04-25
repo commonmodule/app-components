@@ -10,7 +10,7 @@ interface FileDropzoneOptions {
 
 export default class FileDropzone<
   H extends HTMLElement = HTMLElement,
-  E extends EventRecord = EventRecord,
+  E extends EventRecord = {},
 > extends DomNode<H, E> {
   private invisibleFileInput: InvisibleFileInput;
 

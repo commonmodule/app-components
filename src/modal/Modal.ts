@@ -15,7 +15,7 @@ nonModalDialogContainer.onDom("click", (event) => {
   }
 });
 
-export default abstract class Modal<E extends EventRecord = EventRecord>
+export default abstract class Modal<E extends EventRecord = {}>
   extends DomNode<HTMLDialogElement, E> {
   protected closeListener = () => this.remove();
 
