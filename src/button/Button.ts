@@ -79,15 +79,15 @@ export default class Button extends DomNode<HTMLButtonElement, {
       if (!this.loading) {
         if (options.onClick) {
           const promise = options.onClick(this, event);
-          if (promise instanceof Promise) {
+          if (!this.removed && promise instanceof Promise) {
             this.startLoading();
             promise.finally(() => this.stopLoading());
           }
         }
 
-        if (this.hasEvent("click")) {
+        if (!this.removed && this.hasEvent("click")) {
           const promise = this.emit("click");
-          if (promise instanceof Promise) {
+          if (!this.removed && promise instanceof Promise) {
             this.startLoading();
             promise.finally(() => this.stopLoading());
           }
