@@ -7,6 +7,7 @@ interface ConfirmDialogOptions {
   title: string;
   message: DomChild[] | string;
   confirmButtonTitle?: string;
+  cancelButtonTitle?: string;
   onConfirm?: () => any;
 }
 
@@ -44,7 +45,7 @@ export default class ConfirmDialog extends StructuredModal {
       )
       .appendToFooter(
         new Button(".cancel", {
-          title: "Cancel",
+          title: options.cancelButtonTitle ?? "Cancel",
           onClick: () => this.remove(),
         }),
         new Button(".confirm", {
