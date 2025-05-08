@@ -8,6 +8,7 @@ interface InputOptions {
     value?: string;
     readOnly?: boolean;
     autoCapitalize?: "off" | "none" | "on" | "sentences" | "words" | "characters";
+    debounceDelay?: number;
     onKeyDown?: (event: KeyboardEvent) => void;
     onChange?: (newValue: string) => void;
     onClick?: (input: Input) => void;
@@ -17,9 +18,11 @@ export default class Input extends DomNode<HTMLLabelElement, {
 }> {
     private input;
     private previousValue;
+    private inputChangeDebouncer?;
     constructor(options?: InputOptions);
     constructor(classNames?: `.${string}`, options?: InputOptions);
-    private handleInput;
+    private emitValueChangeIfNeeded;
+    private onInputEvent;
     get value(): string;
     set value(value: string);
     get readOnly(): boolean;

@@ -1,4 +1,5 @@
 import { DomNode, el } from "@commonmodule/app";
+import { Debouncer } from "@commonmodule/ts";
 
 interface InputOptions {
   multiline?: boolean;
@@ -9,6 +10,7 @@ interface InputOptions {
   value?: string;
   readOnly?: boolean;
   autoCapitalize?: "off" | "none" | "on" | "sentences" | "words" | "characters";
+  debounceDelay?: number;
   onKeyDown?: (event: KeyboardEvent) => void;
   onChange?: (newValue: string) => void;
   onClick?: (input: Input) => void;
@@ -19,6 +21,7 @@ export default class Input extends DomNode<HTMLLabelElement, {
 }> {
   private input: DomNode<HTMLInputElement | HTMLTextAreaElement>;
   private previousValue: string = "";
+  private inputChangeDebouncer?: Debouncer;
 
   constructor(options?: InputOptions);
   constructor(classNames?: `.${string}`, options?: InputOptions);
@@ -44,13 +47,20 @@ export default class Input extends DomNode<HTMLLabelElement, {
       this.htmlElement.autocapitalize = options.autoCapitalize;
     }
 
+    if (options.debounceDelay !== undefined) {
+      this.inputChangeDebouncer = new Debouncer(
+        options.debounceDelay,
+        () => this.emitValueChangeIfNeeded(),
+      );
+    }
+
     this.append(
       options.label ? el("span.label", options.label) : undefined,
       this.input = el(options.multiline ? "textarea" : "input", {
         placeholder: options.placeholder ?? "",
         value: options.value ?? "",
         readOnly: options.readOnly,
-        onkeyup: () => this.handleInput(),
+        onkeyup: () => this.onInputEvent(),
       }),
       options.suffixIcon ? el(".suffix-icon", options.suffixIcon) : undefined,
     );
@@ -68,12 +78,17 @@ export default class Input extends DomNode<HTMLLabelElement, {
     }
   }
 
-  private handleInput = () => {
+  private emitValueChangeIfNeeded() {
     const newValue = this.value;
     if (newValue !== this.previousValue) {
       this.emit("valueChanged", newValue);
       this.previousValue = newValue;
     }
+  }
+
+  private onInputEvent = () => {
+    if (this.inputChangeDebouncer) this.inputChangeDebouncer.execute();
+    else this.emitValueChangeIfNeeded();
   };
 
   public get value(): string {
@@ -83,7 +98,7 @@ export default class Input extends DomNode<HTMLLabelElement, {
   public set value(value: string) {
     if (this.input.htmlElement.value === value) return;
     this.input.htmlElement.value = value;
-    if (!this.readOnly) this.handleInput();
+    if (!this.readOnly) this.onInputEvent();
   }
 
   public get readOnly(): boolean {
