@@ -1,4 +1,4 @@
-import { DomNode, el } from "@commonmodule/app";
+import { Dom, el } from "@commonmodule/app";
 
 export default class ThumbnailListItem extends Dom {
   constructor(thumbnailUrl: string) {

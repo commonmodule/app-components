@@ -1,4 +1,4 @@
-import { BodyNode, DomChild, DomNode, el } from "@commonmodule/app";
+import { Body, Dom, DomChild, el } from "@commonmodule/app";
 
 interface DropdownMenuOptions {
   left?: number;
@@ -37,7 +37,7 @@ export default class DropdownMenu extends Dom {
     this._options = options;
 
     window.getSelection()?.empty();
-    for (const node of BodyNode.children) {
+    for (const node of Body.children) {
       if (node instanceof DropdownMenu) node.remove();
     }
 
@@ -47,19 +47,22 @@ export default class DropdownMenu extends Dom {
       this.footer = el("footer"),
     );
 
-    this.onWindow("click", (event) => {
-      if (!this.htmlElement.contains(event.target as Node)) {
-        this.remove();
-      }
-    }).onWindow("touchstart", (event) => {
-      if (!this.htmlElement.contains(event.target as Node)) {
-        this.remove();
-      }
-    }).onWindow("keydown", (event) => {
-      if (event.key === "Escape") this.remove();
-    });
+    this
+      .onWindow("click", (event) => {
+        if (!this.htmlElement.contains(event.target as Node)) {
+          this.remove();
+        }
+      })
+      .onWindow("touchstart", (event) => {
+        if (!this.htmlElement.contains(event.target as Node)) {
+          this.remove();
+        }
+      })
+      .onWindow("keydown", (event) => {
+        if (event.key === "Escape") this.remove();
+      });
 
-    this.appendTo(BodyNode).adjustPosition();
+    this.appendTo(Body).adjustPosition();
   }
 
   private adjustPosition() {

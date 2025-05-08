@@ -1,4 +1,4 @@
-import { DomNode } from "@commonmodule/app";
+import { Dom } from "@commonmodule/app";
 import ThumbnailListItem from "./ThumbnailListItem.js";
 
 export default class ThumbnailList extends Dom<HTMLDivElement, {
@@ -12,7 +12,7 @@ export default class ThumbnailList extends Dom<HTMLDivElement, {
     super(".thumbnail-list");
     for (const [index, thumbnailUrl] of options.thumbnailUrls.entries()) {
       const item = new ThumbnailListItem(thumbnailUrl);
-      item.onDom("click", () => {
+      item.on("click", () => {
         this.selectThumbnail(index);
         this.emit("thumbnailSelected", index);
       });

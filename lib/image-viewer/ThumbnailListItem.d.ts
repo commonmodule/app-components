@@ -1,3 +1,4 @@
+import { Dom } from "@commonmodule/app";
 export default class ThumbnailListItem extends Dom {
     constructor(thumbnailUrl: string);
     select(): void;

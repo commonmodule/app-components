@@ -1,4 +1,4 @@
-import { Browser, DomNode, el } from "@commonmodule/app";
+import { Browser, Dom, el } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 import Button, { ButtonType } from "../button/Button.js";
 import Modal from "../modal/Modal.js";
@@ -10,8 +10,8 @@ export default class ImageViewer extends Modal {
   private images: ImageResource[] = [];
   private currentImageIndex = 0;
 
-  private container: DomNode;
-  private imageCounter: DomNode;
+  private container: Dom;
+  private imageCounter: Dom;
   private mainImageDisplay: MainImageDisplay;
   private thumbnailList: ThumbnailList;
 
@@ -84,12 +84,12 @@ export default class ImageViewer extends Modal {
     );
 
     this.mainImageDisplay
-      .onDom("click", (event) => event.stopPropagation())
+      .on("click", (event) => event.stopPropagation())
       .on("swipeLeft", () => this.goToNextImage())
       .on("swipeRight", () => this.goToPrevImage());
 
     this.thumbnailList
-      .onDom("click", (event) => event.stopPropagation())
+      .on("click", (event) => event.stopPropagation())
       .on("thumbnailSelected", (index) => this.goToImage(index));
 
     this.onWindow("keydown", (event) => {
@@ -98,7 +98,7 @@ export default class ImageViewer extends Modal {
     });
   }
 
-  private createButtonContainer(position: "left" | "right"): DomNode {
+  private createButtonContainer(position: "left" | "right"): Dom {
     return el(
       `.button-container.${position}`,
       position === "right"

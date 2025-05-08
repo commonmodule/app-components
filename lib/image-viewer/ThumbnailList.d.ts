@@ -1,3 +1,4 @@
+import { Dom } from "@commonmodule/app";
 import ThumbnailListItem from "./ThumbnailListItem.js";
 export default class ThumbnailList extends Dom<HTMLDivElement, {
     thumbnailSelected: (thumbnailIndex: number) => void;

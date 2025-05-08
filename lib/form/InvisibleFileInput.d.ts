@@ -1,3 +1,4 @@
+import { Dom } from "@commonmodule/app";
 interface InvisibleFileInputOptions {
     multiple?: boolean;
     accept?: string;

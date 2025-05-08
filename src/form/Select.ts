@@ -1,4 +1,4 @@
-import { DomNode, el } from "@commonmodule/app";
+import { Dom, el } from "@commonmodule/app";
 
 interface SelectOptions {
   label?: string;
@@ -10,7 +10,7 @@ interface SelectOptions {
 }
 
 export default class Select extends Dom<HTMLLabelElement> {
-  private select: DomNode<HTMLSelectElement>;
+  private select: Dom<HTMLSelectElement>;
 
   constructor(options: SelectOptions) {
     super(`label.select${options.required === true ? ".required" : ""}`);
@@ -31,7 +31,7 @@ export default class Select extends Dom<HTMLLabelElement> {
       ),
     );
 
-    this.select.onDom("change", () => {
+    this.select.on("change", () => {
       if (options.onChange) options.onChange(this.value);
     });
   }

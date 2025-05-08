@@ -1,3 +1,4 @@
+import { Dom } from "@commonmodule/app";
 interface QuantityInputOptions {
     label?: string;
     placeholder?: string;

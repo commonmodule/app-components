@@ -1,4 +1,4 @@
-import { Browser, DomNode, el } from "@commonmodule/app";
+import { Browser, Dom, el } from "@commonmodule/app";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;
@@ -14,9 +14,9 @@ export default class MainImageDisplay extends Dom<HTMLDivElement, {
   private imageUrls: string[] = [];
   private currentImageIndex = 0;
 
-  private prevImage?: DomNode<HTMLImageElement>;
-  private currentImage: DomNode<HTMLImageElement>;
-  private nextImage?: DomNode<HTMLImageElement>;
+  private prevImage?: Dom<HTMLImageElement>;
+  private currentImage: Dom<HTMLImageElement>;
+  private nextImage?: Dom<HTMLImageElement>;
 
   private translateX = 0;
   private translateY = 0;
@@ -53,16 +53,16 @@ export default class MainImageDisplay extends Dom<HTMLDivElement, {
     );
     this.resetImages();
 
-    this.currentImage.onDom("mousedown", (event) => this.startDrag(event));
+    this.currentImage.on("mousedown", (event) => this.startDrag(event));
     this.onWindow("mousemove", (event) => this.drag(event));
     this.onWindow("mouseup", () => this.endDrag());
 
-    this.currentImage.onDom("touchstart", (event) => this.startTouch(event));
+    this.currentImage.on("touchstart", (event) => this.startTouch(event));
     this.onWindow("touchmove", (event) => this.moveTouch(event));
     this.onWindow("touchend", (event) => this.endTouch(event));
 
-    this.currentImage.onDom("wheel", (event) => this.handleWheelZoom(event));
-    this.currentImage.onDom("transitionend", () => this.resetImages());
+    this.currentImage.on("wheel", (event) => this.handleWheelZoom(event));
+    this.currentImage.on("transitionend", () => this.resetImages());
   }
 
   private resetImages() {

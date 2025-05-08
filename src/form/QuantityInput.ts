@@ -1,4 +1,4 @@
-import { DomNode, el } from "@commonmodule/app";
+import { Dom, el } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 import Button, { ButtonType } from "../button/Button.js";
 
@@ -19,7 +19,7 @@ export default class QuantityInput extends Dom<HTMLLabelElement, {
   private options: QuantityInputOptions;
 
   private minusButton: Button;
-  private input: DomNode<HTMLInputElement>;
+  private input: Dom<HTMLInputElement>;
   private plusButton: Button;
 
   private previousValue: number | undefined;

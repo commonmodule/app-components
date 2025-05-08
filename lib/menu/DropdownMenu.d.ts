@@ -1,4 +1,4 @@
-import { DomChild } from "@commonmodule/app";
+import { Dom, DomChild } from "@commonmodule/app";
 interface DropdownMenuOptions {
     left?: number;
     right?: number;
