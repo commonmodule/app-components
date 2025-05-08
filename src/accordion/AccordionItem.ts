@@ -1,4 +1,4 @@
-import { DomNode, el } from "@commonmodule/app";
+import { Dom, el } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 
 interface AccordionItemOptions {
@@ -6,17 +6,17 @@ interface AccordionItemOptions {
   open?: boolean;
 }
 
-export default class AccordionItem extends DomNode<HTMLDetailsElement> {
-  private iconContainer: DomNode;
+export default class AccordionItem extends Dom<HTMLDetailsElement> {
+  private iconContainer: Dom;
 
-  constructor(options: AccordionItemOptions, ...children: DomNode[]) {
+  constructor(options: AccordionItemOptions, ...children: Dom[]) {
     super("details.accordion-item");
     this.append(
       el("summary", options.label, this.iconContainer = el(".icon-container")),
       el(".content", ...children),
     );
 
-    this.onDom("toggle", () => {
+    this.on("toggle", () => {
       this.iconContainer.clear().append(
         this.htmlElement.open
           ? new AppCompConfig.AccordionCloseIcon()

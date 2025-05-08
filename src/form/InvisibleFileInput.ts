@@ -6,7 +6,7 @@ interface InvisibleFileInputOptions {
   onChange: (files: File[]) => void;
 }
 
-export default class InvisibleFileInput extends DomNode<HTMLInputElement> {
+export default class InvisibleFileInput extends Dom<HTMLInputElement> {
   constructor(private options: InvisibleFileInputOptions) {
     super("input.invisible-file-input", {
       type: "file",

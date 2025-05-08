@@ -1,166 +1,166 @@
-import { DomNode } from "@commonmodule/app";
+import { Dom } from "@commonmodule/app";
 import Tab from "./tab/Tab.js";
 
-type DomNodeConstructor = new () => DomNode;
+type DomConstructor = new () => Dom;
 
-class DefaultCloseIcon extends DomNode {
+class DefaultCloseIcon extends Dom {
   constructor() {
     super("span.icon.close", "❌");
   }
 }
 
-class DefaultShareIcon extends DomNode {
+class DefaultShareIcon extends Dom {
   constructor() {
     super("span.icon.share", "🔗");
   }
 }
 
-class DefaultDownloadIcon extends DomNode {
+class DefaultDownloadIcon extends Dom {
   constructor() {
     super("span.icon.download", "⬇️");
   }
 }
 
-class DefaultLoadingSpinner extends DomNode {
+class DefaultLoadingSpinner extends Dom {
   constructor() {
     super(".loading-spinner");
   }
 }
 
-class DefaultSuccessIcon extends DomNode {
+class DefaultSuccessIcon extends Dom {
   constructor() {
     super("span.icon.success", "✅");
   }
 }
 
-class DefaultInfoIcon extends DomNode {
+class DefaultInfoIcon extends Dom {
   constructor() {
     super("span.icon.info", "ℹ️");
   }
 }
 
-class DefaultWarningIcon extends DomNode {
+class DefaultWarningIcon extends Dom {
   constructor() {
     super("span.icon.warning", "⚠️");
   }
 }
 
-class DefaultErrorIcon extends DomNode {
+class DefaultErrorIcon extends Dom {
   constructor() {
     super("span.icon.error", "❌");
   }
 }
 
-class DefaultAccordionOpenIcon extends DomNode {
+class DefaultAccordionOpenIcon extends Dom {
   constructor() {
     super("span.icon.accordion-open", "▼");
   }
 }
 
-class DefaultAccordionCloseIcon extends DomNode {
+class DefaultAccordionCloseIcon extends Dom {
   constructor() {
     super("span.icon.accordion-close", "▲");
   }
 }
 
-class DefaultFolderCollapsedIcon extends DomNode {
+class DefaultFolderCollapsedIcon extends Dom {
   constructor() {
     super("span.icon.folder-collapse", "📁");
   }
 }
 
-class DefaultFolderExpandedIcon extends DomNode {
+class DefaultFolderExpandedIcon extends Dom {
   constructor() {
     super("span.icon.folder-expand", "📂");
   }
 }
 
-class DefaultMinusIcon extends DomNode {
+class DefaultMinusIcon extends Dom {
   constructor() {
     super("span.icon.minus", "-");
   }
 }
 
-class DefaultPlusIcon extends DomNode {
+class DefaultPlusIcon extends Dom {
   constructor() {
     super("span.icon.plus", "+");
   }
 }
 
-class DefaultPrevIcon extends DomNode {
+class DefaultPrevIcon extends Dom {
   constructor() {
     super("span.icon.prev", "←");
   }
 }
 
-class DefaultNextIcon extends DomNode {
+class DefaultNextIcon extends Dom {
   constructor() {
     super("span.icon.next", "→");
   }
 }
 
-class DefaultZoomInIcon extends DomNode {
+class DefaultZoomInIcon extends Dom {
   constructor() {
     super("span.icon.zoom-in", "🔍+");
   }
 }
 
-class DefaultZoomOutIcon extends DomNode {
+class DefaultZoomOutIcon extends Dom {
   constructor() {
     super("span.icon.zoom-out", "🔍-");
   }
 }
 
-class DefaultResetZoomIcon extends DomNode {
+class DefaultResetZoomIcon extends Dom {
   constructor() {
     super("span.icon.reset-zoom", "🔍1");
   }
 }
 
-class DefaultFullscreenIcon extends DomNode {
+class DefaultFullscreenIcon extends Dom {
   constructor() {
     super("span.icon.fullscreen", "⛶");
   }
 }
 
-class DefaultExitFullscreenIcon extends DomNode {
+class DefaultExitFullscreenIcon extends Dom {
   constructor() {
     super("span.icon.exit-fullscreen", "⛶");
   }
 }
 
 class AppCompConfig {
-  public LoadingSpinner: DomNodeConstructor = DefaultLoadingSpinner;
-  public CloseIcon: DomNodeConstructor = DefaultCloseIcon;
-  public ShareIcon: DomNodeConstructor = DefaultShareIcon;
-  public DownloadIcon: DomNodeConstructor = DefaultDownloadIcon;
+  public LoadingSpinner: DomConstructor = DefaultLoadingSpinner;
+  public CloseIcon: DomConstructor = DefaultCloseIcon;
+  public ShareIcon: DomConstructor = DefaultShareIcon;
+  public DownloadIcon: DomConstructor = DefaultDownloadIcon;
 
-  public SuccessIcon: DomNodeConstructor = DefaultSuccessIcon;
-  public InfoIcon: DomNodeConstructor = DefaultInfoIcon;
-  public WarningIcon: DomNodeConstructor = DefaultWarningIcon;
-  public ErrorIcon: DomNodeConstructor = DefaultErrorIcon;
+  public SuccessIcon: DomConstructor = DefaultSuccessIcon;
+  public InfoIcon: DomConstructor = DefaultInfoIcon;
+  public WarningIcon: DomConstructor = DefaultWarningIcon;
+  public ErrorIcon: DomConstructor = DefaultErrorIcon;
 
-  public AccordionOpenIcon: DomNodeConstructor = DefaultAccordionOpenIcon;
-  public AccordionCloseIcon: DomNodeConstructor = DefaultAccordionCloseIcon;
+  public AccordionOpenIcon: DomConstructor = DefaultAccordionOpenIcon;
+  public AccordionCloseIcon: DomConstructor = DefaultAccordionCloseIcon;
 
-  public FolderCollapsedIcon: DomNodeConstructor = DefaultFolderCollapsedIcon;
-  public FolderExpandedIcon: DomNodeConstructor = DefaultFolderExpandedIcon;
+  public FolderCollapsedIcon: DomConstructor = DefaultFolderCollapsedIcon;
+  public FolderExpandedIcon: DomConstructor = DefaultFolderExpandedIcon;
 
-  public MinusIcon: DomNodeConstructor = DefaultMinusIcon;
-  public PlusIcon: DomNodeConstructor = DefaultPlusIcon;
+  public MinusIcon: DomConstructor = DefaultMinusIcon;
+  public PlusIcon: DomConstructor = DefaultPlusIcon;
 
-  public PrevIcon: DomNodeConstructor = DefaultPrevIcon;
-  public NextIcon: DomNodeConstructor = DefaultNextIcon;
+  public PrevIcon: DomConstructor = DefaultPrevIcon;
+  public NextIcon: DomConstructor = DefaultNextIcon;
 
-  public ZoomInIcon: DomNodeConstructor = DefaultZoomInIcon;
-  public ZoomOutIcon: DomNodeConstructor = DefaultZoomOutIcon;
-  public ResetZoomIcon: DomNodeConstructor = DefaultResetZoomIcon;
+  public ZoomInIcon: DomConstructor = DefaultZoomInIcon;
+  public ZoomOutIcon: DomConstructor = DefaultZoomOutIcon;
+  public ResetZoomIcon: DomConstructor = DefaultResetZoomIcon;
 
-  public FullscreenIcon: DomNodeConstructor = DefaultFullscreenIcon;
-  public ExitFullscreenIcon: DomNodeConstructor = DefaultExitFullscreenIcon;
+  public FullscreenIcon: DomConstructor = DefaultFullscreenIcon;
+  public ExitFullscreenIcon: DomConstructor = DefaultExitFullscreenIcon;
 
   public updateTabBackgroundOnSelect: (
-    tabBackground: DomNode,
+    tabBackground: Dom,
     tab: Tab<any>,
   ) => void = () => {};
 }

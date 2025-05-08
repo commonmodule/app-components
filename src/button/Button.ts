@@ -1,4 +1,4 @@
-import { DomChild, DomNode, el } from "@commonmodule/app";
+import { Dom, DomChild, el } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 
 export enum ButtonType {
@@ -10,21 +10,21 @@ export enum ButtonType {
 
 export interface ButtonOptions {
   type?: ButtonType;
-  icon?: DomNode;
+  icon?: Dom;
   iconPosition?: "left" | "right";
   title?: string | DomChild | DomChild[];
   disabled?: boolean;
   onClick?: (button: Button, event: MouseEvent) => any;
 }
 
-export default class Button extends DomNode<HTMLButtonElement, {
-  click: () => Promise<void> | void;
+export default class Button extends Dom<HTMLButtonElement, {
+  clickAndWait: () => Promise<void>;
 }> {
   private options: ButtonOptions;
 
-  private iconContainer: DomNode | undefined;
-  private titleContainer: DomNode;
-  private loadingSpinner: DomNode | undefined;
+  private iconContainer: Dom | undefined;
+  private titleContainer: Dom;
+  private loadingSpinner: Dom | undefined;
 
   private loading = false;
 
@@ -75,19 +75,19 @@ export default class Button extends DomNode<HTMLButtonElement, {
       );
     }
 
-    this.onDom("click", (event) => {
+    this.on("click", (event) => {
       if (!this.loading) {
         if (options.onClick) {
           const promise = options.onClick(this, event);
-          if (!this.removed && promise instanceof Promise) {
+          if (!this.isRemoved() && promise instanceof Promise) {
             this.startLoading();
             promise.finally(() => this.stopLoading());
           }
         }
 
-        if (!this.removed && this.hasEvent("click")) {
-          const promise = this.emit("click");
-          if (!this.removed && promise instanceof Promise) {
+        if (!this.isRemoved() && this.hasEvent("clickAndWait")) {
+          const promise = this.emit("clickAndWait");
+          if (!this.isRemoved() && promise instanceof Promise) {
             this.startLoading();
             promise.finally(() => this.stopLoading());
           }
@@ -108,7 +108,7 @@ export default class Button extends DomNode<HTMLButtonElement, {
     return this.titleContainer.text;
   }
 
-  public set icon(icon: DomNode | undefined) {
+  public set icon(icon: Dom | undefined) {
     if (this.iconContainer) {
       this.iconContainer.clear();
       if (icon) this.iconContainer.append(icon.clone());
@@ -117,7 +117,7 @@ export default class Button extends DomNode<HTMLButtonElement, {
     }
   }
 
-  public get icon(): DomNode | undefined {
+  public get icon(): Dom | undefined {
     return this.iconContainer?.children[0];
   }
 

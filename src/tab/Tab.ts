@@ -6,7 +6,7 @@ interface TabOptions<Value> {
   openContextMenu?: (left: number, top: number) => DomNode;
 }
 
-export default class Tab<Value> extends DomNode<HTMLDivElement, {
+export default class Tab<Value> extends Dom<HTMLDivElement, {
   selected: () => void;
   deselected: () => void;
 }> {

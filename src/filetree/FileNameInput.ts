@@ -1,6 +1,6 @@
 import { DomNode } from "@commonmodule/app";
 
-export default class FileNameInput extends DomNode<HTMLInputElement> {
+export default class FileNameInput extends Dom<HTMLInputElement> {
   private removing = false;
 
   constructor(onConfirm: (name: string) => void) {

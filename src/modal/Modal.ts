@@ -1,11 +1,10 @@
-import { BodyNode, DomNode, el } from "@commonmodule/app";
-import { EventRecord } from "@commonmodule/ts";
+import { Body, Dom, DomHandlers, el } from "@commonmodule/app";
 
 const nonModalDialogContainer = el(".non-modal-dialog-container").appendTo(
-  BodyNode,
+  Body,
 );
 
-nonModalDialogContainer.onDom("click", (event) => {
+nonModalDialogContainer.on("click", (event) => {
   if (event.target === nonModalDialogContainer.htmlElement) {
     for (const dialog of nonModalDialogContainer.children) {
       if (dialog instanceof Modal) {
@@ -15,15 +14,16 @@ nonModalDialogContainer.onDom("click", (event) => {
   }
 });
 
-export default abstract class Modal<E extends EventRecord = {}>
-  extends DomNode<HTMLDialogElement, E> {
+export default abstract class Modal<
+  E extends DomHandlers<E, HTMLDialogElement> = { close: () => void },
+> extends Dom<HTMLDialogElement, E> {
   protected closeListener = () => this.remove();
 
   constructor(classNames: `.${string}`, private modal = true) {
     super(`dialog.modal${classNames}`);
     this
-      .onDom("close", this.closeListener)
-      .onDom("click", (event) => {
+      .on("close", this.closeListener)
+      .on("click", (event) => {
         const rect = this.calculateRect();
         if (
           event.clientX < rect.left ||
@@ -34,29 +34,26 @@ export default abstract class Modal<E extends EventRecord = {}>
           this.htmlElement.close();
         }
       })
-      .appendTo(modal ? BodyNode : nonModalDialogContainer);
+      .appendTo(modal ? Body : nonModalDialogContainer);
 
     modal ? this.htmlElement.showModal() : this.htmlElement.show();
 
     if (!modal) {
-      for (const bodyNodeChild of BodyNode.children) {
+      for (const bodyNodeChild of Body.children) {
         if (bodyNodeChild instanceof Modal && bodyNodeChild.modal) {
           bodyNodeChild.off("remove", bodyNodeChild.closeListener);
           bodyNodeChild.htmlElement.close();
         }
       }
 
-      this.on(
-        "remove",
-        (() => {
-          for (const bodyNodeChild of BodyNode.children) {
-            if (bodyNodeChild instanceof Modal && bodyNodeChild.modal) {
-              bodyNodeChild.htmlElement.showModal();
-              bodyNodeChild.on("remove", bodyNodeChild.closeListener);
-            }
+      this.on("remove", () => {
+        for (const bodyNodeChild of Body.children) {
+          if (bodyNodeChild instanceof Modal && bodyNodeChild.modal) {
+            bodyNodeChild.htmlElement.showModal();
+            bodyNodeChild.on("remove", bodyNodeChild.closeListener);
           }
-        }) as any,
-      );
+        }
+      });
     }
   }
 }

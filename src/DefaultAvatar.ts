@@ -1,4 +1,4 @@
-import { DomNode } from "@commonmodule/app";
+import { Dom } from "@commonmodule/app";
 
 const ELEMENTS = 3;
 const SIZE = 80;
@@ -43,7 +43,7 @@ function generateColors(numFromName: number, colors: string[]) {
   return elementsProperties;
 }
 
-export default class DefaultAvatar extends DomNode {
+export default class DefaultAvatar extends Dom {
   constructor(classNames: `.${string}`, name: string) {
     super(`.default-avatar${classNames}`);
 

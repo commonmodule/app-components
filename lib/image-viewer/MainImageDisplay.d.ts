@@ -1,5 +1,4 @@
-import { DomNode } from "@commonmodule/app";
-export default class MainImageDisplay extends DomNode<HTMLDivElement, {
+export default class MainImageDisplay extends Dom<HTMLDivElement, {
     swipeLeft: () => void;
     swipeRight: () => void;
 }> {

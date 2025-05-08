@@ -1,4 +1,3 @@
-import { DomNode } from "@commonmodule/app";
 interface SelectOptions {
     label?: string;
     placeholder: string;
@@ -10,7 +9,7 @@ interface SelectOptions {
     value?: string;
     onChange?: (value: string) => void;
 }
-export default class Select extends DomNode<HTMLLabelElement> {
+export default class Select extends Dom<HTMLLabelElement> {
     private select;
     constructor(options: SelectOptions);
     get value(): string;

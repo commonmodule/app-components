@@ -16,7 +16,7 @@ interface InputOptions {
   onClick?: (input: Input) => void;
 }
 
-export default class Input extends DomNode<HTMLLabelElement, {
+export default class Input extends Dom<HTMLLabelElement, {
   valueChanged: (newValue: string) => void;
 }> {
   private input: DomNode<HTMLInputElement | HTMLTextAreaElement>;

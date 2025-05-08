@@ -1,4 +1,4 @@
-import { BodyNode, DomNode, el } from "@commonmodule/app";
+import { Body, Dom, el } from "@commonmodule/app";
 import AppCompConfig from "./AppCompConfig.js";
 import Button, { ButtonType } from "./button/Button.js";
 
@@ -7,7 +7,7 @@ interface SnackbarOptions {
   duration?: number;
 }
 
-export default class Snackbar extends DomNode {
+export default class Snackbar extends Dom {
   private timeoutId?: number;
   private totalDuration: number;
   private startTime: number = 0;
@@ -22,7 +22,7 @@ export default class Snackbar extends DomNode {
     this.createSnackbarContent(options.message);
     this.addEventListeners();
 
-    BodyNode.append(this);
+    Body.append(this);
     this.startDismissTimer();
   }
 
@@ -41,8 +41,8 @@ export default class Snackbar extends DomNode {
   }
 
   private addEventListeners(): void {
-    this.onDom("mouseover", this.pauseDismissTimer);
-    this.onDom("mouseout", this.resumeDismissTimer);
+    this.on("mouseover", this.pauseDismissTimer);
+    this.on("mouseout", this.resumeDismissTimer);
   }
 
   private startDismissTimer(): void {

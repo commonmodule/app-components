@@ -1,6 +1,7 @@
-import { DomNode } from "@commonmodule/app";
-import { EventRecord } from "@commonmodule/ts";
-export default abstract class Modal<E extends EventRecord = {}> extends DomNode<HTMLDialogElement, E> {
+import { Dom, DomHandlers } from "@commonmodule/app";
+export default abstract class Modal<E extends DomHandlers<E, HTMLDialogElement> = {
+    close: () => void;
+}> extends Dom<HTMLDialogElement, E> {
     private modal;
     protected closeListener: () => void;
     constructor(classNames: `.${string}`, modal?: boolean);

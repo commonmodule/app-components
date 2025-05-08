@@ -5,7 +5,7 @@ interface FileDropzoneOptions {
     multiple?: boolean;
     onUpload: (files: File[]) => void;
 }
-export default class FileDropzone<H extends HTMLElement = HTMLElement, E extends EventRecord = {}> extends DomNode<H, E> {
+export default class FileDropzone<H extends HTMLElement = HTMLElement, E extends EventRecord = {}> extends Dom<H, E> {
     private invisibleFileInput;
     constructor(classNames: `.${string}`, options: FileDropzoneOptions, ...children: DomNode[]);
 }

@@ -1,10 +1,9 @@
-import { DomNode } from "@commonmodule/app";
 interface InvisibleFileInputOptions {
     multiple?: boolean;
     accept?: string;
     onChange: (files: File[]) => void;
 }
-export default class InvisibleFileInput extends DomNode<HTMLInputElement> {
+export default class InvisibleFileInput extends Dom<HTMLInputElement> {
     private options;
     constructor(options: InvisibleFileInputOptions);
     openFileSelector(): void;

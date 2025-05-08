@@ -9,7 +9,7 @@ interface FileTreeOptions {
   openContextMenu?: (left: number, top: number, id: string) => DomNode;
 }
 
-export default class FileTree extends DomNode<HTMLUListElement, {
+export default class FileTree extends Dom<HTMLUListElement, {
   nodeSelected: (id: string) => void;
   nodeCreated: (parentId: string | undefined, name: string) => void;
   nodeRemoved: (id: string) => void;

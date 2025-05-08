@@ -7,7 +7,7 @@ const ZOOM_STEP = 0.25;
 const DEFAULT_TRANSITION = "transform 0.2s ease-in-out";
 const DOUBLE_TAP_DELAY = 300;
 
-export default class MainImageDisplay extends DomNode<HTMLDivElement, {
+export default class MainImageDisplay extends Dom<HTMLDivElement, {
   swipeLeft: () => void;
   swipeRight: () => void;
 }> {

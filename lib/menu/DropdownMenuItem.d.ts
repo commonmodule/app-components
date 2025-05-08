@@ -4,7 +4,7 @@ export interface DropdownMenuItemOptions {
     label?: string;
     onClick: () => void;
 }
-export default class DropdownMenuItem extends DomNode {
+export default class DropdownMenuItem extends Dom {
     constructor(options: DropdownMenuItemOptions);
 }
 //# sourceMappingURL=DropdownMenuItem.d.ts.map

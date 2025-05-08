@@ -6,7 +6,7 @@ interface FileTreeOptions {
     sortByName?: boolean;
     openContextMenu?: (left: number, top: number, id: string) => DomNode;
 }
-export default class FileTree extends DomNode<HTMLUListElement, {
+export default class FileTree extends Dom<HTMLUListElement, {
     nodeSelected: (id: string) => void;
     nodeCreated: (parentId: string | undefined, name: string) => void;
     nodeRemoved: (id: string) => void;
@@ -28,7 +28,7 @@ export default class FileTree extends DomNode<HTMLUListElement, {
     createFileNameInput(parentId: string | undefined): void;
     selectNode(id: string): void;
     deselectNode(): void;
-    clear(...except: (DomNode | undefined)[]): this;
+    clear(...except: (DomNode | undefined)[]): any;
 }
 export {};
 //# sourceMappingURL=FileTree.d.ts.map

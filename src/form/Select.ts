@@ -9,7 +9,7 @@ interface SelectOptions {
   onChange?: (value: string) => void;
 }
 
-export default class Select extends DomNode<HTMLLabelElement> {
+export default class Select extends Dom<HTMLLabelElement> {
   private select: DomNode<HTMLSelectElement>;
 
   constructor(options: SelectOptions) {

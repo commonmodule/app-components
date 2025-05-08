@@ -7,7 +7,7 @@ interface CheckboxOptions {
   onChange?: (checked: boolean) => void;
 }
 
-export default class Checkbox extends DomNode<HTMLLabelElement, {
+export default class Checkbox extends Dom<HTMLLabelElement, {
   valueChanged: (newValue: boolean) => void;
 }> {
   private input: DomNode<HTMLInputElement>;

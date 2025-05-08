@@ -1,4 +1,3 @@
-import { DomNode } from "@commonmodule/app";
 interface QuantityInputOptions {
     label?: string;
     placeholder?: string;
@@ -9,7 +8,7 @@ interface QuantityInputOptions {
     readOnly?: boolean;
     onChange?: (newValue: number) => void;
 }
-export default class QuantityInput extends DomNode<HTMLLabelElement, {
+export default class QuantityInput extends Dom<HTMLLabelElement, {
     valueChanged: (newValue: number) => void;
 }> {
     private options;

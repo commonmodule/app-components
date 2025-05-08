@@ -13,7 +13,7 @@ interface QuantityInputOptions {
   onChange?: (newValue: number) => void;
 }
 
-export default class QuantityInput extends DomNode<HTMLLabelElement, {
+export default class QuantityInput extends Dom<HTMLLabelElement, {
   valueChanged: (newValue: number) => void;
 }> {
   private options: QuantityInputOptions;

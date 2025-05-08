@@ -1,9 +1,9 @@
-import { DomNode } from "@commonmodule/app";
+import { Dom } from "@commonmodule/app";
 interface SnackbarOptions {
     message: string;
     duration?: number;
 }
-export default class Snackbar extends DomNode {
+export default class Snackbar extends Dom {
     private timeoutId?;
     private totalDuration;
     private startTime;

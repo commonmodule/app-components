@@ -1,11 +1,11 @@
-import { DomNode, el } from "@commonmodule/app";
+import { Dom, el } from "@commonmodule/app";
 
 interface AlertOptions {
-  icon: DomNode;
+  icon: Dom;
   message: string;
 }
 
-export default abstract class Alert extends DomNode {
+export default abstract class Alert extends Dom {
   constructor(classNames: `.${string}`, options: AlertOptions) {
     super(`.alert${classNames}`);
     this.append(

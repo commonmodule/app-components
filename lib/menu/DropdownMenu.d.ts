@@ -1,11 +1,11 @@
-import { DomChild, DomNode } from "@commonmodule/app";
+import { DomChild } from "@commonmodule/app";
 interface DropdownMenuOptions {
     left?: number;
     right?: number;
     top?: number;
     bottom?: number;
 }
-export default class DropdownMenu extends DomNode {
+export default class DropdownMenu extends Dom {
     private _options;
     private header;
     private main;

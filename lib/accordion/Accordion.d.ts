@@ -1,5 +1,5 @@
-import { DomNode } from "@commonmodule/app";
-export default class Accordion extends DomNode {
-    constructor(...children: DomNode[]);
+import { Dom } from "@commonmodule/app";
+export default class Accordion extends Dom {
+    constructor(...children: Dom[]);
 }
 //# sourceMappingURL=Accordion.d.ts.map

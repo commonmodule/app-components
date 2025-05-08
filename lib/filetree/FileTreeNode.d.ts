@@ -13,7 +13,7 @@ interface FileTreeNodeDirectoryData extends FileTreeNodeBaseData {
     children: FileTreeNodeData[];
 }
 export type FileTreeNodeData = FileTreeNodeFileData | FileTreeNodeDirectoryData;
-export default class FileTreeNode extends DomNode {
+export default class FileTreeNode extends Dom {
     private tree;
     private data;
     private expanded;

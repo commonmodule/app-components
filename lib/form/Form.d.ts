@@ -1,5 +1,5 @@
-import { DomChild, DomNode } from "@commonmodule/app";
-export default class Form extends DomNode {
+import { DomChild } from "@commonmodule/app";
+export default class Form extends Dom {
     constructor(...children: DomChild[]);
 }
 //# sourceMappingURL=Form.d.ts.map

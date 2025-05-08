@@ -22,7 +22,7 @@ export type FileTreeNodeData =
   | FileTreeNodeFileData
   | FileTreeNodeDirectoryData;
 
-export default class FileTreeNode extends DomNode {
+export default class FileTreeNode extends Dom {
   private expanded = false;
 
   private main: DomNode;
