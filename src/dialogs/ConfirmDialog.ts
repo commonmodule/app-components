@@ -1,9 +1,9 @@
-import { DomChild, DomNode, el } from "@commonmodule/app";
+import { Dom, DomChild, el } from "@commonmodule/app";
 import Button, { ButtonType } from "../button/Button.js";
 import StructuredModal from "../modal/StructuredModal.js";
 
 interface ConfirmDialogOptions {
-  icon?: DomNode;
+  icon?: Dom;
   title: string;
   message: DomChild[] | string;
   confirmButtonTitle?: string;

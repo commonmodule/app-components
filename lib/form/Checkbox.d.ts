@@ -1,3 +1,4 @@
+import { Dom } from "@commonmodule/app";
 interface CheckboxOptions {
     label?: string;
     required?: boolean;

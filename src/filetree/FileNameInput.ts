@@ -1,4 +1,4 @@
-import { DomNode } from "@commonmodule/app";
+import { Dom } from "@commonmodule/app";
 
 export default class FileNameInput extends Dom<HTMLInputElement> {
   private removing = false;
@@ -8,7 +8,7 @@ export default class FileNameInput extends Dom<HTMLInputElement> {
 
     this.on("visible", () => this.htmlElement.focus());
 
-    this.onDom("keydown", (event) => {
+    this.on("keydown", (event) => {
       if (this.removing) return;
       if (event.key === "Enter") {
         if (this.htmlElement.value) {
@@ -22,7 +22,7 @@ export default class FileNameInput extends Dom<HTMLInputElement> {
       }
     });
 
-    this.onDom("blur", () => {
+    this.on("blur", () => {
       if (this.removing) return;
       if (this.htmlElement.value) {
         onConfirm(this.htmlElement.value);

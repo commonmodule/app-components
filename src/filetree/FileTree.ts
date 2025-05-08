@@ -1,4 +1,4 @@
-import { DomNode } from "@commonmodule/app";
+import { Dom } from "@commonmodule/app";
 import FileNameInput from "./FileNameInput.js";
 import FileTreeNode, { FileTreeNodeData } from "./FileTreeNode.js";
 
@@ -6,7 +6,7 @@ interface FileTreeOptions {
   id?: string;
   alwaysExpanded?: boolean;
   sortByName?: boolean;
-  openContextMenu?: (left: number, top: number, id: string) => DomNode;
+  openContextMenu?: (left: number, top: number, id: string) => Dom;
 }
 
 export default class FileTree extends Dom<HTMLUListElement, {
@@ -164,7 +164,7 @@ export default class FileTree extends Dom<HTMLUListElement, {
     this.setSelectedNodeId(undefined);
   }
 
-  public clear(...except: (DomNode | undefined)[]) {
+  public clear(...except: (Dom | undefined)[]) {
     this.fileTreeNodeMap.clear();
     return super.clear(...except);
   }

@@ -1,9 +1,9 @@
-import { DomNode } from "@commonmodule/app";
+import { Dom } from "@commonmodule/app";
 interface InputOptions {
     multiline?: boolean;
     label?: string;
     placeholder?: string;
-    suffixIcon?: DomNode;
+    suffixIcon?: Dom;
     required?: boolean;
     value?: string;
     readOnly?: boolean;

@@ -1,8 +1,8 @@
-import { DomNode } from "@commonmodule/app";
+import { Dom } from "@commonmodule/app";
 interface TabOptions<Value> {
     label: string;
     value: Value;
-    openContextMenu?: (left: number, top: number) => DomNode;
+    openContextMenu?: (left: number, top: number) => Dom;
 }
 export default class Tab<Value> extends Dom<HTMLDivElement, {
     selected: () => void;

@@ -1,9 +1,9 @@
-import { DomNode, DomUtils } from "@commonmodule/app";
+import { Dom, DomUtils } from "@commonmodule/app";
 
 interface TabOptions<Value> {
   label: string;
   value: Value;
-  openContextMenu?: (left: number, top: number) => DomNode;
+  openContextMenu?: (left: number, top: number) => Dom;
 }
 
 export default class Tab<Value> extends Dom<HTMLDivElement, {
@@ -14,7 +14,7 @@ export default class Tab<Value> extends Dom<HTMLDivElement, {
     super(".tab");
     this.text = options.label;
 
-    this.onDom("click", () => this.select());
+    this.on("click", () => this.select());
 
     if (this.options.openContextMenu) {
       DomUtils.enhanceWithContextMenu(this, (event) => {

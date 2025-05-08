@@ -1,10 +1,10 @@
-import { DomChild, DomNode, el } from "@commonmodule/app";
+import { Dom, DomChild, el } from "@commonmodule/app";
 import Button, { ButtonType } from "../button/Button.js";
 import QuantityInput from "../form/QuantityInput.js";
 import StructuredModal from "../modal/StructuredModal.js";
 
 interface QuantityInputDialogOptions {
-  icon?: DomNode;
+  icon?: Dom;
   title: string;
   message: DomChild[] | string;
   value?: number;

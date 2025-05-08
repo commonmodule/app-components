@@ -1,4 +1,5 @@
-import { Body, Dom, DomHandlers, el } from "@commonmodule/app";
+import { Body, Dom, el } from "@commonmodule/app";
+import { EventHandlers } from "@commonmodule/ts";
 
 const nonModalDialogContainer = el(".non-modal-dialog-container").appendTo(
   Body,
@@ -14,9 +15,8 @@ nonModalDialogContainer.on("click", (event) => {
   }
 });
 
-export default abstract class Modal<
-  E extends DomHandlers<E, HTMLDialogElement> = { close: () => void },
-> extends Dom<HTMLDialogElement, E> {
+export default abstract class Modal<E extends EventHandlers = {}>
+  extends Dom<HTMLDialogElement, E> {
   protected closeListener = () => this.remove();
 
   constructor(classNames: `.${string}`, private modal = true) {

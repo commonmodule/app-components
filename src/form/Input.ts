@@ -1,11 +1,11 @@
-import { DomNode, el } from "@commonmodule/app";
+import { Dom, el } from "@commonmodule/app";
 import { Debouncer } from "@commonmodule/ts";
 
 interface InputOptions {
   multiline?: boolean;
   label?: string;
   placeholder?: string;
-  suffixIcon?: DomNode;
+  suffixIcon?: Dom;
   required?: boolean;
   value?: string;
   readOnly?: boolean;
@@ -19,7 +19,7 @@ interface InputOptions {
 export default class Input extends Dom<HTMLLabelElement, {
   valueChanged: (newValue: string) => void;
 }> {
-  private input: DomNode<HTMLInputElement | HTMLTextAreaElement>;
+  private input: Dom<HTMLInputElement | HTMLTextAreaElement>;
   private previousValue: string = "";
   private inputChangeDebouncer?: Debouncer;
 
@@ -68,14 +68,10 @@ export default class Input extends Dom<HTMLLabelElement, {
     if (options.value) this.previousValue = options.value;
 
     if (options.onKeyDown) {
-      this.input.onDom("keydown", (e) => options.onKeyDown!(e));
+      this.input.on("keydown", (e) => options.onKeyDown!(e));
     }
-    if (options.onChange) {
-      this.on("valueChanged", (v) => options.onChange!(v));
-    }
-    if (options.onClick) {
-      this.onDom("click", () => options.onClick!(this));
-    }
+    if (options.onChange) this.on("valueChanged", (v) => options.onChange!(v));
+    if (options.onClick) this.on("click", () => options.onClick!(this));
   }
 
   private emitValueChangeIfNeeded() {

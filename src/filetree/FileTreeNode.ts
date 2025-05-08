@@ -1,11 +1,11 @@
-import { DomNode, DomUtils, el } from "@commonmodule/app";
+import { Dom, DomUtils, el } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 import FileNameInput from "./FileNameInput.js";
 import FileTree from "./FileTree.js";
 
 interface FileTreeNodeBaseData {
   id: string;
-  icon?: DomNode;
+  icon?: Dom;
   name: string;
 }
 
@@ -25,11 +25,11 @@ export type FileTreeNodeData =
 export default class FileTreeNode extends Dom {
   private expanded = false;
 
-  private main: DomNode;
-  private folderToggleIconContainer: DomNode | undefined;
-  private iconContainer: DomNode | undefined;
-  private nameContainer: DomNode;
-  private childrenContainer: DomNode<HTMLUListElement> | undefined;
+  private main: Dom;
+  private folderToggleIconContainer: Dom | undefined;
+  private iconContainer: Dom | undefined;
+  private nameContainer: Dom;
+  private childrenContainer: Dom<HTMLUListElement> | undefined;
 
   constructor(
     private tree: FileTree,
@@ -56,10 +56,10 @@ export default class FileTreeNode extends Dom {
       ),
     );
 
-    this.main.onDom("click", () => this.select());
+    this.main.on("click", () => this.select());
 
     if (data.type === "directory") {
-      this.childrenContainer = new DomNode<HTMLUListElement>(
+      this.childrenContainer = new Dom<HTMLUListElement>(
         "ul.children-container",
       ).appendTo(this);
 
@@ -75,7 +75,7 @@ export default class FileTreeNode extends Dom {
       if (this.tree.isAlwaysExpanded()) {
         this.expand();
       } else {
-        this.main.onDom(
+        this.main.on(
           "click",
           () => this.expanded ? this.collapse() : this.expand(),
         );

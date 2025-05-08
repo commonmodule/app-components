@@ -1,4 +1,4 @@
-import { DomNode, el, Store } from "@commonmodule/app";
+import { Dom, el, Store } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 import Tab from "./Tab.js";
 
@@ -6,7 +6,7 @@ export default class TabGroup<T> extends Dom<HTMLDivElement, {
   tabSelected: (value: T) => void;
 }> {
   private store?: Store;
-  private background: DomNode;
+  private background: Dom;
   private tabs: Tab<T>[] = [];
   private selectedTab?: Tab<T>;
 

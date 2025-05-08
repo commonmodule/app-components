@@ -1,4 +1,4 @@
-import { DomNode, el } from "@commonmodule/app";
+import { Dom, el } from "@commonmodule/app";
 
 interface CheckboxOptions {
   label?: string;
@@ -10,7 +10,7 @@ interface CheckboxOptions {
 export default class Checkbox extends Dom<HTMLLabelElement, {
   valueChanged: (newValue: boolean) => void;
 }> {
-  private input: DomNode<HTMLInputElement>;
+  private input: Dom<HTMLInputElement>;
 
   constructor(options?: CheckboxOptions);
   constructor(classNames?: `.${string}`, options?: CheckboxOptions);

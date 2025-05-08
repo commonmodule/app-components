@@ -1,10 +1,10 @@
-import { DomChild, DomNode, el } from "@commonmodule/app";
+import { Dom, DomChild, el } from "@commonmodule/app";
 import Button, { ButtonType } from "../button/Button.js";
 import Input from "../form/Input.js";
 import StructuredModal from "../modal/StructuredModal.js";
 
 interface PromptDialogOptions {
-  icon?: DomNode;
+  icon?: Dom;
   title: string;
   message: DomChild[] | string;
   value?: string;
@@ -66,7 +66,7 @@ export default class PromptDialog extends StructuredModal {
       );
 
     this.input.focus();
-    this.input.onDom("keydown", async (e) => {
+    this.input.on("keydown", async (e) => {
       if (e.key === "Enter") {
         if (options.onConfirm) await options.onConfirm(this.input.value);
         this.resolveConfirm?.(this.input.value);

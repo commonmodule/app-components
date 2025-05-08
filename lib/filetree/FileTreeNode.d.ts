@@ -1,8 +1,8 @@
-import { DomNode } from "@commonmodule/app";
+import { Dom } from "@commonmodule/app";
 import FileTree from "./FileTree.js";
 interface FileTreeNodeBaseData {
     id: string;
-    icon?: DomNode;
+    icon?: Dom;
     name: string;
 }
 export interface FileTreeNodeFileData extends FileTreeNodeBaseData {

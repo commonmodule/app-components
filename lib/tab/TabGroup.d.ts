@@ -1,3 +1,4 @@
+import { Dom } from "@commonmodule/app";
 import Tab from "./Tab.js";
 export default class TabGroup<T> extends Dom<HTMLDivElement, {
     tabSelected: (value: T) => void;
