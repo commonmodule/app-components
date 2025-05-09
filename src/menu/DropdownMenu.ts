@@ -1,4 +1,4 @@
-import { Body, Dom, DomChild, el } from "@commonmodule/app";
+import { AppRoot, Dom, DomChild, el } from "@commonmodule/app";
 
 interface DropdownMenuOptions {
   left?: number;
@@ -37,7 +37,7 @@ export default class DropdownMenu extends Dom {
     this._options = options;
 
     window.getSelection()?.empty();
-    for (const node of Body.children) {
+    for (const node of AppRoot.children) {
       if (node instanceof DropdownMenu) node.remove();
     }
 
@@ -47,22 +47,23 @@ export default class DropdownMenu extends Dom {
       this.footer = el("footer"),
     );
 
-    this
-      .onWindow("click", (event) => {
-        if (!this.htmlElement.contains(event.target as Node)) {
-          this.remove();
-        }
-      })
-      .onWindow("touchstart", (event) => {
-        if (!this.htmlElement.contains(event.target as Node)) {
-          this.remove();
-        }
-      })
-      .onWindow("keydown", (event) => {
-        if (event.key === "Escape") this.remove();
-      });
+    AppRoot.bind("click", this, (event) => {
+      if (!this.htmlElement.contains(event.target as Node)) {
+        this.remove();
+      }
+    });
 
-    this.appendTo(Body).adjustPosition();
+    AppRoot.bind("touchstart", this, (event) => {
+      if (!this.htmlElement.contains(event.target as Node)) {
+        this.remove();
+      }
+    });
+
+    AppRoot.bind("keydown", this, (event) => {
+      if (event.key === "Escape") this.remove();
+    });
+
+    this.appendTo(AppRoot).adjustPosition();
   }
 
   private adjustPosition() {

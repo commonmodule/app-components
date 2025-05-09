@@ -1,4 +1,4 @@
-import { Body, Dom, el } from "@commonmodule/app";
+import { AppRoot, Dom, el } from "@commonmodule/app";
 import AppCompConfig from "./AppCompConfig.js";
 import Button, { ButtonType } from "./button/Button.js";
 
@@ -22,7 +22,7 @@ export default class Snackbar extends Dom {
     this.createSnackbarContent(options.message);
     this.addEventListeners();
 
-    Body.append(this);
+    AppRoot.append(this);
     this.startDismissTimer();
   }
 

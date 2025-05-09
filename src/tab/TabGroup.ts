@@ -1,4 +1,4 @@
-import { Dom, el, Store } from "@commonmodule/app";
+import { AppRoot, Dom, el, Store } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 import Tab from "./Tab.js";
 
@@ -25,7 +25,7 @@ export default class TabGroup<T> extends Dom<HTMLDivElement, {
       this.addTab(tab);
     }
 
-    this.onWindow("resize", () => this.updateTabBackgroundOnSelect());
+    AppRoot.bind("resize", this, () => this.updateTabBackgroundOnSelect());
   }
 
   public init(): this {

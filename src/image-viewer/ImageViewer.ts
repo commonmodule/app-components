@@ -1,4 +1,4 @@
-import { Browser, Dom, el } from "@commonmodule/app";
+import { AppRoot, Browser, Dom, el } from "@commonmodule/app";
 import AppCompConfig from "../AppCompConfig.js";
 import Button, { ButtonType } from "../button/Button.js";
 import Modal from "../modal/Modal.js";
@@ -92,7 +92,7 @@ export default class ImageViewer extends Modal {
       .on("click", (event) => event.stopPropagation())
       .on("thumbnailSelected", (index) => this.goToImage(index));
 
-    this.onWindow("keydown", (event) => {
+    AppRoot.bind("keydown", this, (event) => {
       if (event.key === "ArrowLeft") this.goToPrevImage();
       else if (event.key === "ArrowRight") this.goToNextImage();
     });

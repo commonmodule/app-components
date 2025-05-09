@@ -85,7 +85,7 @@ export default class Button extends Dom<HTMLButtonElement, {
           }
         }
 
-        if (!this.isRemoved() && this.hasEvent("clickAndWait")) {
+        if (!this.isRemoved() && this.off("clickAndWait")) {
           const promise = this.emit("clickAndWait");
           if (!this.isRemoved() && promise instanceof Promise) {
             this.startLoading();

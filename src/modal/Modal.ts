@@ -1,8 +1,8 @@
-import { Body, Dom, el } from "@commonmodule/app";
+import { AppRoot, Dom, el } from "@commonmodule/app";
 import { EventHandlers } from "@commonmodule/ts";
 
 const nonModalDialogContainer = el(".non-modal-dialog-container").appendTo(
-  Body,
+  AppRoot,
 );
 
 nonModalDialogContainer.on("click", (event) => {
@@ -34,12 +34,12 @@ export default abstract class Modal<E extends EventHandlers = {}>
           this.htmlElement.close();
         }
       })
-      .appendTo(modal ? Body : nonModalDialogContainer);
+      .appendTo(modal ? AppRoot : nonModalDialogContainer);
 
     modal ? this.htmlElement.showModal() : this.htmlElement.show();
 
     if (!modal) {
-      for (const bodyNodeChild of Body.children) {
+      for (const bodyNodeChild of AppRoot.children) {
         if (bodyNodeChild instanceof Modal && bodyNodeChild.modal) {
           bodyNodeChild.off("remove", bodyNodeChild.closeListener);
           bodyNodeChild.htmlElement.close();
@@ -47,7 +47,7 @@ export default abstract class Modal<E extends EventHandlers = {}>
       }
 
       this.on("remove", () => {
-        for (const bodyNodeChild of Body.children) {
+        for (const bodyNodeChild of AppRoot.children) {
           if (bodyNodeChild instanceof Modal && bodyNodeChild.modal) {
             bodyNodeChild.htmlElement.showModal();
             bodyNodeChild.on("remove", bodyNodeChild.closeListener);
