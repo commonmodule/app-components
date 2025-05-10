@@ -47,19 +47,19 @@ export default class DropdownMenu extends Dom {
       this.footer = el("footer"),
     );
 
-    AppRoot.bind("click", this, (event) => {
+    AppRoot.bind(this, "click", (event) => {
       if (!this.htmlElement.contains(event.target as Node)) {
         this.remove();
       }
     });
 
-    AppRoot.bind("touchstart", this, (event) => {
+    AppRoot.bind(this, "touchstart", (event) => {
       if (!this.htmlElement.contains(event.target as Node)) {
         this.remove();
       }
     });
 
-    AppRoot.bind("keydown", this, (event) => {
+    AppRoot.bind(this, "keydown", (event) => {
       if (event.key === "Escape") this.remove();
     });
 

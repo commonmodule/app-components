@@ -92,7 +92,7 @@ export default class ImageViewer extends Modal {
       .on("click", (event) => event.stopPropagation())
       .on("thumbnailSelected", (index) => this.goToImage(index));
 
-    AppRoot.bind("keydown", this, (event) => {
+    AppRoot.bind(this, "keydown", (event) => {
       if (event.key === "ArrowLeft") this.goToPrevImage();
       else if (event.key === "ArrowRight") this.goToNextImage();
     });

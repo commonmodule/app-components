@@ -25,7 +25,7 @@ export default class TabGroup<T> extends Dom<HTMLDivElement, {
       this.addTab(tab);
     }
 
-    AppRoot.bind("resize", this, () => this.updateTabBackgroundOnSelect());
+    AppRoot.bind(this, "resize", () => this.updateTabBackgroundOnSelect());
   }
 
   public init(): this {
