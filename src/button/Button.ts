@@ -23,7 +23,7 @@ export default class Button extends Dom<HTMLButtonElement, {
   private options: ButtonOptions;
 
   private iconContainer: Dom | undefined;
-  private titleContainer: Dom;
+  private titleContainer: Dom | undefined;
   private loadingSpinner: Dom | undefined;
 
   private loading = false;
@@ -52,10 +52,12 @@ export default class Button extends Dom<HTMLButtonElement, {
 
     if (options.iconPosition === "right") {
       this.append(
-        this.titleContainer = el(
-          ".title",
-          ...(Array.isArray(options.title) ? options.title : [options.title]),
-        ),
+        options.title
+          ? this.titleContainer = el(
+            ".title",
+            ...(Array.isArray(options.title) ? options.title : [options.title]),
+          )
+          : undefined,
         options.icon
           ? this.iconContainer = el(
             ".right-icon-container",
@@ -68,10 +70,12 @@ export default class Button extends Dom<HTMLButtonElement, {
         options.icon
           ? this.iconContainer = el(".icon-container", options.icon.clone())
           : undefined,
-        this.titleContainer = el(
-          ".title",
-          ...(Array.isArray(options.title) ? options.title : [options.title]),
-        ),
+        options.title
+          ? this.titleContainer = el(
+            ".title",
+            ...(Array.isArray(options.title) ? options.title : [options.title]),
+          )
+          : undefined,
       );
     }
 
@@ -85,7 +89,7 @@ export default class Button extends Dom<HTMLButtonElement, {
           }
         }
 
-        if (!this.isRemoved() && this.off("clickAndWait")) {
+        if (!this.isRemoved() && this.hasEvent("clickAndWait")) {
           const promise = this.emit("clickAndWait");
           if (!this.isRemoved() && promise instanceof Promise) {
             this.startLoading();
@@ -99,13 +103,13 @@ export default class Button extends Dom<HTMLButtonElement, {
   }
 
   public set title(title: string | DomChild | DomChild[]) {
-    this.titleContainer.clear().append(
+    this.titleContainer?.clear().append(
       ...(Array.isArray(title) ? title : [title]),
     );
   }
 
   public get title(): string {
-    return this.titleContainer.text;
+    return this.titleContainer?.text ?? "";
   }
 
   public set icon(icon: Dom | undefined) {
