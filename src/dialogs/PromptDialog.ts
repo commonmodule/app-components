@@ -7,6 +7,7 @@ interface PromptDialogOptions {
   icon?: Dom;
   title: string;
   message: DomChild[] | string;
+  placeholder?: string;
   value?: string;
   confirmButtonTitle?: string;
   cancelButtonTitle?: string;
@@ -46,7 +47,10 @@ export default class PromptDialog extends StructuredModal {
         ...(typeof options.message === "string"
           ? [el("p", options.message)]
           : options.message),
-        this.input = new Input({ value: options.value }),
+        this.input = new Input({
+          value: options.value,
+          placeholder: options.placeholder,
+        }),
       )
       .appendToFooter(
         new Button(".cancel", {

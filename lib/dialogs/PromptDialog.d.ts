@@ -4,6 +4,7 @@ interface PromptDialogOptions {
     icon?: Dom;
     title: string;
     message: DomChild[] | string;
+    placeholder?: string;
     value?: string;
     confirmButtonTitle?: string;
     cancelButtonTitle?: string;
