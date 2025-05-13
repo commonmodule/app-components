@@ -34,7 +34,7 @@ export default class Snackbar extends Dom {
         new Button(".close", {
           type: ButtonType.Icon,
           icon: new AppCompConfig.CloseIcon(),
-          onClick: () => this.remove(),
+          onPress: () => this.remove(),
         }),
       ),
     );

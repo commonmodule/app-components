@@ -14,11 +14,11 @@ export interface ButtonOptions {
   iconPosition?: "left" | "right";
   title?: string | DomChild | DomChild[];
   disabled?: boolean;
-  onClick?: (button: Button, event: MouseEvent) => any;
+  onPress?: (button: Button, event: MouseEvent) => any;
 }
 
 export default class Button extends Dom<HTMLButtonElement, {
-  clickAndWait: () => Promise<void>;
+  pressed: () => Promise<void>;
 }> {
   private options: ButtonOptions;
 
@@ -81,16 +81,16 @@ export default class Button extends Dom<HTMLButtonElement, {
 
     this.on("click", (event) => {
       if (!this.loading) {
-        if (options.onClick) {
-          const promise = options.onClick(this, event);
+        if (options.onPress) {
+          const promise = options.onPress(this, event);
           if (!this.isRemoved() && promise instanceof Promise) {
             this.startLoading();
             promise.finally(() => this.stopLoading());
           }
         }
 
-        if (!this.isRemoved() && this.hasEvent("clickAndWait")) {
-          const promise = this.emit("clickAndWait");
+        if (!this.isRemoved() && this.hasEvent("pressed")) {
+          const promise = this.emit("pressed");
           if (!this.isRemoved() && promise instanceof Promise) {
             this.startLoading();
             promise.finally(() => this.stopLoading());

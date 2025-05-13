@@ -56,12 +56,12 @@ export default class QuantityInputDialog extends StructuredModal {
       .appendToFooter(
         new Button(".cancel", {
           title: "Cancel",
-          onClick: () => this.remove(),
+          onPress: () => this.remove(),
         }),
         new Button(".confirm", {
           type: ButtonType.Contained,
           title: options.confirmButtonTitle ?? "Confirm",
-          onClick: async () => {
+          onPress: async () => {
             const value = this.input.value;
             if (value !== undefined) {
               if (options.onConfirm) await options.onConfirm(value);

@@ -46,12 +46,12 @@ export default class ConfirmDialog extends StructuredModal {
       .appendToFooter(
         new Button(".cancel", {
           title: options.cancelButtonTitle ?? "Cancel",
-          onClick: () => this.remove(),
+          onPress: () => this.remove(),
         }),
         new Button(".confirm", {
           type: ButtonType.Contained,
           title: options.confirmButtonTitle ?? "Confirm",
-          onClick: async () => {
+          onPress: async () => {
             if (options.onConfirm) await options.onConfirm();
             this.resolveConfirm?.();
             this.rejectConfirm = undefined;

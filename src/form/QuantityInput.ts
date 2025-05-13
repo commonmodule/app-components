@@ -55,7 +55,7 @@ export default class QuantityInput extends Dom<HTMLLabelElement, {
           type: ButtonType.Icon,
           icon: new AppCompConfig.MinusIcon(),
           disabled: options.readOnly || options.value === options.min,
-          onClick: () => {
+          onPress: () => {
             const value = this.value;
             if (value === undefined) return;
             this.value = value - 1;
@@ -74,7 +74,7 @@ export default class QuantityInput extends Dom<HTMLLabelElement, {
           type: ButtonType.Icon,
           icon: new AppCompConfig.PlusIcon(),
           disabled: options.readOnly || options.value === options.max,
-          onClick: () => {
+          onPress: () => {
             const value = this.value;
             if (value === undefined) return;
             this.value = value + 1;

@@ -37,7 +37,7 @@ export default class ImageViewer extends Modal {
         new Button(".prev", {
           type: ButtonType.Icon,
           icon: new AppCompConfig.PrevIcon(),
-          onClick: (button, event) => {
+          onPress: (button, event) => {
             event.stopPropagation();
             this.goToPrevImage();
           },
@@ -49,7 +49,7 @@ export default class ImageViewer extends Modal {
         new Button(".next", {
           type: ButtonType.Icon,
           icon: new AppCompConfig.NextIcon(),
-          onClick: (button, event) => {
+          onPress: (button, event) => {
             event.stopPropagation();
             this.goToNextImage();
           },
@@ -59,17 +59,17 @@ export default class ImageViewer extends Modal {
           new Button(".zoom-in", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ZoomInIcon(),
-            onClick: () => this.mainImageDisplay.zoomIn(),
+            onPress: () => this.mainImageDisplay.zoomIn(),
           }),
           new Button(".zoom-out", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ZoomOutIcon(),
-            onClick: () => this.mainImageDisplay.zoomOut(),
+            onPress: () => this.mainImageDisplay.zoomOut(),
           }),
           new Button(".reset-zoom", {
             type: ButtonType.Icon,
             icon: new AppCompConfig.ResetZoomIcon(),
-            onClick: () => this.mainImageDisplay.resetZoom(),
+            onPress: () => this.mainImageDisplay.resetZoom(),
           }),
           { onclick: (event) => event.stopPropagation() },
         ),
@@ -105,24 +105,24 @@ export default class ImageViewer extends Modal {
         ? new Button(".fullscreen", {
           type: ButtonType.Icon,
           icon: new AppCompConfig.FullscreenIcon(),
-          onClick: () => this.toggleFullscreen(),
+          onPress: () => this.toggleFullscreen(),
         })
         : undefined,
       new Button(".share", {
         type: ButtonType.Icon,
         icon: new AppCompConfig.ShareIcon(),
-        onClick: () => this.shareCurrentImage(),
+        onPress: () => this.shareCurrentImage(),
       }),
       new Button(".download", {
         type: ButtonType.Icon,
         icon: new AppCompConfig.DownloadIcon(),
-        onClick: () => this.downloadCurrentImage(),
+        onPress: () => this.downloadCurrentImage(),
       }),
       position === "right"
         ? new Button(".close", {
           type: ButtonType.Icon,
           icon: new AppCompConfig.CloseIcon(),
-          onClick: () => this.remove(),
+          onPress: () => this.remove(),
         })
         : undefined,
     );

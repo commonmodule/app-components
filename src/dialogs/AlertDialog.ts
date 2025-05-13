@@ -44,7 +44,7 @@ export default class AlertDialog extends StructuredModal {
       .appendToFooter(
         new Button(".confirm", {
           title: options.confirmButtonTitle ?? "OK",
-          onClick: async () => {
+          onPress: async () => {
             if (options.onConfirm) await options.onConfirm();
             this.remove();
           },
