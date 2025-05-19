@@ -27,7 +27,7 @@ export default class Select extends Dom<HTMLLabelElement> {
         ...options.options.map((option) =>
           el("option", { value: option.value }, option.label)
         ),
-        { value: options.value },
+        { value: options.value ?? "" },
       ),
     );
 
