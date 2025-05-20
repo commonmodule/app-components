@@ -1,9 +1,9 @@
-import { Dom } from "@commonmodule/app";
+import { Dom, DomChild } from "@commonmodule/app";
 import { EventHandlers } from "@commonmodule/ts";
 import InvisibleFileInput from "./InvisibleFileInput.js";
 
 interface FileDropzoneOptions {
-  accept: string;
+  accept?: string;
   multiple?: boolean;
   onUpload: (files: File[]) => void;
 }
@@ -15,10 +15,26 @@ export default class FileDropzone<
   private invisibleFileInput: InvisibleFileInput;
 
   constructor(
-    classNames: `.${string}`,
-    options: FileDropzoneOptions,
-    ...children: Dom[]
+    classNamesOrOptions: `.${string}` | FileDropzoneOptions,
+    optionsOrChild?: FileDropzoneOptions | DomChild<H>,
+    ...children: DomChild<H>[]
   ) {
+    let classNames: `.${string}` | string = "";
+    let options: FileDropzoneOptions;
+
+    if (typeof classNamesOrOptions === "string") {
+      classNames = classNamesOrOptions;
+      if (optionsOrChild === undefined) {
+        throw new Error("Expected options to be provided");
+      }
+      options = optionsOrChild as FileDropzoneOptions;
+    } else {
+      options = classNamesOrOptions as FileDropzoneOptions;
+      if (optionsOrChild) {
+        children = [optionsOrChild as DomChild<H>, ...children];
+      }
+    }
+
     super(`.file-dropzone${classNames}`, ...children);
 
     this.append(
