@@ -8,8 +8,8 @@ export default class TabGroup<T> extends Dom<HTMLDivElement, {
     private tabs;
     private selectedTab?;
     constructor(id?: string | Tab<T>, ...tabs: Tab<T>[]);
+    private init;
     private updateTabBackgroundOnSelect;
-    init(): this;
     getSelectedValue(): T | undefined;
     addTab(tab: Tab<T>): void;
     selectTab(value: T): this;

@@ -25,12 +25,15 @@ export default class FileTree extends Dom<HTMLUListElement, {
     dataOrOptions: FileTreeOptions | FileTreeNodeData[],
     dataOrUndefined?: FileTreeNodeData[],
   ) {
-    let data = [];
+    let data: FileTreeNodeData[];
     let options: FileTreeOptions = {};
 
     if (!Array.isArray(dataOrOptions)) {
-      data = dataOrUndefined ?? [];
-      options = dataOrOptions ?? {};
+      if (dataOrUndefined === undefined) {
+        throw new Error("data is required");
+      }
+      data = dataOrUndefined;
+      options = dataOrOptions;
     } else {
       data = dataOrOptions;
     }

@@ -25,8 +25,18 @@ export default class TabGroup<T> extends Dom<HTMLDivElement, {
       this.addTab(tab);
     }
 
-    this.on("visible", () => this.updateTabBackgroundOnSelect());
+    this.on("visible", () => this.init());
     AppRoot.bind(this, "resize", () => this.updateTabBackgroundOnSelect());
+  }
+
+  private init(): this {
+    const storedValue = this.store?.get<T>("selected");
+    if (storedValue) {
+      this.selectTab(storedValue);
+    } else {
+      this.tabs[0]?.select();
+    }
+    return this;
   }
 
   private updateTabBackgroundOnSelect(): void {
@@ -36,16 +46,6 @@ export default class TabGroup<T> extends Dom<HTMLDivElement, {
         this.selectedTab,
       );
     }
-  }
-
-  public init(): this {
-    const storedValue = this.store?.get<T>("selected");
-    if (storedValue) {
-      this.selectTab(storedValue);
-    } else {
-      this.tabs[0]?.select();
-    }
-    return this;
   }
 
   public getSelectedValue(): T | undefined {
