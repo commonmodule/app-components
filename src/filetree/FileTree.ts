@@ -14,14 +14,31 @@ export default class FileTree extends Dom<HTMLUListElement, {
   nodeCreated: (parentId: string | undefined, name: string) => void;
   nodeRemoved: (id: string) => void;
 }> {
+  public options: FileTreeOptions;
+
   private selectedNodeId: string | undefined;
   private fileTreeNodeMap = new Map<string, FileTreeNode>();
 
+  constructor(data: FileTreeNodeData[]);
+  constructor(options: FileTreeOptions, data: FileTreeNodeData[]);
   constructor(
-    public options: FileTreeOptions,
-    data: FileTreeNodeData[],
+    dataOrOptions: FileTreeOptions | FileTreeNodeData[],
+    dataOrUndefined?: FileTreeNodeData[],
   ) {
+    let data = [];
+    let options: FileTreeOptions = {};
+
+    if (!Array.isArray(dataOrOptions)) {
+      data = dataOrUndefined ?? [];
+      options = dataOrOptions ?? {};
+    } else {
+      data = dataOrOptions;
+    }
+
     super("ul.file-tree");
+
+    this.options = options;
+
     this.setData(data);
   }
 

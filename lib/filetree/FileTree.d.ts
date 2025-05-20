@@ -14,6 +14,7 @@ export default class FileTree extends Dom<HTMLUListElement, {
     options: FileTreeOptions;
     private selectedNodeId;
     private fileTreeNodeMap;
+    constructor(data: FileTreeNodeData[]);
     constructor(options: FileTreeOptions, data: FileTreeNodeData[]);
     setData(data: FileTreeNodeData[]): void;
     isAlwaysExpanded(): boolean;
